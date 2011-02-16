@@ -11,18 +11,18 @@ class Person
   property :first_name, String
   property :last_name,  String
   property :email,      String, :length => 255
-#  property :password,   BCryptHash
+  #property :password,   BCryptHash
   property :info,       Text
   timestamps :at
   is :slug, :source => :name
 
   #has 1, :visit
   has n, :news
-  #has n, :reports
-  #has n, :threads
-  #has n, :comments
-  #has n, :participations
-  #has n, :events, :through => :participations
+  has n, :reports
+  has n, :threads
+  has n, :comments
+  has n, :participations
+  has n, :events, :through => :participations
 
   attr_accessor :password_confirmation
 

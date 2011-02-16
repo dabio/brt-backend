@@ -3,23 +3,10 @@
 #   it is copyright (c) 2009-2011 danilo braband (danilo @ berlinracingteam,
 #   then a dot and a 'de')
 #
-
-require 'cuba'
-require 'slim'
-require 'rack/no-www'
-require 'rack-r18n'
-require 'dm-core'
-require 'dm-timestamps'
-require 'dm-validations'
-require 'dm-is-slug'
-
-Dir.glob('./lib/*.rb') do |lib|
-  require lib
-end
+require 'shotgun'
 
 Cuba.use Rack::NoWWW
 Cuba.use Rack::R18n, :default => 'de'
-
 
 Cuba.define do
   extend R18n::Helpers
@@ -31,10 +18,8 @@ Cuba.define do
   # /index.html
   on path('') do
     today = Date.today
-    @news = News.all(
-      :date.lte => today,
-      :order => [:date.desc, :updated_at.desc],
-      :limit => 4)
+    @news = News.all(:date.lte => today, :order => [:date.desc, :updated_at.desc],
+                     :limit => 4)
     slim 'index'
   end
 

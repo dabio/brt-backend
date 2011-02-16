@@ -12,6 +12,9 @@ group :development do
   gem "dm-sqlite-adapter"
   gem "shotgun"
   gem "heroku"
+  gem "capybara"
+  gem "cutest"
+  gem "taps"
 end
 
 group :production do

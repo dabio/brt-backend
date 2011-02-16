@@ -4,34 +4,37 @@
 #   then a dot and a 'de')
 #
 
-class News
+class Event
   include DataMapper::Resource
 
   property :id,         Serial
   property :date,       Date
   property :title,      String
-  property :message,    Text, :lazy => false
+  #property :url,        URI
+  property :distance,   Integer
+  #property :type,       Enum[:race, :training], :default => :race
   timestamps :at
   is :slug, :source => :title
 
   belongs_to :person
-
+  has n, :reports
   has n, :comments
+  has n, :participations
+  has n, :people, :through => :participations
 
-  validates_presence_of :title, :date, :message
+  validates_presence_of :date, :title, :distance, :type
 
-#  after :save do |news|
+#  after :save do |event|
 #    # save link in mixing table
-#    Mixing.first_or_create(:news => news).update(:date => news.date)
+#    Mixing.first_or_create(:event => event).update(:date => event.date)
 #  end
 
   def permalink
-    "/news/#{date.strftime("%Y/%m/%d")}/#{slug}"
+    "/rennen/#{date.strftime("%Y/%m/%d")}/#{slug}" if type == :race
   end
 
   def editlink
     "#{permalink}/edit"
   end
 end
-
 
