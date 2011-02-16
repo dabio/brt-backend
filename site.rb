@@ -3,7 +3,7 @@
 #   it is copyright (c) 2009-2011 danilo braband (danilo @ berlinracingteam,
 #   then a dot and a 'de')
 #
-require 'shotgun'
+require './shotgun'
 
 Cuba.use Rack::NoWWW
 Cuba.use Rack::R18n, :default => 'de'
