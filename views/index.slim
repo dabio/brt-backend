@@ -1,0 +1,68 @@
+! doctype html
+html
+head
+    title Berlin Racing Team
+    meta charset='utf-8'
+    meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'
+    meta name='viewport' content='width=device-width, initial-scale=1.0'
+    link href="#{{coat('/css/styles.scss')}}" rel='stylesheet'
+
+body
+    #header.container.clearfix
+        h1
+            a href='/'
+                span Berlin Racing Team
+
+        #primary-nav
+            ul
+                li
+                    a.active href='/'
+                        span Home
+                li
+                    a href='/team'
+                        span Team
+                li
+                    a href='/sponsoren'
+                        span Sponsoren
+                li
+                    a href='/kontakt'
+                        span Kontakt
+
+    #content.container
+        #slider.clearfix
+            .slides_container
+                div
+                    img width=826 height=465 src='#{{cdn}}/slides/1.jpg'
+                div
+                    img width=826 height=465 src='#{{cdn}}/slides/2.jpg'
+                div
+                    img width=826 height=465 src='#{{cdn}}/slides/3.jpg'
+            .slides-nav
+                a class="prev" Zur&uuml;ck
+                a class="next" Weiter
+            ul.pagination
+                li
+                    a
+                li
+                    a
+                li
+                    a
+
+        #home-news.clearfix
+            .news-box
+                h3 Nachrichten
+                p Neuigkeiten rund um das Berlin Racing Team
+                p
+                    a.droid-italic href="/news" title="Weitere Nachrichten" Archiv &raquo;
+            - for item in @news do
+                .news-box
+                    h3 = item.title
+                    p.meta = l item.date, :full
+                    p = item.message
+
+    script src='#{{cdn}}/js/jquery.min.js'
+    script src='#{{cdn}}/js/jquery.slides.min.js'
+    javascript:
+        var cdn = "#{cdn}";
+        $(function(){var a=$("#slider"),b=$(".slides-nav");a.slides({preload:!0,preloadImage:"#{{cdn}}/img/loader.gif",effect:"fade",fadeSpeed:250,/*play:5e3,*/crossfade:!0,generatePagination:!1}),$('.slides_container').hover(function(){b.fadeIn("medium")},function(){b.fadeOut("medium")})})
+

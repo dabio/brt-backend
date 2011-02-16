@@ -1,0 +1,227 @@
+$cdn: 'http://berlinracingteam.commondatastorage.googleapis.com';
+
+@import 'reset';
+@import 'fonts';
+
+/* ------------------------------------------------------------------------------ */
+/* 1. Document Setup (body, common classes, vertical rhymes, structure, etc)      */
+/* ------------------------------------------------------------------------------ */
+body {
+    border-top: 10px solid #edf2f9;
+    font: 12px/20px "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #fff;
+    color: #444;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+h1 {
+    font-size: 24px;
+    line-height: 28px;
+}
+h2 {
+    font-size: 20px;
+    line-height: 22px;
+}
+h3 {
+    font-size: 16px;
+    line-height: 20px;
+}
+h4 {
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 15px;
+    font-family: "Droid Serif", Georgia, Times, serif;
+    font-style: italic;
+}
+h5 {
+    font-size: 12px;
+    line-height: 18px;
+}
+h6 {
+    font-size: 10px;
+    line-height: 16px;
+}
+ol, ul {
+    list-style: none;
+}
+p, pre, ul, ol, dl, dd, blockquote, address, table, fieldset, form {
+    margin-bottom: 20px;
+}
+
+.container {
+    margin: 0 auto;
+    width: 826px;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.clearfix {
+    display: inline-block;
+}
+/* Hide from IE Mac \*/
+.clearfix {
+    display: block;
+} /* End hide from IE Mac */
+.none {
+    display: none;
+}
+
+#content {
+    padding: 40px 0 30px 0;
+}
+
+/* ------------------------------------------------------------------------------ */
+/* 3. Header Styles                                                               */
+/* ------------------------------------------------------------------------------ */
+#header {
+    border-bottom: 1px solid #e5ecf7;
+    padding: 27px 0 30px 0;
+}
+#header h1 a {
+    background-image: url($cdn+'/img/logo.png');
+    display: block;
+    float: left;
+    height: 43px;
+    width: 276px;
+}
+#header h1 span {
+    display: none;
+}
+
+/* ------------------------------------------------------------------------------ */
+/* 4. Navigation & Menus                                                          */
+/* ------------------------------------------------------------------------------ */
+#primary-nav {
+    float: right;
+    font-size: 13px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin-top: 10px;
+}
+#primary-nav ul {
+    line-height: 35px;
+}
+#primary-nav li {
+    float: left;
+    margin-left: 30px;
+}
+#primary-nav a {
+    color: #999;
+    display: block;
+    font-weight: bold;
+}
+#primary-nav a:hover, #primary-nav a.active {
+    text-decoration: none;
+    color: #444;
+}
+
+
+/* ------------------------------------------------------------------------------ */
+/* 12. Homepage Element                                                           */
+/* ------------------------------------------------------------------------------ */
+#slider {
+    margin-bottom: 39px;
+}
+#slider .slides_container {
+    width: 826px;
+    height: 465px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+.slides-nav {
+    position: relative;
+    z-index: 100;
+    display: none;
+}
+.slides-nav a {
+    position: absolute;
+    display: block;
+    text-indent: -9999px;
+    width: 40px;
+    height: 40px;
+    background-image: url($cdn+'/img/slides-sprite.png');
+    z-index: 10;
+}
+.slides-nav a.prev {
+    background-position: 0 0;
+    margin: -243px 0 0 20px;
+}
+.slides-nav a:hover.prev {
+    background-position: 80px 200px;
+}
+.slides-nav a.next {
+    background-position: 160px 0;
+    margin: -243px 0 0 766px;
+}
+.slides-nav a:hover.next {
+    background-position: 40px 200px;
+}
+.pagination {
+    position: absolute;
+    z-index: 10;
+    margin: -30px 0 0 20px;
+}
+.pagination li {
+    float: left;
+    margin: 0 5px 0 0;
+}
+.pagination li a {
+    display: block;
+    background: url($cdn+'/img/slides-sprite.png') 0 160px;
+    width: 12px;
+    height: 15px;
+    outline: none;
+}
+.pagination li.current a {
+    background: url($cdn+'/img/slides-sprite.png') 188px 160px;
+}
+
+#home-news {
+    border-top: 1px solid #e5ecf7;
+    padding: 40px 0 39px;
+}
+
+#home-news h3 {
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+#home-news p {
+    margin-bottom: 15px;
+}
+#home-news .news-box {
+    float: left;
+    margin-right: 18px;
+    width: 196px;
+}
+#home-news .news-box-last {
+    margin-right: 0;
+}
+#home-news .meta {
+    font-family: "Droid Serif", Georgia, Times, serif;
+    font-size: 11px;
+    font-style: italic;
+    color: #999;
+    margin-bottom: 10px;
+}
+
+.droid-italic {
+    font-family: "Droid Serif", Georgia, Times, serif;
+    font-style: italic;
+    font-size: 11px;
+}
