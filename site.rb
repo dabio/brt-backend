@@ -29,6 +29,7 @@ Cuba.define do
       @email = Email.new()
       slim 'kontakt'
     end
+
     on post, param('name'), param('email'), param('message') do |n, e, m|
         @email = Email.new(:name => n, :email => e, :message => m)
 
@@ -44,6 +45,27 @@ Cuba.define do
         else
           slim 'kontakt'
         end
+    end
+  end
+
+  # /news
+  on path('news') do
+    on path('new') do
+      on get do
+        @news = News.new()
+        slim 'news_form'
+      end
+
+      on post, param('date'), param('title'), param('message') do |d, t, m|
+        @person = Person.first(:id => 1)
+        @news = News.new(:date => d, :title => t, :message => m, :person => @person)
+
+        if @news.save
+          res.redirect @news.permalink
+        else
+          slim 'news_form'
+        end
+      end
     end
   end
 
