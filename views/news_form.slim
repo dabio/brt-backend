@@ -1,63 +1,68 @@
 ! doctype html
 html
 head
-    title Berlin Racing Team - Meldung
-    meta charset='utf-8'
-    meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'
-    meta name='viewport' content='width=device-width, initial-scale=1.0'
-    link href="#{{coat('/css/styles.scss')}}" rel='stylesheet'
+  title Berlin Racing Team - Meldung
+  meta charset='utf-8'
+  meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'
+  meta name='viewport' content='width=device-width, initial-scale=1.0'
+  link href="#{{coat('/css/styles.scss')}}" rel='stylesheet'
 
 body
-    #header.container
-        h1
-            a href='/'
-                span Berlin Racing Team
+  #header.container
+    h1
+      a href='/'
+        span Berlin Racing Team
 
-        #primary-nav
-            ul
-                li
-                    a href='/'
-                        span Home
-                /li
-                    a href='/team'
-                        span Team
-                /li
-                    a href='/sponsoren'
-                        span Sponsoren
-                li
-                    a.active href='/kontakt'
-                        span Kontakt
-    hr
-    #content.container
-        .c1-12
-            - if @news.new?
-                h1.page-title Neue Meldung anlegen
-            - else
-                h1.page-title Meldung bearbeiten
-            .c1-9.entry-content
-                form method="post" action="#{{@news.new? ? '/news/new' : @news.editlink}}"
-                    p
-                        label for="date"
-                            small Datum
-                        input type="date" name="date" placeholder="#{Date.today}" value=@news.date
-                    p
-                        label for="title"
-                            small Titel
-                        input type="text" name="title" value=@news.title
-                    p
-                        label for="message"
-                            small Text
-                        textarea name="message" rows=15 =@news.message
-                    p
-                        button.clean-gray type="submit"
-                            span Speichern
-            .c10-12.entry-content
-                h3.widget Tipps
-                p Halte dich kurz!
-    hr
+    #primary-nav
+      ul
+        li
+          a href='/'
+            span Home
+        /li
+          a href='/team'
+            span Team
+        /li
+          a href='/sponsoren'
+            span Sponsoren
+        li
+          a.active href='/kontakt'
+            span Kontakt
+  hr
+  #content.container
 
-/    script src='#{{cdn}}/js/jquery.min.js'
-/    script src='#{{cdn}}/js/jquery.slides.min.js'
-/    javascript:
-/        $(function(){var a=$("#slider"),b=$(".slides-nav");a.slides({preload:!0,preloadImage:"#{{cdn}}/img/loader.gif",effect:"fade",fadeSpeed:250,/*play:5e3,*/crossfade:!0,generatePagination:!1}),a.hover(function(){b.fadeIn("medium")},function(){b.fadeOut("medium")})})
+    .c1-12
+      - if @news.new?
+        h1.page-title Neue Meldung anlegen
+      - else
+        h1.page-title Meldung bearbeiten
+    
+    .c1-9.entry-content
+      form method="post" action="#{{@news.new? ? '/news/new' : @news.editlink}}"
+        p
+          label for="date"
+            small Datum
+          input type="date" name="user[date]" placeholder="#{Date.today}" value=@news.date
+        p
+          label for="title"
+            small Titel
+          input.full type="text" name="user[title]" value=@news.title
+        p
+          label for="message"
+            small Text
+          textarea name="user[message]" rows=15 =@news.message
+        p
+          button.clean-gray type="submit"
+            span Speichern
+        
+    .c10-12.entry-content
+      h3.widget Tipps
+      ul
+        li Halte dich kurz
+        li Achte die deutsche Sprache
+  hr
+
+/  script src='#{{cdn}}/js/jquery.min.js'
+/  script src='#{{cdn}}/js/jquery.slides.min.js'
+/  javascript:
+  $(function(){var a=$("#slider"),b=$(".slides-nav");a.slides({preload:!0,preloadImage:"#{{cdn}}/img/loader.gif",effect:"fade",fadeSpeed:250,/*play:5e3,*/crossfade:!0,generatePagination:!1}),a.hover(function(){b.fadeIn("medium")},function(){b.fadeOut("medium")})})
 

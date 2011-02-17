@@ -1,4 +1,4 @@
-# coding:utf-8
+# encoding: utf-8
 #
 #   this is berlinracingteam.de, a cuba application
 #   it is copyright (c) 2009-2011 danilo braband (danilo @ berlinracingteam,
@@ -6,8 +6,17 @@
 #
 
 module Cuba::Prelude
-  def slim(template, options={})
-    res.write Slim::Template.new("views/#{template}.slim", options).render(self)
+  # @private Used internally by #slim to cache the Slim templates.
+  def _cache
+    Thread.current[:_cache] ||= Tilt::Cache.new
+  end
+  private :_cache
+
+  def slim(template, locals = {}, options = {})
+    res.headers['Content-Type'] = 'text/html; charset=utf-8'
+    _cache.fetch(template, locals) do
+      Slim::Template.new("views/#{template}.slim", 1, options)
+    end.render(self, locals)
   end
 
   def stylesheet(template)
@@ -17,6 +26,7 @@ module Cuba::Prelude
     res.headers['Content-Type'] = 'text/css; charset=utf-8'
     render("views/#{template}")
   end
+
   # Wraps the common case of throwing a 404 page in a nice little helper.
   #
   # @example

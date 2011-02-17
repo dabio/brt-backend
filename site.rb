@@ -1,3 +1,4 @@
+﻿# encoding: utf-8
 #
 #   this is berlinracingteam.de, a cuba application
 #   it is copyright (c) 2009-2011 danilo braband (danilo @ berlinracingteam,
@@ -20,31 +21,31 @@ Cuba.define do
     today = Date.today
     @news = News.all(:date.lte => today, :order => [:date.desc, :updated_at.desc],
                      :limit => 4)
-    slim 'index'
+    res.write slim 'index'
   end
 
   # /kontakt
   on path('kontakt') do
     on get do
       @email = Email.new()
-      slim 'kontakt'
+      res.write slim 'kontakt'
     end
 
     on post, param('name'), param('email'), param('message') do |n, e, m|
-        @email = Email.new(:name => n, :email => e, :message => m)
+      @email = Email.new(:name => n, :email => e, :message => m)
 
-        if @email.save
-          send_email(ENV['CONTACT_EMAIL'],
-                     :from => @email.email,
-                     :from_alias => @email.name,
-                     :subject => 'Nachricht vom berinracingteam.de',
-                     :body => @email.message
-          )
-          @email.update(:send_at => Time.now)
-          res.redirect '/kontakt'
-        else
-          slim 'kontakt'
-        end
+      if @email.save
+        send_email(ENV['CONTACT_EMAIL'],
+                   :from => @email.email,
+                   :from_alias => @email.name,
+                   :subject => 'Nachricht vom berinracingteam.de',
+                   :body => @email.message
+        )
+        @email.update(:send_at => Time.now)
+        res.redirect '/kontakt'
+      else
+        res.write slim 'kontakt'
+      end
     end
   end
 
@@ -53,17 +54,23 @@ Cuba.define do
     on path('new') do
       on get do
         @news = News.new()
-        slim 'news_form'
+        res.write slim 'news_form'
       end
 
-      on post, param('date'), param('title'), param('message') do |d, t, m|
+      on post, param('user') do |user|
         @person = Person.first(:id => 1)
-        @news = News.new(:date => d, :title => t, :message => m, :person => @person)
-
+        user.each do |key, value|
+          value.force_encoding('UTF-8')
+        end
+        @news = News.new(user)
+        @news.person = @person
+        #puts d.force_encoding('UTF-8')
+        #puts t.force_encoding('UTF-8')
+        #puts m.force_encoding('UTF-8')
         if @news.save
           res.redirect @news.permalink
         else
-          slim 'news_form'
+          res.write slim 'news_form'
         end
       end
     end

@@ -92,6 +92,9 @@ input:focus, textarea:focus {
 input {
     width: 190px;
 }
+input.full {
+    width: 596px;
+}
 textarea {
     resize: none;
     width: 596px;
