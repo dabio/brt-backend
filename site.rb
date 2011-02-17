@@ -21,14 +21,14 @@ Cuba.define do
     today = Date.today
     @news = News.all(:date.lte => today, :order => [:date.desc, :updated_at.desc],
                      :limit => 4)
-    res.write slim 'index'
+    res.write render 'views/index.slim'
   end
 
   # /kontakt
   on path('kontakt') do
     on get do
       @email = Email.new()
-      res.write slim 'kontakt'
+      res.write render 'views/kontakt.slim'
     end
 
     on post, param('name'), param('email'), param('message') do |n, e, m|
@@ -44,7 +44,7 @@ Cuba.define do
         @email.update(:send_at => Time.now)
         res.redirect '/kontakt'
       else
-        res.write slim 'kontakt'
+        res.write render 'views/kontakt.slim'
       end
     end
   end
@@ -54,23 +54,16 @@ Cuba.define do
     on path('new') do
       on get do
         @news = News.new()
-        res.write slim 'news_form'
+        res.write render 'views/news_form.slim'
       end
 
       on post, param('user') do |user|
-        @person = Person.first(:id => 1)
-        user.each do |key, value|
-          value.force_encoding('UTF-8')
-        end
         @news = News.new(user)
-        @news.person = @person
-        #puts d.force_encoding('UTF-8')
-        #puts t.force_encoding('UTF-8')
-        #puts m.force_encoding('UTF-8')
+        @news.person = @Person.first(:id => 1)
         if @news.save
           res.redirect @news.permalink
         else
-          res.write slim 'news_form'
+          res.write render 'views/news_form.slim'
         end
       end
     end

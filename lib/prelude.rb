@@ -6,17 +6,9 @@
 #
 
 module Cuba::Prelude
-  # @private Used internally by #slim to cache the Slim templates.
-  def _cache
-    Thread.current[:_cache] ||= Tilt::Cache.new
-  end
-  private :_cache
-
-  def slim(template, locals = {}, options = {})
-    res.headers['Content-Type'] = 'text/html; charset=utf-8'
-    _cache.fetch(template, locals) do
-      Slim::Template.new("views/#{template}.slim", 1, options)
-    end.render(self, locals)
+  # overwrite cuba param method for getting utf-8 compatible paramters
+  def param(key, default = nil)
+    lambda { captures << (req[key].force_encoding('UTF-8') || default) }
   end
 
   def stylesheet(template)
@@ -38,7 +30,7 @@ module Cuba::Prelude
   #   end
   def not_found
     res.status = 404
-    res.write slim 404
+    res.write render 'views/404.slim'
   end
 
   def send_email(to, opts={})
