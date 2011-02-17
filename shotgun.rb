@@ -6,6 +6,7 @@
 
 require 'cuba'
 require 'slim'
+require 'sass'
 require 'rack/no-www'
 require 'rack-r18n'
 require 'dm-core'
