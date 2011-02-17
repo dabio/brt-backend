@@ -13,7 +13,7 @@ Cuba.define do
   extend Cuba::Prelude
 
   DataMapper::Logger.new($stdout, :debug) unless production?
-  DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db')
+  DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
 
   # /index.html
   on path('') do
@@ -21,6 +21,30 @@ Cuba.define do
     @news = News.all(:date.lte => today, :order => [:date.desc, :updated_at.desc],
                      :limit => 4)
     slim 'index'
+  end
+
+  # /kontakt
+  on path('kontakt') do
+    on get do
+      @email = Email.new()
+      slim 'kontakt'
+    end
+    on post, param('name'), param('email'), param('message') do |n, e, m|
+        @email = Email.new(:name => n, :email => e, :message => m)
+
+        if @email.save
+          send_email(ENV['CONTACT_EMAIL'],
+                     :from => @email.email,
+                     :from_alias => @email.name,
+                     :subject => 'Nachricht vom berinracingteam.de',
+                     :body => @email.message
+          )
+          @email.update(:send_at => Time.now)
+          res.redirect '/kontakt'
+        else
+          slim 'kontakt'
+        end
+    end
   end
 
   # /css/styles.css

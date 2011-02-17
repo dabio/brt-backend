@@ -18,10 +18,10 @@ body
                 li
                     a.active href='/'
                         span Home
-                li
+                /li
                     a href='/team'
                         span Team
-                li
+                /li
                     a href='/sponsoren'
                         span Sponsoren
                 li
@@ -29,7 +29,7 @@ body
                         span Kontakt
 
     #content.container
-        #slider.clearfix
+        #slider.c1-12
             .slides_container
                 div
                     img width=826 height=465 src='#{{cdn}}/slides/1.jpg'
@@ -47,8 +47,8 @@ body
                     a
                 li
                     a
-
-        #home-news.clearfix
+        hr
+        .c1-12.home-wrap
             .news-box
                 h3 Nachrichten
                 p Neuigkeiten rund um das Berlin Racing Team
@@ -59,10 +59,10 @@ body
                     h3 = item.title
                     p.meta = l item.date, :full
                     p = item.message
+        hr
 
     script src='#{{cdn}}/js/jquery.min.js'
     script src='#{{cdn}}/js/jquery.slides.min.js'
     javascript:
-        var cdn = "#{cdn}";
-        $(function(){var a=$("#slider"),b=$(".slides-nav");a.slides({preload:!0,preloadImage:"#{{cdn}}/img/loader.gif",effect:"fade",fadeSpeed:250,/*play:5e3,*/crossfade:!0,generatePagination:!1}),$('.slides_container').hover(function(){b.fadeIn("medium")},function(){b.fadeOut("medium")})})
+        $(function(){var a=$("#slider"),b=$(".slides-nav");a.slides({preload:!0,preloadImage:"#{{cdn}}/img/loader.gif",effect:"fade",fadeSpeed:250,/*play:5e3,*/crossfade:!0,generatePagination:!1}),a.hover(function(){b.fadeIn("medium")},function(){b.fadeOut("medium")})})
 
