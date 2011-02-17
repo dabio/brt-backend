@@ -34,7 +34,7 @@ module Cuba::Prelude
   def send_email(to, opts={})
     require 'net/smtp'
 
-    opts[:server]     ||= ENV["SENDGRID_SERVER"]
+    opts[:server]     ||= 'smtp.sendgrid.net'
     opts[:port]       ||= 25
     opts[:user]       ||= ENV["SENDGRID_USERNAME"]
     opts[:password]   ||= ENV["SENDGRID_PASSWORD"]
