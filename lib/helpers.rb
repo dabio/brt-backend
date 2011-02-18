@@ -28,5 +28,14 @@ private
   def production?
     ENV['RACK_ENV'] == 'production'
   end
+
+  def slugify(str)
+    s = str.to_ascii
+    s.gsub!(/\W+/, ' ')
+    s.strip!
+    s.downcase!
+    s.gsub!(/\ +/, '-')
+    s
+  end
 end
 

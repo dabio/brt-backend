@@ -15,7 +15,9 @@ class Person
   #property :password,   BCryptHash
   property :info,       Text
   timestamps :at
-  is :slug, :source => :name
+  property :slug,       String, :length => 50, :default => lambda { |r, p|
+    slugify(r.name)
+  }
 
   #has 1, :visit
   has n, :news

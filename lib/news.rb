@@ -13,7 +13,10 @@ class News
   property :title,      String
   property :message,    Text, :lazy => false
   timestamps :at
-  is :slug, :source => :title
+  property :slug,       String, :length => 50, :default => lambda { |r, p|
+    slugify(r.title)
+  }
+  #is :slug, :source => :title
 
   belongs_to :person
 
@@ -21,10 +24,10 @@ class News
 
   validates_presence_of :title, :date, :message
 
-#  after :save do |news|
-#    # save link in mixing table
-#    Mixing.first_or_create(:news => news).update(:date => news.date)
-#  end
+  #after :save do |news|
+  #  # save link in mixing table
+  #  Mixing.first_or_create(:news => news).update(:date => news.date)
+  #end
 
   def permalink
     "/news/#{date.strftime("%Y/%m/%d")}/#{slug}"

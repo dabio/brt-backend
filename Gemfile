@@ -6,7 +6,8 @@ gem "rack-no-www"
 gem "rack-r18n"
 gem "dm-core"
 gem "dm-timestamps"
-gem "dm-is-slug"
+gem "dm-validations"
+gem "unidecode"
 
 group :development do
   gem "dm-sqlite-adapter"

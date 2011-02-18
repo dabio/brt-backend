@@ -15,8 +15,10 @@ class Event
   property :distance,   Integer
   #property :type,       Enum[:race, :training], :default => :race
   timestamps :at
-  is :slug, :source => :title
-
+  property :slug,       String, :length => 50, :default => lambda { |r, p|
+    slugify(r.title)
+  }
+ 
   belongs_to :person
   has n, :reports
   has n, :comments
