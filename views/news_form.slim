@@ -39,17 +39,17 @@ body
     .c1-9.entry-content
       form method="post" action="#{{@news.new? ? '/news/new' : @news.editlink}}"
         p
-          label for="date"
+          label for="news_date"
             small Datum
-          input type="date" name="user[date]" placeholder="#{Date.today}" value=@news.date
+          input type="date" id="news_date" name="news[date]" placeholder="#{Date.today}" value=@news.date
         p
-          label for="title"
+          label for="news_title"
             small Titel
-          input.full type="text" name="user[title]" value=@news.title
+          input.full type="text" id="news_title" name="news[title]" value=@news.title
         p
-          label for="message"
+          label for="news_message"
             small Text
-          textarea name="user[message]" rows=15 =@news.message
+          textarea id="news_message" name="news[message]" rows=15 =@news.message
         p
           button.clean-gray type="submit"
             span Speichern

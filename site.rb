@@ -31,16 +31,12 @@ Cuba.define do
       res.write render 'views/kontakt.slim'
     end
 
-    on post, param('name'), param('email'), param('message') do |n, e, m|
-      @email = Email.new(:name => n, :email => e, :message => m)
+    on post, param('contact'), param('email') do |contact, email|
+      break not_found unless email.length == 0
 
+      @email = Email.new(contact)
       if @email.save
-        send_email(ENV['CONTACT_EMAIL'],
-                   :from => @email.email,
-                   :from_alias => @email.name,
-                   :subject => 'Nachricht vom berinracingteam.de',
-                   :body => @email.message
-        )
+        send_email(ENV['CONTACT_EMAIL'], :from => @email.email, :from_alias => @email.name, :subject => 'Nachricht vom berinracingteam.de', :body => @email.message)
         @email.update(:send_at => Time.now)
         res.redirect '/kontakt'
       else
@@ -57,9 +53,9 @@ Cuba.define do
         res.write render 'views/news_form.slim'
       end
 
-      on post, param('user') do |user|
-        @news = News.new(user)
-        @news.person = @Person.first(:id => 1)
+      on post, param('news') do |news|
+        @news = News.new(news)
+        @news.person = Person.first(:id => 1)
         if @news.save
           res.redirect @news.permalink
         else
