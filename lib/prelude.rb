@@ -33,10 +33,10 @@ module Cuba::Prelude
 
   def footer
     @people = Person.all :order => [:last_name, :first_name]
-    partials('footer')
+    partial('footer')
   end
 
-  def partials(template)
+  def partial(template)
     render "views/partials/#{template}.slim"
   end
 

@@ -1,63 +1,66 @@
 ! doctype html
 html
-head
-  title Berlin Racing Team - Meldung
-  meta charset='utf-8'
-  meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'
-  meta name='viewport' content='width=device-width, initial-scale=1.0'
-  link href="#{{coat('/css/styles.scss')}}" rel='stylesheet'
+  head
+    title Berlin Racing Team - Meldung
+    meta charset='utf-8'
+    meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'
+    meta name='viewport' content='width=device-width, initial-scale=1.0'
+    link href="#{{coat('/css/styles.scss')}}" rel='stylesheet'
 
-body
-  #header.container
-    h1
-      a href='/'
-        span Berlin Racing Team
+  body
+    #header.container
+      h1
+        a href='/'
+          span Berlin Racing Team
 
-    #primary-nav
-      ul
-        li
-          a href='/'
-            span Home
-        /li
-          a href='/team'
-            span Team
-        /li
-          a href='/sponsoren'
-            span Sponsoren
-        li
-          a.active href='/kontakt'
-            span Kontakt
-  hr
-  #content.container
+      #primary-nav
+        ul
+          li
+            a href='/'
+              span Home
+          /li
+            a href='/team'
+              span Team
+          /li
+            a href='/sponsoren'
+              span Sponsoren
+          li
+            a.active href='/kontakt'
+              span Kontakt
+    hr
+    #content.container
 
-    .c1-12
-      - if @news.new?
-        h1.page-title Neue Meldung anlegen
-      - else
-        h1.page-title Meldung bearbeiten
-    
-    .c1-9.entry-content
-      form method="post" action="#{{@news.new? ? '/news/new' : @news.editlink}}"
-        p
-          label for="news_date"
-            small Datum
-          input type="date" id="news_date" name="news[date]" placeholder="#{Date.today}" value=@news.date
-        p
-          label for="news_title"
-            small Titel
-          input.full type="text" id="news_title" name="news[title]" value=@news.title
-        p
-          label for="news_message"
-            small Text
-          textarea id="news_message" name="news[message]" rows=15 =@news.message
-        p
-          button.clean-gray type="submit"
-            span Speichern
-        
-    .c10-12.entry-content
-      h3.widget Tipps
-      ul
-        li Halte dich kurz
-        li Achte die deutsche Sprache
-  hr
+      .c1-12
+        - if @news.new?
+          h1.page-title Neue Meldung anlegen
+        - else
+          h1.page-title Meldung bearbeiten
+      
+      .c1-9.entry-content
+        form method="post" action="#{{@news.new? ? '/news/new' : @news.editlink}}"
+          p
+            label for="news_date"
+              small Datum
+            input type="date" id="news_date" name="news[date]" placeholder="#{Date.today}" value=@news.date
+          p
+            label for="news_title"
+              small Titel
+            input.full type="text" id="news_title" name="news[title]" value=@news.title
+          p
+            label for="news_message"
+              small Text
+            textarea id="news_message" name="news[message]" rows=15 =@news.message
+          p
+            button.clean-gray type="submit"
+              span Speichern
+          
+      .c10-12.entry-content
+        h3.widget Tipps
+        ul
+          li Halte dich kurz
+          li Achte die deutsche Sprache
+    hr
+
+    == footer
+    == partial 'google_analytics'
 
