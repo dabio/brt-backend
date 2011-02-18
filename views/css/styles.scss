@@ -22,6 +22,7 @@ body {
     font: 12px/20px "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     background: #fff;
     color: #444;
+    overflow-y: auto;
 }
 
 a {
@@ -116,12 +117,16 @@ textarea {
 }
 
 #content {
+    margin-bottom: 40px;
 }
 
-.c1-9, .c1-12, .c10-12 {
+.c1-3, .c1-9, .c1-12, .c4-9, .c10-12 {
     display: inline;
     float: left;
     margin-right: 18px;
+}
+.c1-3 {
+    width: 196px;
 }
 .c1-9 {
     width: 616px;
@@ -129,6 +134,9 @@ textarea {
 .c1-12 {
     margin-right: 0;
     width: 826px;
+}
+.c4-9 {
+    width: 402px;
 }
 .c10-12 {
     margin-right: 0;
@@ -238,6 +246,23 @@ small {
 
 
 /* ------------------------------------------------------------------------------ */
+/* 9. Footer Styles                                                               */
+/* ------------------------------------------------------------------------------ */
+#footer {
+    background: #edf2f9;
+    margin-top: 80px;
+    padding: 70px 0 80px 0;
+}
+#footer .team img {
+    background: #fff;
+    border: 1px solid #e5ecf7;
+    float: left;
+    margin: 0 4px 4px 0;
+    padding: 3px;
+
+}
+
+/* ------------------------------------------------------------------------------ */
 /* 10. Page Templates                                                             */
 /* ------------------------------------------------------------------------------ */
 .entry-content {
@@ -261,7 +286,8 @@ h3.widget {
 /* 12. Homepage Element                                                           */
 /* ------------------------------------------------------------------------------ */
 #slider {
-    margin: 40px 0 39px 0;
+    border-bottom: 1px solid #e5ecf7;
+    padding: 40px 0 39px 0;
 }
 #slider .slides_container {
     width: 826px;
@@ -319,7 +345,7 @@ h3.widget {
 }
 
 .home-wrap {
-    border-top: 1px solid #e5ecf7;
+    border-bottom: 1px solid #e5ecf7;
     padding: 40px 0 39px;
 }
 
