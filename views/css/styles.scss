@@ -11,8 +11,8 @@ $cdn: 'http://berlinracingteam.commondatastorage.googleapis.com';
     box-shadow: $h $v $blur $color;
 }
 
-@import 'reset';
 @import 'fonts';
+@import 'reset';
 
 /* ------------------------------------------------------------------------------ */
 /* 1. Document Setup (body, common classes, vertical rhymes, structure, etc)      */
