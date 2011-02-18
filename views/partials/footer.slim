@@ -7,8 +7,15 @@
       h3.widget Team
       - for person in @people
         img src=person.avatar_url width=45 height=45
+    .c10-12.next_events
+      h3.widget N&auml;chste Rennen
+      ul
+      - for event in @events
+        li
+          .date = l event.date, :full
+          .title = event.title
   hr
   .container.copyright
-    p Berlin Racing Team &copy; #{Date.today.year}.<br/>Finde uns auch bei <a href="https://www.facebook.com/pages/Berlin-Racing-Team/123966271010402" title="Zur Facebook Seite vom Berlin Racing Team">Facebook</a>.
+    p Berlin Racing Team &copy; #{Date.today.year}.<br/>Wir sind auch bei <a href="https://www.facebook.com/pages/Berlin-Racing-Team/123966271010402" title="Zur Facebook Seite vom Berlin Racing Team">Facebook</a>.
 
 hr

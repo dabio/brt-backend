@@ -260,6 +260,20 @@ small {
     margin: 0 4px 4px 0;
     padding: 3px;
 }
+#footer .next_events li {
+    list-style: none;
+}
+#footer .next_events .date {
+    display: block;
+    font-family: "Droid Serif", Georgia, Times, serif;
+    font-size: 11px;
+    font-style: italic;
+    color: #999;
+}
+#footer .next_events .title {
+    font-size: 11px;
+    margin-bottom: 10px;
+}
 #footer .container {
     margin-top: 40px;
 }

@@ -32,12 +32,14 @@ module Cuba::Prelude
   end
 
   def footer
-    @people = Person.all :order => [:last_name, :first_name]
+    @people = Person.all(:order => [:last_name, :first_name])
+    @events = Event.all(:date.gte => Date.today, :order => [:date, :updated_at.desc],
+      :limit => 3)
     partial('footer')
   end
 
-  def partial(template)
-    render "views/partials/#{template}.slim"
+  def partial(template, locals = {})
+    render "views/partials/#{template}.slim", locals
   end
 
   # Wraps the common case of throwing a 404 page in a nice little helper.

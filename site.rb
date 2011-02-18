@@ -18,8 +18,7 @@ Cuba.define do
 
   # /index.html
   on path('') do
-    today = Date.today
-    @news = News.all(:date.lte => today, :order => [:date.desc, :updated_at.desc],
+    @news = News.all(:date.lte => Date.today, :order => [:date.desc, :updated_at.desc],
                      :limit => 4)
     res.write render 'views/index.slim'
   end
