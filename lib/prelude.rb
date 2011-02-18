@@ -6,9 +6,21 @@
 #
 
 module Cuba::Prelude
+  # Fixes encoding issue by defaulting to UTF-8
+  def force_encoding(data, encoding = 'UTF-8')
+    if data.respond_to? :force_encoding
+      data.force_encoding encoding
+    elsif data.respond_to? :each_value
+      data.each_value { |v| v.force_encoding(encoding) }
+    elsif data.respond_to? :each
+      data.each { |v| v.force_encoding(encoding) }
+    end
+    data
+  end
+
   # overwrite cuba param method for getting utf-8 compatible paramters
   def param(key, default = nil)
-    lambda { captures << (req[key].force_encoding('UTF-8') || default) }
+    lambda { captures << (force_encoding(req[key]) || default) }
   end
 
   def stylesheet(template)
