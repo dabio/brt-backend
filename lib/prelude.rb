@@ -31,6 +31,13 @@ module Cuba::Prelude
     render("views/#{template}")
   end
 
+  def navigation
+    {
+      '/' => 'Home',
+      '/kontakt' => 'Kontakt'
+    }
+  end
+
   def footer
     @people = Person.all(:order => [:last_name, :first_name])
     @events = Event.all(:date.gte => Date.today, :order => [:date, :updated_at.desc],

@@ -1,33 +1,9 @@
 ! doctype html
 html
-  head
-    title Berlin Racing Team - Kontakt
-    meta charset='utf-8'
-    meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'
-    meta name='viewport' content='width=device-width, initial-scale=1.0'
-    link href="#{{coat('/css/styles.scss')}}" rel='stylesheet'
-
+  == partial 'head', :title => 'Kontakt'
   body
-    #header.container
-      h1
-        a href='/'
-          span Berlin Racing Team
+    == partial 'header', :active => 'Kontakt'
 
-      #primary-nav
-        ul
-          li
-            a href='/'
-              span Home
-          /li
-            a href='/team'
-              span Team
-          /li
-            a href='/sponsoren'
-              span Sponsoren
-          li
-            a.active href='/kontakt'
-              span Kontakt
-    hr
     #content.container
       .c1-12
         h1.page-title Kontakt
@@ -57,7 +33,6 @@ html
       .c10-12.entry-content
         h3.widget Anschrift
         address Berlin Racing Team<br/>Danilo Braband<br/>Simon-Bolivar-Str. 24<br/>13055 Berlin
-      hr
 
     == footer
     == partial 'google_analytics'

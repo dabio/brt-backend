@@ -1,0 +1,14 @@
+#header.container
+  h1
+    a href='/'
+      span Berlin Racing Team
+
+  #primary-nav
+    ul
+      - for url, name in navigation
+        li
+          - if active == name
+            a.active href=url =name
+          - else
+            a href=url =name
+hr

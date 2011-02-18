@@ -1,32 +1,8 @@
 ! doctype html
 html
-  head
-    title Berlin Racing Team
-    meta charset='utf-8'
-    meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'
-    meta name='viewport' content='width=device-width, initial-scale=1.0'
-    link href="#{{coat('/css/styles.scss')}}" rel='stylesheet'
-
+  == partial 'head'
   body
-    #header.container
-      h1
-        a href='/'
-          span Berlin Racing Team
-
-      #primary-nav
-        ul
-          li
-            a.active href='/'
-              span Home
-          /li
-            a href='/team'
-              span Team
-          /li
-            a href='/sponsoren'
-              span Sponsoren
-          li
-            a href='/kontakt'
-              span Kontakt
+    == partial 'header', :active => 'Home'
 
     #content.container
       #slider.c1-12
@@ -59,7 +35,6 @@ html
             h3 = item.title
             p.meta = l item.date, :full
             p = item.message
-    hr
 
     == footer
     == partial 'google_analytics'

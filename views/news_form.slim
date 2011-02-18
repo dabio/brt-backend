@@ -1,33 +1,9 @@
 ! doctype html
 html
-  head
-    title Berlin Racing Team - Meldung
-    meta charset='utf-8'
-    meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'
-    meta name='viewport' content='width=device-width, initial-scale=1.0'
-    link href="#{{coat('/css/styles.scss')}}" rel='stylesheet'
-
+  == partial 'head', :title => 'Meldung'
   body
-    #header.container
-      h1
-        a href='/'
-          span Berlin Racing Team
+    == partial 'header', :active => 'Home'
 
-      #primary-nav
-        ul
-          li
-            a href='/'
-              span Home
-          /li
-            a href='/team'
-              span Team
-          /li
-            a href='/sponsoren'
-              span Sponsoren
-          li
-            a.active href='/kontakt'
-              span Kontakt
-    hr
     #content.container
 
       .c1-12
@@ -59,7 +35,6 @@ html
         ul
           li Halte dich kurz
           li Achte die deutsche Sprache
-    hr
 
     == footer
     == partial 'google_analytics'

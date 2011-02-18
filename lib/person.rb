@@ -34,11 +34,11 @@ class Person
   validates_uniqueness_of :email
 
   def image_url
-    "#{cdn}/people/#{slug}.jpg"
+    "http:#{cdn}/people/#{slug}.jpg"
   end
 
   def avatar_url
-    "#{cdn}/people/#{slug}_avatar.jpg"
+    "http:#{cdn}/people/#{slug}_avatar.jpg"
   end
 
   def name
