@@ -7,7 +7,7 @@
     ul
       - for url, name in navigation
         li
-          - if active == name
+          - if defined? active and active == name
             a.active href=url =name
           - else
             a href=url =name
