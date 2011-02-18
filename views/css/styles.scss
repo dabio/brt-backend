@@ -251,7 +251,7 @@ small {
 #footer {
     background: #edf2f9;
     margin-top: 80px;
-    padding: 70px 0 80px 0;
+    padding: 30px 0 20px 0;
 }
 #footer .team img {
     background: #fff;
@@ -259,7 +259,18 @@ small {
     float: left;
     margin: 0 4px 4px 0;
     padding: 3px;
-
+}
+#footer .container {
+    margin-top: 40px;
+}
+#footer .copyright {
+    border-top: 1px solid #d5e0f2;
+    color: #999;
+    font-size: 11px;
+    padding-top: 35px;
+}
+#footer a {
+    color: #666;
 }
 
 /* ------------------------------------------------------------------------------ */

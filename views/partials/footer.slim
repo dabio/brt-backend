@@ -1,11 +1,14 @@
 #footer
   .container
-    div.c1-3
+    .c1-3
       img style="margin-bottom: 14px" width=27 height=20 src='#{{cdn}}/img/gate_small.png'
-      p Berlin Racing Team, 2008 von ehemaligen Junioren und Freizeitsportlern gegr&uuml;ndet und seither stetig gewachsen.
-    div.c4-9.team
+      p Berlin Racing Team, 2008 von ehemaligen Juniorenfahrern und Freizeitsportlern gegr&uuml;ndet und seither stetig gewachsen.
+    .c4-9.team
       h3.widget Team
       - for person in @people
         img src=person.avatar_url width=45 height=45
+  hr
+  .container.copyright
+    p Berlin Racing Team &copy; #{Date.today.year}.<br/>Finde uns auch bei <a href="https://www.facebook.com/pages/Berlin-Racing-Team/123966271010402" title="Zur Facebook Seite vom Berlin Racing Team">Facebook</a>.
 
 hr
