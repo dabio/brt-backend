@@ -7,8 +7,10 @@ hr
       p Berlin Racing Team, 2008 von ehemaligen Juniorenfahrern und Freizeitsportlern gegr&uuml;ndet. Seither stetig gewachsen.
     .c4-9.team
       h3.widget Team
-      - for person in @people
-        img src="#{{person.avatar_url}}" width=45 height=45
+      ul
+        - for person in @people
+          li
+            img src="#{{person.avatar_url}}" width=45 height=45 alt=person.name
     .c10-12.next_events
       h3.widget N&auml;chste Rennen
       ul
