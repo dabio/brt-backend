@@ -8,7 +8,7 @@
       - for url, name in navigation
         li
           - if defined? active and active == name
-            a.active href=url =name
+            a.active href="#{{url}}" =name
           - else
-            a href=url =name
+            a href="#{{url}}" =name
 hr

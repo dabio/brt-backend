@@ -16,7 +16,7 @@ Cuba.define do
   DataMapper::Logger.new($stdout, :debug) unless production?
   DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
 
-  # /index.html
+  # /
   on path('') do
     @news = News.all(:date.lte => Date.today, :order => [:date.desc, :updated_at.desc],
                      :limit => 4)
@@ -60,6 +60,16 @@ Cuba.define do
         else
           res.write render 'views/news_form.slim'
         end
+      end
+    end
+  end
+
+  # /rennen
+  on path('rennen') do
+    on path('new') do
+      on get do
+        @event = Event.new()
+        res.write render 'views/event_form.slim'
       end
     end
   end
