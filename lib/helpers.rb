@@ -22,11 +22,15 @@ private
   end
 
   def development?
-    !production?
+    !(production? or test?)
   end
 
   def production?
     ENV['RACK_ENV'] == 'production'
+  end
+
+  def test?
+    ENV['RACK_ENV'] == 'test'
   end
 
   def slugify(str)
