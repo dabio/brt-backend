@@ -14,7 +14,10 @@ require 'dm-core'
 require 'dm-timestamps'
 #require 'dm-types'
 require 'dm-validations'
+require 'bcrypt'
 require 'unidecode'
+require 'addressable/uri'
+
 
 Dir.glob('./lib/*.rb') do |lib|
   require lib

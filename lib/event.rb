@@ -11,7 +11,7 @@ class Event
   property :id,         Serial
   property :date,       Date
   property :title,      String
-  #property :url,        URI
+  property :url,        URI
   property :distance,   Integer
   #property :type,       Enum[:race, :training], :default => :race
   timestamps :at
@@ -25,7 +25,7 @@ class Event
   has n, :participations
   has n, :people, :through => :participations
 
-  validates_presence_of :date, :title, :distance, :type
+  validates_presence_of :date, :title, :distance#, :type
 
 #  after :save do |event|
 #    # save link in mixing table
@@ -33,7 +33,7 @@ class Event
 #  end
 
   def permalink
-    "/rennen/#{date.strftime("%Y/%m/%d")}/#{slug}" if type == :race
+    "/rennen/#{date.strftime("%Y/%m/%d")}/#{slug}"
   end
 
   def editlink

@@ -12,7 +12,7 @@ class Person
   property :first_name, String
   property :last_name,  String
   property :email,      String, :length => 255
-  #property :password,   BCryptHash
+  property :password,   BCryptHash
   property :info,       Text
   timestamps :at
   property :slug,       String, :length => 50, :default => lambda { |r, p|

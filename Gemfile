@@ -7,6 +7,7 @@ gem "rack-r18n"
 gem "dm-core"
 gem "dm-timestamps"
 gem "dm-validations"
+gem "bcrypt-ruby"
 gem "unidecode"
 
 group :development do
