@@ -13,7 +13,7 @@ Cuba.define do
   extend R18n::Helpers
   extend Cuba::Prelude
 
-  DataMapper::Logger.new($stdout, :debug) unless production?
+  DataMapper::Logger.new($stdout, :debug) if development?
   DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
 
   # /
@@ -70,6 +70,17 @@ Cuba.define do
       on get do
         @event = Event.new()
         res.write render 'views/event_form.slim'
+      end
+
+      on post, param('event') do |event|
+        @event = Event.new(event)
+        @event.person = Person.first(:id => 1)
+        if @event.save
+          res redirect @event.permalink
+        else
+          puts @event.errors
+          res.write render 'views/event_form.slim'
+        end
       end
     end
   end
