@@ -2,7 +2,7 @@
 html
   == partial 'head', :title => 'Meldung'
   body
-    == partial 'header', :active => 'Home'
+    == partial 'header'
 
     #content.container
 
@@ -16,7 +16,8 @@ html
         form method="post" action="#{{@news.new? ? '/news/new' : @news.editlink}}"
           p
             label for="news_date"
-              small Datum
+              small Datum 
+              small.format YYYY-MM-DD
             input type="date" id="news_date" name="news[date]" placeholder="#{Date.today}" value=@news.date
           p
             label for="news_title"
