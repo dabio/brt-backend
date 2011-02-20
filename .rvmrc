@@ -1,7 +1,7 @@
 
 if [[ -d "${rvm_path:-$HOME/.rvm}/environments" \
-  && -s "${rvm_path:-$HOME/.rvm}/environments/ruby-1.9.2-p136@berlinracingteam.de" ]] ; then
-  \. "${rvm_path:-$HOME/.rvm}/environments/ruby-1.9.2-p136@berlinracingteam.de"
+  && -s "${rvm_path:-$HOME/.rvm}/environments/ruby-1.9.2-p180@berlinracingteam" ]] ; then
+  \. "${rvm_path:-$HOME/.rvm}/environments/ruby-1.9.2-p180@berlinracingteam"
 else
-  rvm --create  "ruby-1.9.2-p136@berlinracingteam.de"
+  rvm --create  "ruby-1.9.2-p180@berlinracingteam"
 fi
