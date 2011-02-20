@@ -39,8 +39,10 @@ html
     == footer
     == partial 'google_analytics'
 
-    script src='#{{cdn}}/js/jquery.min.js'
-    script src='#{{cdn}}/js/jquery.slides.min.js'
-    javascript:
-      $(function(){var a=$("#slider"),b=$(".slides-nav");a.slides({preload:!0,preloadImage:"#{{cdn}}/img/loader.gif",effect:"fade",fadeSpeed:250,play:5e3,crossfade:!0,generatePagination:!1}),a.hover(function(){b.fadeIn("medium")},function(){b.fadeOut("medium")})})
+    / i hate the sliding while developing
+    - if production?
+      script src='#{{cdn}}/js/jquery.min.js'
+      script src='#{{cdn}}/js/jquery.slides.min.js'
+      javascript:
+        $(function(){var a=$("#slider"),b=$(".slides-nav");a.slides({preload:!0,preloadImage:"#{{cdn}}/img/loader.gif",effect:"fade",fadeSpeed:250,play:5e3,crossfade:!0,generatePagination:!1}),a.hover(function(){b.fadeIn("medium")},function(){b.fadeOut("medium")})})
 
