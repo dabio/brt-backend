@@ -9,9 +9,19 @@ class Email
   include DataMapper::Resource
 
   property :id,         Serial
-  property :name,       String, :required => true
-  property :email,      String, :required => true, :format => :email_address
-  property :message,    Text, :required => true
+  property :name, String, :required => true,
+    :messages => {
+      :presence => 'Bitte gib uns einen Namen, damit wir Dich ansprechen können.'
+    }
+  property :email,      String, :required => true, :format => :email_address,
+    :messages => {
+      :presence => 'Wir m&ouml;chten Dir gerne antworten und ben&ouml;tigen daher deine E-Mail.',
+      :format => 'Deine E-Mail scheint nicht korrekt zu sein.'
+    }
+  property :message,    Text, :required => true,
+    :messages => {
+      :presence => 'Du hast Deine Nachricht nicht eingetragen.'
+    }
   property :send_at,    DateTime
   timestamps :at
 end
