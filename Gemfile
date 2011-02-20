@@ -2,7 +2,6 @@ source :rubygems
 gem "cuba"
 gem "slim"
 gem "sass"
-gem "rack-flash"
 gem "rack-no-www"
 gem "rack-r18n"
 gem "dm-core"

@@ -17,6 +17,14 @@ private
     "#{file.gsub(/\.scss$/, '.css')}?#{hash}"
   end
 
+  def has_auth?
+    !current_person.nil?
+  end
+
+  def has_admin?
+    has_auth? && current_person.id == 1
+  end
+
   def root(*args)
     File.join(File.expand_path(File.dirname(__FILE__)), *args)
   end

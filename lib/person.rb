@@ -9,10 +9,11 @@ class Person
   include DataMapper::Resource
 
   property :id,         Serial
-  property :first_name, String
-  property :last_name,  String
-  property :email,      String, :length => 255
-  property :password,   BCryptHash
+  property :first_name, String, :required => true
+  property :last_name,  String, :required => true
+  property :email,      String, :required => true, :format => :email_address,
+    :unique => true
+  property :password,   BCryptHash, :required => true
   property :info,       Text
   timestamps :at
   property :slug,       String, :length => 50, :default => lambda { |r, p|
@@ -30,8 +31,6 @@ class Person
   attr_accessor :password_confirmation
 
   validates_confirmation_of :password, :if => :password_required?
-  validates_presence_of :first_name, :last_name, :email
-  validates_uniqueness_of :email
 
   def image_url
     "http:#{cdn}/people/#{slug}.jpg"
