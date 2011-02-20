@@ -28,7 +28,7 @@ Cuba.define do
     unless current_person
       res.header['WWW-Authenticate'] = %(Basic realm='Berlin Racing Team')
       res.status = 401
-      res.write 'Denke nicht, wir w&uuml;rden dich nicht m&ouml;gen!'
+      res.write 'Wir haben Dich trotzdem gern.'
     else
       res.redirect '/'
     end
