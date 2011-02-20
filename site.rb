@@ -6,6 +6,8 @@
 #
 require './shotgun'
 
+Cuba.use Rack::Session::Cookie
+Cuba.use Rack::Flash
 Cuba.use Rack::NoWWW
 Cuba.use Rack::R18n, :default => 'de'
 
@@ -50,6 +52,7 @@ Cuba.define do
         @email.update(:send_at => Time.now)
         res.redirect '/kontakt'
       else
+        flash[:notice] = 'Danke f&uuml;r deine Nachricht. Wir werden sie zeitnah beantworten.'
         res.write render 'views/kontakt.slim'
       end
     end
