@@ -6,6 +6,22 @@
 #
 
 module Cuba::Prelude
+  def authenticate(email, password)
+    return nil unless person = Person.first(:email => email)
+    person.password == password ? person : nil
+  end
+
+  def current_person
+    unless @current_person
+      @auth ||= Rack::Auth::Basic::Request.new(env)
+      if @auth.provided? and @auth.basic? and @auth.credentials
+        @auth.credentials[0] << '@berlinracingteam.de' unless @auth.credentials[0]['@']
+        @current_person = authenticate(@auth.credentials[0], @auth.credentials[1])
+      end
+    end
+    @current_person
+  end
+
   # Fixes encoding issue by defaulting to UTF-8
   def force_encoding(data, encoding = 'UTF-8')
     if data.respond_to? :force_encoding

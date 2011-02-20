@@ -1,4 +1,5 @@
 $cdn: 'http://berlinracingteam.commondatastorage.googleapis.com';
+$main_blue: #edf2f9;
 
 @mixin border-radius($radius) {
     -moz-border-radius: $radius;
@@ -18,7 +19,7 @@ $cdn: 'http://berlinracingteam.commondatastorage.googleapis.com';
 /* 1. Document Setup (body, common classes, vertical rhymes, structure, etc)      */
 /* ------------------------------------------------------------------------------ */
 body {
-    border-top: 10px solid #edf2f9;
+    border-top: 10px solid $main_blue;
     font: 12px/20px "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     background: #fff;
     color: #444;
@@ -32,6 +33,7 @@ a {
 }
 a:hover {
     color: #f36535;
+    text-decoration: underline;
 }
 a img {
     border: none;
@@ -157,6 +159,20 @@ textarea {
 /* ------------------------------------------------------------------------------ */
 /* 2. Header Styles                                                               */
 /* ------------------------------------------------------------------------------ */
+#current_person {
+    background: $main_blue;
+    color: #999;
+    font-size: 11px;
+    padding-top: 10px;
+}
+#current_person a {
+    color: #666;
+}
+#current_person a:hover {
+    color: #444;
+    text-decoration: underline;
+}
+
 #header {
     border-bottom: 1px solid #e5ecf7;
     padding: 27px 0 30px 0;
@@ -171,6 +187,7 @@ textarea {
 #header h1 span {
     display: none;
 }
+
 
 /* ------------------------------------------------------------------------------ */
 /* 3. Navigation & Menus                                                          */
@@ -252,7 +269,7 @@ small.format {
 /* 5. Footer Styles                                                               */
 /* ------------------------------------------------------------------------------ */
 #footer {
-    background: #edf2f9;
+    background: $main_blue;
     margin-top: 80px;
     padding: 30px 0 20px 0;
 }
@@ -277,14 +294,24 @@ small.format {
 #footer .container {
     margin-top: 40px;
 }
-#footer .copyright {
-    border-top: 1px solid #d5e0f2;
+#footer .copyright, #footer .login {
     color: #999;
+    float: left;
     font-size: 11px;
     padding-top: 35px;
 }
+#footer .login {
+    float: right;
+}
+#footer .border {
+    border-top: 1px solid #d5e0f2;
+}
 #footer a {
     color: #666;
+}
+#footer a:hover {
+    color: #444;
+    text-decoration: underline;
 }
 
 /* ------------------------------------------------------------------------------ */

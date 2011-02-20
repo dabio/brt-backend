@@ -19,7 +19,10 @@ hr
             .date = l event.date, :full
             .title = event.title
   hr
-  .container.copyright
-    p Berlin Racing Team &copy; #{Date.today.year}<br/>Wir sind auch bei <a href="https://www.facebook.com/pages/Berlin-Racing-Team/123966271010402" title="Zur Facebook Seite vom Berlin Racing Team">Facebook</a>.
+  .container.border
+    p.copyright Berlin Racing Team &copy; #{Date.today.year}<br/>Wir sind auch bei <a href="https://www.facebook.com/pages/Berlin-Racing-Team/123966271010402" title="Zur Facebook Seite vom Berlin Racing Team">Facebook</a>.
+    - unless current_person
+      p.login
+        a href="/login" Anmelden
 
 hr

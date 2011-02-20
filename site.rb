@@ -17,10 +17,21 @@ Cuba.define do
   DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
 
   # /
-  on path('') do
+  on path '' do
     @news = News.all(:date.lte => Date.today, :order => [:date.desc, :updated_at.desc],
                      :limit => 4)
     res.write render 'views/index.slim'
+  end
+
+  # /login
+  on path 'login' do
+    unless current_person
+      res.header['WWW-Authenticate'] = %(Basic realm='Berlin Racing Team')
+      res.status = 401
+      res.write 'Denke nicht, wir w&uuml;rden dich nicht m&ouml;gen!'
+    else
+      res.redirect '/'
+    end
   end
 
   # /kontakt
@@ -48,13 +59,17 @@ Cuba.define do
   on path('news') do
     on path('new') do
       on get do
+        break not_found unless current_person
+
         @news = News.new()
         res.write render 'views/news_form.slim'
       end
 
       on post, param('news') do |news|
+        break not_found unless current_person
+
         @news = News.new(news)
-        @news.person = Person.first(:id => 1)
+        @news.person = current_person
         if @news.save
           res.redirect @news.permalink
         else
@@ -62,26 +77,38 @@ Cuba.define do
         end
       end
     end
+
+    on default do
+      not_found
+    end
   end
 
   # /rennen
   on path('rennen') do
     on path('new') do
       on get do
+        break not_found unless current_person
+
         @event = Event.new()
         res.write render 'views/event_form.slim'
       end
 
       on post, param('event') do |event|
+        break not_found unless current_person
+
         @event = Event.new(event)
-        @event.person = Person.first(:id => 1)
+        @event.person = current_person
         if @event.save
-          res redirect @event.permalink
+          res.redirect @event.permalink
         else
           puts @event.errors
           res.write render 'views/event_form.slim'
         end
       end
+    end
+
+    on default do
+      not_found
     end
   end
 
