@@ -119,7 +119,7 @@ Cuba.define do
   end
 
 
-  # /team/fist-last/edit
+  # /team/first-last/edit
   on path('team'), segment, path('edit') do |slug|
     @person = Person.first(:slug => slug)
     break unless @person == current_person or has_admin?
@@ -177,6 +177,7 @@ Cuba.define do
   # /team
   on path('team') do
     break
+    res.write render 'views/people.slim'
   end
 
 
