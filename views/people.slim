@@ -12,6 +12,15 @@ html
       .c1-3.entry-content
         p 2007 aus einer Laune heraus gegr&uuml;ndet. 2008 das erste Mal die Teamwertung in der Ucker-m&auml;rckischen Meisterschaft gewonnen, 2009 und 2010 haben wir den Triumph wiederholen k&ouml;nnen.
 
+      .c4-12.entry-content
+        ul.people
+          - @people.each_with_index do |p, idx|
+            li.hentry class="#{'last' if (idx + 1) % 3 == 0}"
+              a.thumb
+                img src="#{{p.avatar_url}}" alt=p.name width=182 height=182
+              h2
+                a =p.name
+
     == footer
     == partial 'google_analytics'
 

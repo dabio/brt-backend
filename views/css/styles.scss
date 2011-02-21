@@ -122,7 +122,7 @@ textarea {
     margin-bottom: 40px;
 }
 
-.c1-3, .c1-9, .c1-12, .c4-9, .c10-12 {
+.c1-3, .c1-9, .c1-12, .c4-9, .c4-12, .c10-12 {
     display: inline;
     float: left;
     margin-right: 18px;
@@ -139,6 +139,10 @@ textarea {
 }
 .c4-9 {
     width: 402px;
+}
+.c4-12 {
+    margin-right: 0;
+    width: 612px;
 }
 .c10-12 {
     margin-right: 0;
@@ -334,6 +338,42 @@ form .error {
     margin-left: 20px;
 }
 
+.entry-content ul.people {
+    list-style: none;
+}
+
+.entry-content .hentry {
+    float: left;
+    margin: 0 18px 40px 0;
+    width: 192px;
+}
+.entry-content .last {
+    margin-right: 0;
+}
+.hentry h2 a {
+    color: #444;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 21px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+.hentry h2 a:hover {
+    text-decoration: none;
+}
+.hentry a.thumb {
+    display: block;
+    overflow: hidden;
+    padding: 5px
+}
+.hentry a.thumb:hover {
+    background: #f5f5f5;
+}
+.hentry img {
+    float: left;
+    overflow: auto;
+}
+
 
 /* ------------------------------------------------------------------------------ */
 /* 7. Widgets                                                                     */
@@ -347,6 +387,8 @@ h3.widget {
     margin: 0 0 20px 0;
     text-transform: uppercase;
 }
+
+
 /* ------------------------------------------------------------------------------ */
 /* 8. Homepage Element                                                            */
 /* ------------------------------------------------------------------------------ */

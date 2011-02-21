@@ -176,7 +176,7 @@ Cuba.define do
 
   # /team
   on path('team') do
-    break
+    @people = Person.all(:order => [:last_name, :first_name])
     res.write render 'views/people.slim'
   end
 
