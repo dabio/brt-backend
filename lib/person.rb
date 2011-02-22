@@ -40,6 +40,10 @@ class Person
     "http:#{cdn}/people/#{slug}_avatar.jpg"
   end
 
+  def medium_url
+    "http:#{cdn}/people/#{slug}_medium.jpg"
+  end
+
   def name
     "#{first_name} #{last_name}"
   end

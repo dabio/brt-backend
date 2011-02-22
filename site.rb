@@ -4,6 +4,7 @@
 #   it is copyright (c) 2009-2011 danilo braband (danilo @ berlinracingteam,
 #   then a dot and a 'de')
 #
+
 require './shotgun'
 
 Cuba.use Rack::NoWWW
@@ -135,8 +136,10 @@ Cuba.define do
         :info   => p['info']
       }
 
-      @person.password = p['password'] unless p['password'].empty?
-      @person.password_confirmation = p['password_confirmation'] unless p['password'].empty?
+      unless p['password'].empty?
+        @person.password = p['password']
+        @person.password_confirmation = p['password_confirmation']
+      end
 
       if @person.save
         res.redirect @person.permalink

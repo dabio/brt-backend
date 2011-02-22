@@ -50,6 +50,7 @@ module Cuba::Prelude
   def navigation
     {
       '/' => 'Home',
+      '/team' => 'Team',
       '/kontakt' => 'Kontakt'
     }
   end
