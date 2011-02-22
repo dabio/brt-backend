@@ -387,6 +387,20 @@ h3.widget {
     margin: 0 0 20px 0;
     text-transform: uppercase;
 }
+h3.widget a .raquo {
+    color: $main_blue;
+    font-size: 11px;
+}
+h3.widget a:hover .raquo {
+    color: #444;
+}
+#footer h3.widget a {
+    color: #999;
+}
+#footer h3.widget a:hover {
+    color: #444;
+    text-decoration: none;
+}
 
 
 /* ------------------------------------------------------------------------------ */
