@@ -18,7 +18,7 @@ Cuba.define do
   DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
 
   # /
-  on path('') do
+  on get, path('') do
     @news = News.all(:date.lte => Date.today, :order => [:date.desc, :updated_at.desc],
                      :limit => 4)
     res.write render 'views/index.slim'
@@ -26,7 +26,7 @@ Cuba.define do
 
 
   # /login
-  on path('login') do
+  on get, path('login') do
     unless current_person
       res.header['WWW-Authenticate'] = %(Basic realm='Berlin Racing Team')
       res.status = 401
@@ -120,68 +120,73 @@ Cuba.define do
   end
 
 
-  # /team/first-last/edit
-  on path('team'), segment, path('edit') do |slug|
-    @person = Person.first(:slug => slug)
-    break unless @person == current_person or has_admin?
-    # GET
-    on get do
-      res.write render 'views/person_form.slim'
-    end
-
-    # POST
-    on post, param('person') do |p|
-      @person.attributes = {
-        :email  => p['email'],
-        :info   => p['info']
-      }
-
-      unless p['password'].empty?
-        @person.password = p['password']
-        @person.password_confirmation = p['password_confirmation']
-      end
-
-      if @person.save
-        res.redirect @person.permalink
-      else
-        res.write render 'views/person_form.slim'
-      end
-    end
-  end
-
-  # /team/new
-  on path('team'), path('new') do
-    break unless has_admin?
-
-    # GET
-    on get do
-      @person = Person.new
-      res.write render 'views/person_form.slim'
-    end
-
-    # POST
-    on post, param('person') do |p|
-      @person = Person.new(p)
-
-      if @person.save
-        res.redirect @person.permalink
-      else
-        res.write render 'views/person_form.slim'
-      end
-    end
-  end
-
-  # /team/first-last
-  on path('team'), segment do |slug|
-    break unless @person = Person.first(:slug => slug)
-    break
-  end
-
   # /team
   on path('team') do
-    @people = Person.all(:order => [:last_name, :first_name])
-    res.write render 'views/people.slim'
+    # /team
+    on get, path('') do
+      @people = Person.all(:order => [:last_name, :first_name])
+      res.write render 'views/people.slim'
+    end
+
+    # /team/new
+    on path('new') do
+      break unless has_admin?
+      on get, path('') do
+        @person = Person.new
+        res.write render 'views/person_form.slim'
+      end
+
+      on post, path(''), param('person') do |p|
+        @person = Person.new(p)
+
+        if @person.save
+          res.redirect @person.permalink
+        else
+          res.write render 'views/person_form.slim'
+        end
+      end
+    end
+
+    # /team/first-last
+    on segment do |slug|
+      break not_found unless @person = Person.first(:slug => slug)
+
+      # /team/first-last
+      on get, path('') do
+        res.write 'found'
+      end
+
+      # /team/first-last/edit
+      on path('edit') do
+        break not_found unless @person == current_person or has_admin?
+        # /team/first-last/edit
+        on get, path('') do
+          res.write render 'views/person_form.slim'
+        end
+
+        on post, path(''), param('person') do |p|
+          @person.attributes = {
+            :email  => p['email'],
+            :info   => p['info']
+          }
+
+          unless p['password'].empty?
+            @person.password = p['password']
+            @person.password_confirmation = p['password_confirmation']
+          end
+
+          if @person.save
+            res.redirect @person.permalink
+          else
+            res.write render 'views/person_form.slim'
+          end
+        end
+      end
+      # edit
+    end
+    # first-last
   end
+  # end /team
 
 
   # /css/styles.css
