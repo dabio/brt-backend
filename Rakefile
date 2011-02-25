@@ -15,6 +15,16 @@ task :test do
 end
 
 
+namespace "gems" do
+  task :uninstall do
+    system("rvm --force gemset empty")
+  end
+  task :install do
+    system("bundle install --without production")
+  end
+end
+
+
 namespace "db" do
   task :prepare do
     DataMapper::Logger.new($stdout, :debug) unless production?
