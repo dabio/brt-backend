@@ -15,9 +15,12 @@ hr
           li
             img src="#{{person.avatar_url}}" width=45 height=45 alt=person.name
     .c10-12.next_events
-      h3.widget N&auml;chste Rennen
+      h3.widget
+        a href="/rennen"
+          span N&auml;chste Rennen 
+          span.raquo &raquo;
       ul
-        - for event in @events
+        - for event in @events[0,3]
           li
             .date = l event.date, :full
             .title = event.title

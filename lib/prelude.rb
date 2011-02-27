@@ -51,14 +51,15 @@ module Cuba::Prelude
     {
       '/' => 'Home',
       '/team' => 'Team',
+      '/rennen' => 'Rennen',
       '/kontakt' => 'Kontakt'
     }
   end
 
   def footer
     @people ||= Person.all(:order => [:last_name, :first_name])
-    @events = Event.all(:date.gte => Date.today, :order => [:date, :updated_at.desc],
-      :limit => 3)
+    @events ||= Event.all(:date.gte => Date.today,
+                          :order => [:date, :updated_at.desc], :limit => 3)
     partial('footer')
   end
 

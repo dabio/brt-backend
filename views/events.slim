@@ -1,0 +1,31 @@
+! doctype html
+html
+  == partial 'head', :title => 'Rennen'
+  body
+    == partial 'header', :active => 'Rennen'
+
+    #content.container
+
+      .c1-12
+        h1.page-title Geplante Rennteilnahmen
+
+      .c1-9.entry-content
+        p Bei folgenden Rennen werden wir um Spitzenplatzierungen k&auml;mpfen.
+        ul.events
+          - @events.each do |e|
+            li 
+              span.meta= l e.date, :full
+              h3 #{e.title}, #{e.distance} km
+
+      .c10-12.entry-content
+        - if has_admin?
+          .new
+            a.clean-gray href="/rennen/new" Neues Rennen
+        - if @results
+          h3.widget Letzte Ergebnisse
+
+    == footer
+    == partial 'google_analytics'
+
+
+

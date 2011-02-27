@@ -11,7 +11,7 @@ class Event
   property :id,         Serial
   property :date,       Date
   property :title,      String
-  #property :url,        URI
+  property :url,        URI
   property :distance,   Integer
   #property :type,       Enum[:race, :training], :default => :race
   timestamps :at

@@ -16,9 +16,9 @@ GEM
     childprocess (0.1.7)
       ffi (~> 0.6.3)
     configuration (1.2.0)
-    cuba (1.0.0)
+    cuba (2.0.0.rc2)
       rack (~> 1.2)
-      tilt (~> 1.1)
+      tilt (~> 1.2)
     culerity (0.2.15)
     cutest (1.0.1)
     data_objects (0.10.3)
@@ -59,8 +59,6 @@ GEM
     nokogiri (1.4.4)
     r18n-core (0.4.9)
     rack (1.2.1)
-    rack-flash (0.1.1)
-      rack
     rack-no-www (0.0.1)
     rack-r18n (0.1)
       r18n-core
@@ -107,7 +105,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby
   capybara
-  cuba
+  cuba (= 2.0.0.rc2)
   cutest
   dm-core
   dm-postgres-adapter
@@ -115,7 +113,6 @@ DEPENDENCIES
   dm-timestamps
   dm-validations
   heroku
-  rack-flash
   rack-no-www
   rack-r18n
   sass

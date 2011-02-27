@@ -1,5 +1,5 @@
 source :rubygems
-gem "cuba"
+gem "cuba", "2.0.0.rc2"
 gem "slim"
 gem "sass"
 gem "rack-no-www"

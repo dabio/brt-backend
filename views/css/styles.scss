@@ -226,7 +226,7 @@ textarea {
 address {
     font-style: italic;
 }
-button.clean-gray {
+.clean-gray {
     background: #eee;
     background: -moz-linear-gradient(top, #eee 0%, #ccc 100%);
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#ccc));
@@ -244,7 +244,7 @@ button.clean-gray {
     text-shadow: 0 1px 0 #eee;
 }
 
-button.clean-gray:hover {
+.clean-gray:hover {
     background: #ddd;
     background: -moz-linear-gradient(top, #ddd 0%, #bbb 100%);
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ddd), to(#bbb));
@@ -254,12 +254,16 @@ button.clean-gray:hover {
     text-shadow: 0 1px 0 #ddd;
 }
 
-button.clean-gray:active {
+.clean-gray:active {
     border: 1px solid #aaa;
     border-bottom: 1px solid #888;
     -moz-box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
     -webkit-box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
     box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
+}
+a.clean-gray:hover {
+    color: #333;
+    text-decoration: none;
 }
 small {
     font-size: 11px;
@@ -487,11 +491,39 @@ h3.widget a:hover .raquo {
     margin-right: 0;
 }
 .home-wrap .meta {
+    margin-bottom: 10px;
+}
+
+/* ------------------------------------------------------------------------------ */
+/* 9. Event page                                                                  */
+/* ------------------------------------------------------------------------------ */
+ul.events {
+    list-style: none;
+}
+ul.events li {
+    margin-left: 0;
+}
+ul.events h3 {
+    margin-bottom: 20px;
+}
+
+
+.meta {
     font-family: "Droid Serif", Georgia, Times, serif;
     font-size: 11px;
     font-style: italic;
     color: #999;
-    margin-bottom: 10px;
+}
+.meta a {
+    color: #999;
+}
+.meta a:hover {
+    color: #444;
+    text-decoration: none;
+}
+
+.new {
+    margin-bottom: 15px;
 }
 
 .droid-italic {
@@ -499,3 +531,4 @@ h3.widget a:hover .raquo {
     font-style: italic;
     font-size: 11px;
 }
+
