@@ -57,10 +57,10 @@ module Cuba::Prelude
   end
 
   def footer
+    @events = Event.all(:date.gte => Date.today, :order => [:date, :updated_at.desc],
+                        :limit => 3)
     @people ||= Person.all(:order => [:last_name, :first_name])
-    @events ||= Event.all(:date.gte => Date.today,
-                          :order => [:date, :updated_at.desc], :limit => 3)
-    partial('footer')
+    partial 'footer'
   end
 
   def partial(template, locals = {})

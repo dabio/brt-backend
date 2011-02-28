@@ -497,14 +497,15 @@ h3.widget a:hover .raquo {
 /* ------------------------------------------------------------------------------ */
 /* 9. Event page                                                                  */
 /* ------------------------------------------------------------------------------ */
-ul.events {
-    list-style: none;
+.events h3 {
+    font-weight: bold;
+    font-size: 12px;
 }
-ul.events li {
-    margin-left: 0;
+.events .c4-12 {
+    margin-bottom: 40px;
 }
-ul.events h3 {
-    margin-bottom: 20px;
+.events p {
+    margin-bottom: 40px;
 }
 
 

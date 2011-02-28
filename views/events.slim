@@ -7,17 +7,23 @@ html
     #content.container
 
       .c1-12
-        h1.page-title Geplante Rennteilnahmen
+        h1.page-title Rennenkalender
 
-      .c1-9.entry-content
-        p Bei folgenden Rennen werden wir um Spitzenplatzierungen k&auml;mpfen.
-        ul.events
-          - @events.each do |e|
-            li 
-              span.meta= l e.date, :full
-              h3 #{e.title}, #{e.distance} km
+      .c1-12.entry-content.events
+        p Bei folgenden Rennen werden wir in diesem Jahr um Spitzenplatzierungen k&auml;mpfen.
+        - @events.each_with_index do |e, i|
+          - if i == 0 or @events[i-1].date.month < e.date.month
+            - @count = 0
+            | <div class="c1-3"><h3>#{l e.date, :month}</h3></div>
+            | <div class="c4-12">
+          - @count = @count + 1
+          .hentry class="#{'last' if @count % 3 == 0}"
+            .meta = l e.date, :full
+            .title = e.title
+          - if i+1 == @events.length or @events[i+1].date.month > e.date.month
+            | </div>
 
-      .c10-12.entry-content
+      /.c10-12.entry-content
         - if has_admin?
           .new
             a.clean-gray href="/rennen/new" Neues Rennen

@@ -20,7 +20,7 @@ hr
           span N&auml;chste Rennen 
           span.raquo &raquo;
       ul
-        - for event in @events[0,3]
+        - for event in @events
           li
             .date = l event.date, :full
             .title = event.title
