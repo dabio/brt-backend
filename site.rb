@@ -112,10 +112,11 @@ Cuba.define do
   end
 
   on 'rennen' do
-    year = Date.today.year
-    @events = Event.all(:date.gte => "#{year}-01-01", :date.lte => "#{year}-12-31",
+    today = Date.today
+    @events = Event.all(:date.gte => "#{today.year}-01-01",
+                        :date.lte => "#{today.year}-12-31",
                         :order => [:date, :updated_at.desc])
-    res.write render 'views/events.slim'
+    res.write render 'views/events.slim', :today => today
   end
 
 
