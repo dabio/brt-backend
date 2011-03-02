@@ -13,7 +13,7 @@ class Person
   property :last_name,  String, :required => true
   property :email,      String, :required => true, :format => :email_address,
     :unique => true
-  #property :password,   BCryptHash, :required => true
+  property :password,   BCryptHash, :required => true
   property :info,       Text
   timestamps :at
   property :slug,       String, :length => 50, :default => lambda { |r, p|
