@@ -18,8 +18,12 @@ html
             | <div class="c4-12">
           - @count = @count + 1
           .hentry class="#{'last' if @count % 3 == 0}"
-            .meta = l e.date, :full
-            .title = e.title
+            h3 = e.title
+            .meta
+              span.date = l e.date, :full
+              - if e.url
+                span.registration  &middot <a href="#{{e.url}}">Ausschreibung</a>
+              
           - if i+1 == @events.length or @events[i+1].date.month > e.date.month
             | </div>
 
