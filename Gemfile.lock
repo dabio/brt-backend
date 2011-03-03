@@ -16,7 +16,7 @@ GEM
     childprocess (0.1.7)
       ffi (~> 0.6.3)
     configuration (1.2.0)
-    cuba (2.0.0.rc2)
+    cuba (2.0.0.rc3)
       rack (~> 1.2)
       tilt (~> 1.2)
     culerity (0.2.15)
@@ -105,7 +105,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby
   capybara
-  cuba (= 2.0.0.rc2)
+  cuba (= 2.0.0.rc3)
   cutest
   dm-core
   dm-postgres-adapter
