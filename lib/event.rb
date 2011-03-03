@@ -4,6 +4,8 @@
 #   it is copyright (c) 2009-2011 danilo braband (danilo @ berlinracingteam,
 #   then a dot and a 'de')
 #
+require './lib/dm'
+
 
 class Event
   include DataMapper::Resource
