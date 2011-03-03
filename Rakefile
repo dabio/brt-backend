@@ -42,5 +42,10 @@ namespace "db" do
     require 'dm-migrations'
     DataMapper.auto_upgrade!
   end
+
+  desc 'Pull Database from heroku'
+  task :pull do
+    system "heroku db:pull sqlite://db/local.db"
+  end
 end
 
