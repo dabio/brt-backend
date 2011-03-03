@@ -16,14 +16,16 @@ html
             - @count = 0
             | <div class="c1-3"><h3>#{l e.date, :month}</h3></div>
             | <div class="c4-12">
-          - @count = @count + 1
+          - @count += 1
           .hentry class="#{'last' if @count % 3 == 0}"
             h3 = e.title
             .meta
               span.date = l e.date, :full
-              - if e.url and e.date >= today
-                span.registration  &middot <a href="#{{e.url}}">Ausschreibung</a>
-              
+              - if e.date >= today
+                - if e.url
+                  span.registration  &middot; <a href="#{{e.url}}">Ausschreibung</a>
+                - if has_auth?
+                  span.registered  &middot; Ich bin dabei
           - if i+1 == @events.length or @events[i+1].date.month > e.date.month
             | </div>
 
