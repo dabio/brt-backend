@@ -10,13 +10,15 @@ require './shotgun'
 Cuba.use Rack::NoWWW
 Cuba.use Rack::R18n, :default => 'de'
 
-Cuba.define do
-  extend R18n::Helpers
-  extend Cuba::Prelude
+class Cuba::Ron
+  include R18n::Helpers
+  include Cuba::Prelude
 
   DataMapper::Logger.new($stdout, :debug) if development?
   DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
+end
 
+Cuba.define do
   # /
   on '' do
     @news = News.all(:date.lte => Date.today, :order => [:date.desc, :updated_at.desc],
