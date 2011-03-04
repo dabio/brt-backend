@@ -11,7 +11,7 @@ class Email
   property :id,         Serial
   property :name, String, :required => true,
     :messages => {
-      :presence => 'Bitte gib uns einen Namen, damit wir Dich ansprechen können.'
+      :presence => 'Bitte gib Deinen Namen an, damit wir Dich ansprechen können.'
     }
   property :email,      String, :required => true, :format => :email_address,
     :messages => {

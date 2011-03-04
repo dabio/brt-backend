@@ -11,6 +11,7 @@ task :default => :test
 task :test do
   require 'cutest'
 
+  ENV['RACK_ENV'] = "test"
   Cutest.run(Dir['test/*.rb'])
 end
 
