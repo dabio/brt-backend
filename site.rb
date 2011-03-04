@@ -7,7 +7,7 @@
 
 require './shotgun'
 
-Cuba.use Rack::NoWWW
+Cuba.use Rack::ForceDomain, ENV["DOMAIN"]
 Cuba.use Rack::R18n, :default => 'de'
 
 class Cuba::Ron

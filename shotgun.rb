@@ -8,7 +8,7 @@
 require 'cuba'
 require 'slim'
 require 'sass'
-require 'rack/no-www'
+require 'rack-force_domain'
 require 'rack-r18n'
 require 'dm-core'
 require 'dm-timestamps'

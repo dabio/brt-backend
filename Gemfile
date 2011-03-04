@@ -3,7 +3,7 @@ source :rubygems
 gem "cuba", "2.0.0.rc3"
 gem "slim"
 gem "sass"
-gem "rack-no-www"
+gem "rack-force_domain"
 gem "rack-r18n"
 gem "dm-core"
 gem "dm-timestamps"
