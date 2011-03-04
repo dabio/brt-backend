@@ -1,5 +1,6 @@
 $cdn: '//berlinracingteam.commondatastorage.googleapis.com';
 $main_blue: #edf2f9;
+$hover_color: #f36535;
 
 @mixin border-radius($radius) {
     -moz-border-radius: $radius;
@@ -32,7 +33,7 @@ a {
     text-decoration: none;
 }
 a:hover {
-    color: #f36535;
+    color: $hover_color;
     text-decoration: underline;
 }
 a img {
@@ -501,6 +502,13 @@ h3.widget a:hover .raquo {
     font-weight: bold;
     font-size: 12px;
     margin-bottom: 10px;
+}
+.events h3 a {
+    color: #444;
+}
+.events h3 a:hover {
+    color: $hover_color;
+    text-decoration: none;
 }
 .events .c1-3,
 .events .c4-12 {

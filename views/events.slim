@@ -18,7 +18,7 @@ html
             | <div class="c4-12">
           - @count += 1
           .hentry class="#{'last' if @count % 3 == 0}"
-            h3 = e.title
+            h3= e.title
             .meta
               span.date = l e.date, :full
               - if e.date >= today

@@ -113,6 +113,38 @@ Cuba.define do
 
   end
 
+  on 'rennen/:y/:m/:d/:slug' do |y, m, d, slug|
+    @event = Event.first(:date => Date.new(y.to_i, m.to_i, d.to_i), :slug => slug)
+    break not_found unless @event
+
+    on '' do
+      res.write render 'views/event.slim'
+    end
+
+    on 'edit' do
+      break not_found unless has_admin?
+
+      on get do
+        res.write render 'views/event_form.slim'
+      end
+
+      on post, param('event') do |e|
+        @event.attributes = {
+          :date => e['date'],
+          :title => e['title'],
+          :url => e['url'],
+          :distance => e['distance']
+        }
+
+        if @event.save
+          res.redirect @event.permalink
+        else
+          res.write render 'views/event_form.slim'
+        end
+      end
+    end
+  end
+
   on 'rennen' do
     today = Date.today
     @events = Event.all(:date.gte => "#{today.year}-01-01",
