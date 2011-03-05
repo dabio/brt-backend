@@ -12,7 +12,7 @@ task :test do
   require 'cutest'
 
   ENV['RACK_ENV'] = "test"
-  Cutest.run(Dir['test/*.rb'])
+  Cutest.run(Dir['test/test_*.rb'])
 end
 
 
