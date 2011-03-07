@@ -117,8 +117,18 @@ Cuba.define do
     @event = Event.first(:date => Date.new(y.to_i, m.to_i, d.to_i), :slug => slug)
     break not_found unless @event
 
-    on '' do
+    on get do
       res.write render 'views/event.slim'
+    end
+
+    on post do
+      break not_found unless has_auth?
+      Participation.create(:person => current_person, :event => @event)
+    end
+
+    on delete do
+      break not_found unless has_auth?
+      Participation.all(:person => current_person, :event => @event).destroy!
     end
 
     on 'edit' do

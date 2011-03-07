@@ -352,6 +352,15 @@ form .error {
     margin: 0 18px 40px 0;
     width: 192px;
 }
+
+h2.entry-title {
+    font: 24px/36px "Droid Serif", Georgia, Times, serif;
+    font-style: italic;
+    color: #444;
+    padding-left: 214px;
+    margin-bottom: 14px;
+}
+
 .entry-content .last {
     margin-right: 0;
 }
@@ -398,6 +407,12 @@ h3.widget a .raquo {
 }
 h3.widget a:hover .raquo {
     color: #444;
+}
+label.widget {
+    display: inline;
+}
+input.widget {
+    width: auto;
 }
 #footer h3.widget a {
     color: #999;
@@ -527,6 +542,12 @@ h3.widget a:hover .raquo {
 .meta a:hover {
     color: #444;
     text-decoration: none;
+}
+.meta strong {
+    color: #444;
+}
+.meta .info {
+    text-align: right;
 }
 
 .new {

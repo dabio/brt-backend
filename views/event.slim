@@ -1,0 +1,46 @@
+! doctype html
+html
+  == partial 'head', :title => @event.title
+  body
+    == partial "header", :active => "Rennen"
+
+    #content.container
+
+      .c1-12
+        h1.page-title Rennkalender
+      
+      .c1-12.entry-content
+        h2.entry-title =@event.title
+
+      .c1-3.meta
+        .info
+          | Am <strong>#{l @event.date, :full}</strong><br/>
+          | und <strong>#{@event.distance} km</strong> Distanz<br/>
+          /- if Date.today <= @event.date
+            | Zur <strong>Ausschreibung</strong>
+
+      .c4-9
+        p testitest
+
+      .c10-12
+        h3.widget Anmeldung
+        p
+          - if @event.participations.first(:person => current_person)
+            input.widget type="checkbox" id="participate" value=@event.id checked="checked"
+          - else
+            input.widget type="checkbox" id="participate" value=@event.id
+          label.widget for="participate" Ich bin beim Rennen dabei
+
+    == footer
+    == partial 'google_analytics'
+    script src='#{{cdn}}/js/jquery.min.js'
+    javascript:
+      $('#participate').change(function(){
+        $.ajax({
+            url: '#{{@event.permalink}}',
+            type: $(this).attr('checked') ? 'POST' : 'DELETE',
+        })
+      })
+
+
+
