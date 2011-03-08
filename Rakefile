@@ -18,10 +18,10 @@ end
 
 namespace "gems" do
   task :uninstall do
-    system("rvm --force gemset empty")
+    system "rvm", "--force", "gemset", "empty"
   end
   task :install do
-    system("bundle install --without production")
+    system "bundle", "install", "--without", "production"
   end
 end
 
@@ -44,9 +44,14 @@ namespace "db" do
     DataMapper.auto_upgrade!
   end
 
-  desc 'Pull Database from heroku'
+  desc 'Pull database from heroku'
   task :pull do
-    system "heroku db:pull sqlite://db/local.db"
+    system "heroku", "db:pull", "sqlite://db/local.db"
+  end
+
+  desc 'Push database to heroku'
+  task :push do
+    system "heroku", "db:push", "sqlite://db/local.db"
   end
 end
 
