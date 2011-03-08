@@ -117,18 +117,8 @@ Cuba.define do
     @event = Event.first(:date => Date.new(y.to_i, m.to_i, d.to_i), :slug => slug)
     break not_found unless @event
 
-    on get do
+    on '' do
       res.write render 'views/event.slim'
-    end
-
-    on post do
-      break not_found unless has_auth?
-      Participation.create(:person => current_person, :event => @event)
-    end
-
-    on delete do
-      break not_found unless has_auth?
-      Participation.all(:person => current_person, :event => @event).destroy!
     end
 
     on 'edit' do
@@ -161,6 +151,21 @@ Cuba.define do
                         :date.lte => "#{today.year}-12-31",
                         :order => [:date, :updated_at.desc])
     res.write render 'views/events.slim', :today => today
+  end
+
+
+  on 'teilnahme', param('event_id') do |event_id|
+    @event = Event.first :id => event_id
+    break not_found unless has_auth? and @event
+
+    on post do
+      Participation.create :person => current_person, :event => @event
+    end
+
+    on delete do
+      Participation.all(:person => current_person, :event => @event).destroy!
+    end
+
   end
 
 

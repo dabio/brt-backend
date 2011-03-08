@@ -15,8 +15,8 @@ html
       .c1-3.meta
         .info
           | Am <strong>#{l @event.date, :full}</strong><br/>
-          | und <strong>#{@event.distance} km</strong> Distanz<br/>
-          /- if Date.today <= @event.date
+          | mit <strong>#{@event.distance} km</strong> Distanz<br/>
+          - if Date.today <= @event.date
             | Zur <strong>Ausschreibung</strong>
 
       .c4-9
@@ -36,9 +36,10 @@ html
     script src='#{{cdn}}/js/jquery.min.js'
     javascript:
       $('#participate').change(function(){
+        var ob = $(this);
         $.ajax({
-            url: '#{{@event.permalink}}',
-            type: $(this).attr('checked') ? 'POST' : 'DELETE',
+            url: '/teilnahme/?event_id='+ob.val(),
+            type: ob.attr('checked') ? 'POST' : 'DELETE',
         })
       })
 
