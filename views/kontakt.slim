@@ -14,12 +14,7 @@ html
 
         form method="post" action="/kontakt"
 
-          - if @email.errors.length > 0
-            .error
-              h4 Korrigiere bitte folgende Angabe#{'n' if @email.errors.length > 1}:
-              ul.errors
-                - @email.errors.each do |error|
-                  li ==error[0]
+          == partial 'errors', :items => @email
 
           p
             label for="contact_name"

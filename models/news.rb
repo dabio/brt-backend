@@ -10,10 +10,10 @@ class News
 
   property :id,         Serial
   property :date,       Date
-  property :title,      String
+  property :title,      String, :length => 250
   property :message,    Text, :lazy => false
   timestamps :at
-  property :slug,       String, :length => 50, :default => lambda { |r, p|
+  property :slug,       String, :length => 2000, :default => lambda { |r, p|
     slugify(r.title)
   }
   #is :slug, :source => :title

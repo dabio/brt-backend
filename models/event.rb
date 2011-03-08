@@ -4,7 +4,7 @@
 #   it is copyright (c) 2009-2011 danilo braband (danilo @ berlinracingteam,
 #   then a dot and a 'de')
 #
-require './lib/models/dm'
+require './models/dm'
 
 
 class Event
@@ -12,12 +12,12 @@ class Event
 
   property :id,         Serial
   property :date,       Date
-  property :title,      String
+  property :title,      String, :length => 250
   property :url,        URI
   property :distance,   Integer
   #property :type,       Enum[:race, :training], :default => :race
   timestamps :at
-  property :slug,       String, :length => 50, :default => lambda { |r, p|
+  property :slug,       String, :length => 2000, :default => lambda { |r, p|
     slugify(r.title)
   }
  

@@ -12,29 +12,31 @@ Cuba.use Rack::R18n, :default => 'de'
 
 class Cuba::Ron
   include R18n::Helpers
-  include Cuba::Prelude
 
   DataMapper::Logger.new($stdout, :debug) if development?
   DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
 end
 
 Cuba.define do
+  extend Cuba::Prelude
+
   # /
   on '' do
-    @news = News.all(:date.lte => Date.today, :order => [:date.desc, :updated_at.desc],
-                     :limit => 4)
+    @news = News.all(:date.lte => Date.today,
+                     :order => [:date.desc, :updated_at.desc], :limit => 4)
     res.write render 'views/index.slim'
   end
 
 
   # /login
-  on 'login' do
+  on 'login', param('next') do |n|
     unless current_person
       res.header['WWW-Authenticate'] = %(Basic realm='Berlin Racing Team')
       res.status = 401
       res.write 'Wir haben Dich trotzdem gern.'
     else
-      res.redirect '/'
+      n = '/' unless n
+      res.redirect n
     end
   end
 
@@ -159,13 +161,12 @@ Cuba.define do
     break not_found unless has_auth? and @event
 
     on post do
-      Participation.create :person => current_person, :event => @event
+      Participation.create(:person => current_person, :event => @event)
     end
 
     on delete do
       Participation.all(:person => current_person, :event => @event).destroy!
     end
-
   end
 
 
