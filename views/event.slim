@@ -16,8 +16,8 @@ html
         .info
           | Am <strong>#{l @event.date, :full}</strong><br/>
           | mit <strong>#{@event.distance} km</strong> Distanz<br/>
-          - if today <= @event.date
-            | Zur <strong>Ausschreibung</strong>
+          - if today <= @event.date and @event.url
+              | Zur <a href="#{{@event.url}}"><strong>Ausschreibung</strong></a>
 
       .c4-12
         table
