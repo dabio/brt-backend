@@ -22,7 +22,7 @@ Cuba.define do
 
   # /
   on '' do
-    @news = News.all(:date.lte => Date.today,
+    @news = News.all(:date.lte => today,
                      :order => [:date.desc, :updated_at.desc], :limit => 4)
     res.write render 'views/index.slim'
   end
@@ -120,8 +120,7 @@ Cuba.define do
     break not_found unless @event
 
     on '' do
-      today = Date.today
-      res.write render 'views/event.slim', {:today => today}
+      res.write render 'views/event.slim'
     end
 
     on 'edit' do
@@ -149,11 +148,10 @@ Cuba.define do
   end
 
   on 'rennen' do
-    today = Date.today
     @events = Event.all(:date.gte => "#{today.year}-01-01",
                         :date.lte => "#{today.year}-12-31",
                         :order => [:date, :updated_at.desc])
-    res.write render 'views/events.slim', :today => today
+    res.write render 'views/events.slim'
   end
 
 

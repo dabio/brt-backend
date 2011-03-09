@@ -11,6 +11,7 @@ module Cuba::Prelude
     person.password == password ? person : nil
   end
 
+
   def current_person
     unless @current_person
       @auth ||= Rack::Auth::Basic::Request.new(env)
@@ -21,6 +22,7 @@ module Cuba::Prelude
     end
     @current_person
   end
+
 
   # Fixes encoding issue by defaulting to UTF-8
   def force_encoding(data, encoding = 'UTF-8')
@@ -34,10 +36,18 @@ module Cuba::Prelude
     data
   end
 
+
+  def today
+    @today unless @today = Date.today
+    @today
+  end
+
+
   # overwrite cuba param method for getting utf-8 compatible paramters
   def param(key, default = nil)
     lambda { captures << (force_encoding(req[key]) || default) }
   end
+
 
   def stylesheet(template)
     if req.query_string =~ /^\w{5}$/
@@ -46,6 +56,7 @@ module Cuba::Prelude
     res.headers['Content-Type'] = 'text/css; charset=utf-8'
     render("views/#{template}")
   end
+
 
   def navigation
     {
@@ -56,12 +67,14 @@ module Cuba::Prelude
     }
   end
 
+
   def footer
     @events = Event.all(:date.gte => Date.today, :order => [:date, :updated_at.desc],
                         :limit => 3)
     @people ||= Person.all(:order => [:last_name, :first_name])
     partial 'footer'
   end
+
 
   def partial(template, locals = {})
     render "views/partials/#{template}.slim", locals
@@ -80,6 +93,7 @@ module Cuba::Prelude
     res.status = 404
     res.write render 'views/404.slim'
   end
+
 
   def send_email(to, opts={})
     require 'net/smtp'
