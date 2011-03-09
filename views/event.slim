@@ -16,13 +16,20 @@ html
         .info
           | Am <strong>#{l @event.date, :full}</strong><br/>
           | mit <strong>#{@event.distance} km</strong> Distanz<br/>
-          - if Date.today <= @event.date
+          - if today <= @event.date
             | Zur <strong>Ausschreibung</strong>
 
-      .c4-9
-        p testitest
+      .c4-12
+        table
+          thead
+            tr
+              th Teilnehmer
+          tbody
+            - @event.participations.each do |p|
+              tr
+                td =p.person
 
-      .c10-12
+      /.c10-12
         h3.widget Anmeldung
         p
           - if @event.participations.first(:person => current_person)
