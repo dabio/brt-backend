@@ -5,10 +5,10 @@
 #   then a dot and a 'de')
 #
 
-require './shotgun'
 
 task :default => :test
 task :test do
+  require './shotgun'
   require 'cutest'
 
   ENV['RACK_ENV'] = "test"
@@ -28,6 +28,7 @@ end
 
 namespace "db" do
   task :prepare do
+    require './shotgun'
     DataMapper::Logger.new($stdout, :debug) unless production?
     DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
   end
