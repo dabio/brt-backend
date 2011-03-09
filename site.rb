@@ -120,7 +120,8 @@ Cuba.define do
     break not_found unless @event
 
     on '' do
-      res.write render 'views/event.slim'
+      today = Date.today
+      res.write render 'views/event.slim', {:today => today}
     end
 
     on 'edit' do
