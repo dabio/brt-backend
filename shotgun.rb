@@ -17,11 +17,15 @@ require 'bcrypt'
 require 'unidecode'
 require 'addressable/uri'
 
-Dir.glob './lib/*.rb' do |lib|
+Dir.glob './libs/*.rb' do |lib|
   require lib
 end
 
 Dir.glob './models/*.rb' do |model|
   require model
 end
+
+#Dir.glob './apps/*.rb' do |app|
+#  require app
+#end
 

@@ -4,7 +4,7 @@
 #   it is copyright (c) 2009-2011 danilo braband (danilo @ berlinracingteam,
 #   then a dot and a 'de')
 #
-require './lib/dm'
+require './libs/dm'
 
 
 class Person
