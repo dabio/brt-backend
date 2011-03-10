@@ -277,9 +277,22 @@ form .error {
     color: red;
 }
 
+table {
+    width: 100%;
+}
 table th {
     font-weight: bold;
     text-align: left;
+}
+table th .participate {
+    font-weight: normal;
+    margin-left: 80px;
+}
+table th .participate input {
+    width: auto;
+}
+table td.even {
+    background: #fcfcfc;
 }
 
 

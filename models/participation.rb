@@ -8,6 +8,8 @@
 class Participation
   include DataMapper::Resource
 
+  property :person_id,  Integer, :key => true
+  property :event_id,   Integer, :key => true
   property :position_overall,   Integer
   property :position_age_class, Integer
   timestamps :at
