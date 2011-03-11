@@ -1,0 +1,12 @@
+table
+  thead
+    tr
+      th colspan="3" Teilnehmer
+  tbody
+    - participations.each_with_index do |p, i|
+      tr
+        td class="#{'even' if i % 2 == 1}" =p.person.name
+        td class="#{'even' if i % 2 == 1}" =p.position_overall
+        td class="#{'even' if i % 2 == 1}" =p.position_age_class
+
+

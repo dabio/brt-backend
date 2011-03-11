@@ -64,6 +64,7 @@ module Cuba::Prelude
       '/' => 'Home',
       '/team' => 'Team',
       '/rennen' => 'Rennen',
+      '/diskussionen' => 'Diskussionen',
       '/kontakt' => 'Kontakt'
     }
   end

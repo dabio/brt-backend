@@ -1,0 +1,40 @@
+! doctype html
+html
+  == partial 'head', :title => 'Diskussionen'
+  body
+    == partial 'header', :active => "Diskussionen"
+
+    #content.container
+
+      .c1-12
+        - if @debate.new?
+          h1.page-title Neues Thema er&ouml;ffnen
+        - else
+          h1.page-title Thema bearbeiten
+      
+      .c1-9.entry-content
+        form method="post" action="#{{@debate.new? ? '/diskussionen/new' : @debate.editlink}}"
+
+          == partial 'errors', :items => @debate
+
+          p
+            label for="debate_title"
+              small Titel
+            input type="text" id="debate_title" name="debate[title]" value=@debate.title
+
+          == partial 'errors', :items => @comment
+
+          p
+            label for="comment_text"
+              small Text
+            textarea id="comment_text" name="comment[text]" rows=15 =@comment.text
+          p
+            button.clean-gray type="submit"
+              span Erstellen
+          
+
+    == footer
+    == partial 'google_analytics'
+
+
+

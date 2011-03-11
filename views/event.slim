@@ -20,17 +20,7 @@ html
               | Zur <a href="#{{@event.url}}"><strong>Ausschreibung</strong></a>
 
       .c4-9
-        table
-          thead
-            tr
-              th colspan="3" Teilnehmer
-          tbody
-            - @event.participations.each_with_index do |p, i|
-              tr
-                td class="#{'even' if i % 2 == 1}" =p.person.name
-                td class="#{'even' if i % 2 == 1}" =p.position_overall
-                td class="#{'even' if i % 2 == 1}" =p.position_age_class
-
+        == partial 'teilnehmer', :participations => @event.participations
 
       .c10-12
         - if has_auth? and today <= @event.date

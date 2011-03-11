@@ -5,7 +5,7 @@
 #   then a dot and a 'de')
 #
 
-class Thread
+class Debate
   include DataMapper::Resource
 
   property :id,     Serial
@@ -15,10 +15,14 @@ class Thread
   belongs_to :person
   has n, :comments
 
-  validates_presence_of :title, :text
+  validates_presence_of :title
+
+  def editlink
+    "#{permalink}/edit"
+  end
 
   def permalink
-    "/diskussion/#{id}"
+    "/diskussionen/#{id}"
   end
 end
 

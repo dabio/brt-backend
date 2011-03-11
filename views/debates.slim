@@ -1,0 +1,36 @@
+! doctype html
+html
+  == partial 'head', :title => 'Diskussionen'
+  body
+    == partial 'header', :active => 'Diskussionen'
+
+    #content.container
+
+      .c1-12
+        h1.page-title Diskussionen
+
+      .c1-9.entry-content.events
+        p Nutze diese Diskussionsplattform, falls du anderen Fahrern etwas mitteilen m&ouml;chtest.
+
+        ul.debates
+          - @debates.each_with_index do |d, i|
+            li
+              h3
+                a href=d.permalink =d.title
+              .meta
+                span Erstellt von <strong>#{d.person.name}</strong> am <strong>#{l d.created_at, :full}</strong>. 
+                - if d.comments.count > 1
+                  span Hat jetzt <strong>#{d.comments.count-1}</strong> Antworten.
+                - else
+                  span Bisher noch <strong>ohne</strong> Antworten.
+
+      .c10-12.entry-content
+        .new
+          a.clean-gray href="/diskussionen/new" Neues Thema
+
+    == footer
+    == partial 'google_analytics'
+
+
+
+

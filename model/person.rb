@@ -25,7 +25,7 @@ class Person
   #has 1, :visit
   has n, :news
   has n, :reports
-  has n, :threads
+  has n, :comments
   has n, :comments
   has n, :participations
   has n, :events, :through => :participations

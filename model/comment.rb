@@ -13,7 +13,7 @@ class Comment
   timestamps :at
 
   belongs_to :person
-  belongs_to :thread, :required => false
+  belongs_to :debate, :required => false
   belongs_to :news,   :required => false
   belongs_to :event,  :required => false
   
@@ -21,7 +21,7 @@ class Comment
   validates_presence_of :text
 
   def permalink
-    "/diskussion/#{thread.id}/##{id}"
+    "/diskussion/#{debate.id}/##{id}"
   end
 end
 

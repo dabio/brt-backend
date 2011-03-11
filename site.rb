@@ -169,6 +169,58 @@ Cuba.define do
   end
 
 
+  on 'diskussionen/new' do
+    break unless has_auth?
+
+    on get do
+      @debate = Debate.new
+      @comment = Comment.new
+      res.write render 'views/debate_form.slim'
+    end
+
+    on post, param('debate'), param('comment') do |d, c|
+      @debate = Debate.new(d)
+      @debate.person = current_person
+
+      @comment = Comment.new(c)
+      @comment.person = current_person
+
+      if @debate.save
+        @comment.debate = @debate
+
+        if @comment.save
+          res.redirect @debate.permalink
+        else
+          @debate.destroy
+          res.write render 'views/debate_form.slim'
+        end
+      else
+        res.write render 'views/debate_form.slim'
+      end
+    end
+  end
+
+
+  on 'diskussionen/:id' do |id|
+    @debate = Debate.first(:id => id)
+    break not_found unless @has_auth or @debate
+
+    on '' do
+    end
+
+    on 'edit' do
+    end
+
+  end
+
+
+  on 'diskussionen' do
+    break unless has_auth?
+    @debates = Debate.all(:order => [:updated_at.desc])
+    res.write render 'views/debates.slim'
+  end
+
+
   on 'team/new' do
     break unless has_admin?
 
