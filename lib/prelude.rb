@@ -17,7 +17,8 @@ module Cuba::Prelude
       @auth ||= Rack::Auth::Basic::Request.new(env)
       if @auth.provided? and @auth.basic? and @auth.credentials
         @auth.credentials[0] << '@berlinracingteam.de' unless @auth.credentials[0]['@']
-        @current_person = authenticate(@auth.credentials[0], @auth.credentials[1])
+        @current_person = authenticate(@auth.credentials[0].strip.downcase,
+                                       @auth.credentials[1])
       end
     end
     @current_person

@@ -7,8 +7,8 @@
 
 module DataMapper
   class Property
-    autoload :BCryptHash,   './libs/dm/bcrypt_hash'
-    autoload :URI,          './libs/dm/uri'
+    autoload :BCryptHash,   './lib/dm/bcrypt_hash'
+    autoload :URI,          './lib/dm/uri'
   end
 end
 

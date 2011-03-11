@@ -33,7 +33,7 @@ html
 
 
       .c10-12
-        - if has_auth? and today >= @event.date
+        - if has_auth? and today <= @event.date
           h3.widget Anmeldung
           p
             - if @event.participations.first(:person => current_person)
