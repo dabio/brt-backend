@@ -41,6 +41,17 @@ private
     ENV['RACK_ENV'] == 'test'
   end
 
+  def simple_format(str)
+    str = '' if str.nil?
+    start_tag = "<p>"
+    end_tag = "</p>"
+    str.gsub! /\r\n?/, "\n"
+    str.gsub! /\n\n+/, "#{end_tag}\n\n#{start_tag}"
+    str.gsub! /([^\n]\n)(?=[^\n])/, "\1<br />"
+    str.insert 0, start_tag
+    str.concat end_tag
+  end
+
   def slugify(str)
     s = str.to_ascii
     s.gsub!(/\W+/, ' ')
