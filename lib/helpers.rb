@@ -7,6 +7,30 @@
 
 module Kernel
 private
+  # Taken from rails
+  AUTO_LINK_RE = %r{(?:([\w+.:-]+:)//|www\.)[^\s<]+}x
+  BRACKETS = {']' => '[', ')' => '(', '}' => '{'}
+  def auto_link(text, limit=nil)
+    trim = lambda {|s, l| l != nil and (s.length > limit and "#{s[0,l-1]}…") or s}
+    text.gsub(AUTO_LINK_RE) do
+      scheme, href = $1, $&
+      punctuation = []
+      # don't include trailing punctiation character as part of the URL
+      while href.sub!(/[^\w\/-]$/, '')
+        punctuation.push $&
+        if opening = BRACKETS[punctuation.last] and href.scan(opening).size > href.scan(punctuation.last).size
+          href << punctuation.pop
+          break
+        end
+      end
+
+      link_text = block_given? ? yield(href) : href
+      href = 'http://' + href unless scheme
+
+      "<a href=\"#{href}\">#{trim[link_text, limit]}</a>" + punctuation.reverse.join('')
+    end
+  end
+
   def cdn
     '//berlinracingteam.commondatastorage.googleapis.com'
   end

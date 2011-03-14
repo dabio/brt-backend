@@ -1,0 +1,37 @@
+! doctype html
+html
+  == partial 'head', :title => @debate.title
+  body
+    == partial 'header', :active => "Diskussionen"
+
+    #content.container
+
+      .c1-12
+        h1.page-title =@debate.title
+
+      .c1-9.entry-content
+          ul.debate
+            - @debate.comments.each_with_index do |c, i|
+              li
+                .meta #{c.person.name} am #{l c.created_at, :full} um #{c.created_at.strftime "%H:%M"} Uhr
+                img.avatar src="#{{c.person.avatar_url}}" width=45 height=45 alt=c.person.name
+                .comment ==simple_format(auto_link(c.text))
+            li#answer
+              img.avatar src="#{{current_person.avatar_url}}" width=45 height=45 alt=current_person.name
+              .comment
+                form method="post" action="/comments/new"
+                  input type="hidden" name="comment[type]" value="Debate"
+                  input type="hidden" name="comment[type_id]" value=@debate.id
+                  p
+                    textarea id="comment_text" name="comment[text]" rows=5
+                  p
+                    button.clean-gray type="submit"
+                      span Antworten
+ 
+
+    == footer
+    == partial 'google_analytics'
+
+
+
+

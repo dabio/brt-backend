@@ -206,10 +206,12 @@ Cuba.define do
     break not_found unless @has_auth or @debate
 
     on '' do
+      #@comments = Comment.all(:debate => @debate, :order => [:created_at.desc])
+      res.write render 'views/debate.slim'
     end
 
-    on 'edit' do
-    end
+    #on 'edit' do
+    #end
 
   end
 
@@ -218,6 +220,22 @@ Cuba.define do
     break unless has_auth?
     @debates = Debate.all(:order => [:updated_at.desc])
     res.write render 'views/debates.slim'
+  end
+
+
+  on 'comments/new' do
+    on post, param('comment') do |comment|
+      @foreign_model = Kernel.const_get(comment["type"]).first(:id => comment["type_id"])
+      @comment = Comment.new(:text => comment["text"],
+                             comment["type"].downcase => @foreign_model,
+                             :person => current_person)
+      if @comment.save
+        @foreign_model.update(:updated_at => Time.now)
+        res.redirect @foreign_model.permalink
+      else
+        res.redirect @foreign_model.permalink
+      end
+    end
   end
 
 
