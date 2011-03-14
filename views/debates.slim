@@ -18,11 +18,13 @@ html
               h3
                 a href=d.permalink =d.title
               .meta
-                span Erstellt von <strong>#{d.person.name}</strong> am <strong>#{l d.created_at, :full}</strong>. 
-                - if d.comments.count > 1
-                  span Hat jetzt <strong>#{d.comments.count-1}</strong> Antworten.
+                span Erstellt von <strong>#{d.person.name}</strong>, 
+                - if d.comments.count == 2
+                span mit <strong>einer</strong> Antwort, zuletzt am <strong>#{l d.updated_at, :full}</strong> um <strong>#{d.updated_at.strftime "%H:%M"}</strong> beantwortet.
+                - elsif d.comments.count > 2
+                  span mit <strong>#{d.comments.count-1}</strong> Antworten, zuletzt am <strong>#{l d.updated_at, :full}</strong> um <strong>#{d.updated_at.strftime "%H:%M"}</strong> beantwortet.
                 - else
-                  span Bisher noch <strong>ohne</strong> Antworten.
+                  span <strong>ohne</strong> Antwort.
 
       .c10-12.entry-content
         .new

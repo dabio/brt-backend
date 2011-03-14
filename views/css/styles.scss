@@ -1,6 +1,7 @@
 $cdn: '//berlinracingteam.commondatastorage.googleapis.com';
 $main_blue: #edf2f9;
-$hover_color: #f36535;
+$anchor_color: #0046ad;
+$hover_color: #000;
 
 @mixin border-radius($radius) {
     -moz-border-radius: $radius;
@@ -28,7 +29,7 @@ body {
 }
 
 a {
-    color: #88bbc8;
+    color: $anchor_color;
     cursor: pointer;
     text-decoration: none;
 }
@@ -93,6 +94,7 @@ input, textarea {
     border: 1px solid #e0e0e0;
     color: #999;
     padding: 5px;
+    outline: 0;
 }
 input:focus, textarea:focus {
     color: #444;
@@ -582,11 +584,33 @@ input.widget {
 /* ------------------------------------------------------------------------------ */
 /* 10. Debates                                                                    */
 /* ------------------------------------------------------------------------------ */
+ul.debate,
 ul.debates {
     list-style: none;
 
     li {
         margin-bottom: 20px;
         margin-left: 0;
+        overflow: auto;
+    }
+    .avatar{
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        float: left;
+        margin: 0 10px 4px 0;
+        padding: 3px;
     }
 }
+ul.debate {
+    .meta,
+    .comment {
+        margin-left: 63px;
+    }
+    li#answer {
+        margin-top: 20px;
+    }
+    textarea {
+        width: 541px;
+    }
+}
+
