@@ -170,7 +170,7 @@ Cuba.define do
 
 
   on 'diskussionen/new' do
-    break unless has_auth?
+    break not_found unless has_auth?
 
     on get do
       @debate = Debate.new
@@ -224,6 +224,7 @@ Cuba.define do
 
 
   on 'comments/new' do
+    break not_found unless has_auth?
     on post, param('comment') do |comment|
       @foreign_model = Kernel.const_get(comment["type"]).first(:id => comment["type_id"])
       @comment = Comment.new(:text => comment["text"],
