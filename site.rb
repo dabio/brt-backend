@@ -215,7 +215,7 @@ Cuba.define do
 
 
   on 'diskussionen' do
-    break unless has_auth?
+    break not_found unless has_auth?
     @debates = Debate.all(:order => [:updated_at.desc])
     res.write render 'views/debates.slim'
   end

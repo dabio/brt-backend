@@ -60,13 +60,13 @@ module Cuba::Prelude
 
 
   def navigation
-    {
-      '/' => 'Home',
-      '/team' => 'Team',
-      '/rennen' => 'Rennen',
-      '/diskussionen' => 'Diskussionen',
-      '/kontakt' => 'Kontakt'
-    }
+    n = Hash.new
+    n["/"] = "Home"
+    n["/team"] = "Team"
+    n["/rennen"] = "Rennen"
+    n["/diskussionen"] = "Diskussionen" if has_auth?
+    n["/kontakt"] = "Kontakt"
+    n
   end
 
 
