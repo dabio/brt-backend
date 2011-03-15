@@ -7,26 +7,34 @@ html
     #content.container
 
       .c1-12
-        h1.page-title =@debate.title
+        h1.page-title
+          a href="/diskussionen" Diskussionen
 
-      .c1-9.entry-content
+      .c1-12.entry-content
+        h2.entry-title =@debate.title
+
+      .c1-12
           ul.debate
-            - @debate.comments.each_with_index do |c, i|
-              li
-                .meta #{c.person.name} am #{l c.created_at, :full} um #{c.created_at.strftime "%H:%M"} Uhr
-                img.avatar src="#{{c.person.avatar_url}}" width=45 height=45 alt=c.person.name
-                .comment ==simple_format(auto_link(c.text))
+            - @debate.comments.each do |c|
+              li id="comment_#{c.id}"
+                .c1-2
+                  img.avatar src="#{{c.person.avatar_url}}" width=45 height=45 alt=c.person.name
+                .c3-12
+                  .meta #{c.person.name} am #{l c.created_at, :full} um #{c.created_at.strftime "%H:%M"} Uhr
+                  .comment ==simple_format(auto_link(c.text))
             li#answer
-              img.avatar src="#{{current_person.avatar_url}}" width=45 height=45 alt=current_person.name
-              .comment
-                form method="post" action="/comments/new"
-                  input type="hidden" name="comment[type]" value="Debate"
-                  input type="hidden" name="comment[type_id]" value=@debate.id
-                  p
-                    textarea id="comment_text" name="comment[text]" rows=5
-                  p
-                    button.clean-gray type="submit"
-                      span Antworten
+              .c1-2
+                img.avatar src="#{{current_person.avatar_url}}" width=45 height=45 alt=current_person.name
+              .c3-12
+                .comment
+                  form method="post" action="/comments/new"
+                    input type="hidden" name="comment[type]" value="Debate"
+                    input type="hidden" name="comment[type_id]" value=@debate.id
+                    p
+                      textarea id="comment_text" name="comment[text]" rows=5
+                    p
+                      button.clean-gray type="submit"
+                        span Antworten
  
 
     == footer

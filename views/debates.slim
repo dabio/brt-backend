@@ -9,14 +9,16 @@ html
       .c1-12
         h1.page-title Diskussionen
 
-      .c1-9.entry-content.events
-        p Nutze diese Diskussionsplattform, falls du anderen Fahrern etwas mitteilen m&ouml;chtest.
+      .c1-3.entry-content
+        .new
+          a.clean-gray href="/diskussionen/new" Neues Thema
 
+      .c4-12.entry-content.events
         ul.debates
           - @debates.each_with_index do |d, i|
             li
               h3
-                a href=d.permalink =d.title
+                a href=d.permalink #{d.title} <span class="raquo">&raquo;</span>
               .meta
                 span Erstellt von <strong>#{d.person.name}</strong>, 
                 - if d.comments.count == 2
@@ -24,11 +26,7 @@ html
                 - elsif d.comments.count > 2
                   span mit <strong>#{d.comments.count-1}</strong> Antworten, zuletzt am <strong>#{l d.updated_at, :full}</strong> um <strong>#{d.updated_at.strftime "%H:%M"}</strong> beantwortet.
                 - else
-                  span <strong>ohne</strong> Antwort.
-
-      .c10-12.entry-content
-        .new
-          a.clean-gray href="/diskussionen/new" Neues Thema
+                  span noch <strong>ohne</strong> Antworten.
 
     == footer
     == partial 'google_analytics'

@@ -232,7 +232,7 @@ Cuba.define do
                              :person => current_person)
       if @comment.save
         @foreign_model.update(:updated_at => Time.now)
-        res.redirect @foreign_model.permalink
+        res.redirect "#{@foreign_model.permalink}#comment_#{@comment.id}"
       else
         res.redirect @foreign_model.permalink
       end

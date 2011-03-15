@@ -125,10 +125,13 @@ textarea {
     margin-bottom: 40px;
 }
 
-.c1-3, .c1-9, .c1-12, .c4-9, .c4-12, .c10-12 {
+.c1-2, .c1-3, .c1-9, .c1-12, .c3-12, .c4-9, .c4-12, .c10-12 {
     display: inline;
     float: left;
     margin-right: 18px;
+}
+.c1-2 {
+    width: 124px;
 }
 .c1-3 {
     width: 196px;
@@ -139,6 +142,10 @@ textarea {
 .c1-12 {
     margin-right: 0;
     width: 826px;
+}
+.c3-12 {
+    margin-right: 0;
+    width: 682px;
 }
 .c4-9 {
     width: 402px;
@@ -596,16 +603,22 @@ ul.debates {
     .avatar{
         background: #fff;
         border: 1px solid #e0e0e0;
-        float: left;
-        margin: 0 10px 4px 0;
+        float: right;
+        margin-top: 20px;
         padding: 3px;
     }
 }
-ul.debate {
-    .meta,
-    .comment {
-        margin-left: 63px;
+ul.debates h3 a {
+    color: $anchor_color;
+
+    .raquo {
+        color: #fff;
     }
+}
+ul.debates h3 a:hover .raquo {
+    color: #000;
+}
+ul.debate {
     li#answer {
         margin-top: 20px;
     }
