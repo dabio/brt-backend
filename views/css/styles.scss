@@ -125,13 +125,13 @@ textarea {
     margin-bottom: 40px;
 }
 
-.c1-2, .c1-3, .c1-9, .c1-12, .c3-9, .c4-9, .c4-12, .c10-12 {
+.c1-1, .c1-3, .c1-9, .c1-12, .c2-9, .c4-9, .c4-12, .c10-12 {
     display: inline;
     float: left;
     margin-right: 18px;
 }
-.c1-2 {
-    width: 124px;
+.c1-1 {
+    width: 53px;
 }
 .c1-3 {
     width: 196px;
@@ -143,8 +143,8 @@ textarea {
     margin-right: 0;
     width: 826px;
 }
-.c3-9 {
-    width: 471px;
+.c2-9 {
+    width: 544px;
 }
 .c4-9 {
     width: 402px;
@@ -177,6 +177,7 @@ textarea {
     color: #999;
     font-size: 11px;
     padding-top: 10px;
+    padding-bottom: 20px;
 }
 #current_person a {
     color: #666;
@@ -184,6 +185,17 @@ textarea {
 #current_person a:hover {
     color: #444;
     text-decoration: underline;
+}
+#current_person img.avatar {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 3px;
+    overflow: auto;
+    float: left;
+}
+#current_person p {
+    margin-top: 1px;
+    margin-bottom: 0;
 }
 
 #header {
@@ -603,7 +615,6 @@ ul.debates {
         background: #fff;
         border: 1px solid #e0e0e0;
         float: right;
-        margin-top: 20px;
         padding: 3px;
     }
 }
@@ -614,10 +625,18 @@ ul.debates h3 a {
         color: #fff;
     }
 }
-ul.debates h3 a:hover .raquo {
+ul.debates h3 a:hover {
     color: #000;
+    text-decoration: none;
+
+    .raquo {
+        color: #000;
+    }
 }
 ul.debate {
+    .avatar {
+        margin-top: 20px;
+    }
     li#answer {
         margin-top: 20px;
 
@@ -626,7 +645,7 @@ ul.debate {
         }
     }
     textarea {
-        width: 469px;
+        width: 532px;
     }
 }
 
