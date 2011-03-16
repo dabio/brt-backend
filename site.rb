@@ -263,7 +263,7 @@ Cuba.define do
     break unless @person = Person.first(:slug => slug)
 
     on '' do
-      res.write 'found'
+      res.redirect '/'
     end
 
     on 'edit' do
