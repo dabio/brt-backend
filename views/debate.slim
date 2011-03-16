@@ -19,13 +19,13 @@ html
               li id="comment_#{c.id}"
                 .c1-2
                   img.avatar src="#{{c.person.avatar_url}}" width=45 height=45 alt=c.person.name
-                .c3-12
+                .c3-9
                   .meta #{c.person.name} am #{l c.created_at, :full} um #{c.created_at.strftime "%H:%M"} Uhr
                   .comment ==simple_format(auto_link(c.text))
             li#answer
               .c1-2
                 img.avatar src="#{{current_person.avatar_url}}" width=45 height=45 alt=current_person.name
-              .c3-12
+              .c3-9
                 .comment
                   form method="post" action="/comments/new"
                     input type="hidden" name="comment[type]" value="Debate"

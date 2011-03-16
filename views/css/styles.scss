@@ -125,7 +125,7 @@ textarea {
     margin-bottom: 40px;
 }
 
-.c1-2, .c1-3, .c1-9, .c1-12, .c3-12, .c4-9, .c4-12, .c10-12 {
+.c1-2, .c1-3, .c1-9, .c1-12, .c3-9, .c4-9, .c4-12, .c10-12 {
     display: inline;
     float: left;
     margin-right: 18px;
@@ -143,9 +143,8 @@ textarea {
     margin-right: 0;
     width: 826px;
 }
-.c3-12 {
-    margin-right: 0;
-    width: 682px;
+.c3-9 {
+    width: 471px;
 }
 .c4-9 {
     width: 402px;
@@ -384,7 +383,7 @@ h2.entry-title {
     font: 24px/36px "Droid Serif", Georgia, Times, serif;
     font-style: italic;
     color: #444;
-    padding-left: 214px;
+    padding-left: 142px;
     margin-bottom: 14px;
 }
 
@@ -621,9 +620,13 @@ ul.debates h3 a:hover .raquo {
 ul.debate {
     li#answer {
         margin-top: 20px;
+
+        .avatar {
+            margin-top: 0;
+        }
     }
     textarea {
-        width: 541px;
+        width: 469px;
     }
 }
 
