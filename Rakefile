@@ -16,13 +16,14 @@ task :test do
 end
 
 
-namespace "gems" do
-  task :uninstall do
-    system "rvm", "--force", "gemset", "empty"
-  end
-  task :install do
-    system "bundle", "install", "--without", "production"
-  end
+task :uninstall do
+  system "rvm", "--force", "gemset", "empty"
+  File.unlink "Gemfile.lock"
+end
+
+task :install do
+  system "gem", "install", "bundler"
+  system "bundle", "install", "--without", "production"
 end
 
 
