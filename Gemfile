@@ -1,6 +1,6 @@
 source :rubygems
 
-gem "cuba", "2.0.0.rc3"
+gem "cuba"
 gem "slim"
 gem "sass"
 gem "rack-force_domain"
