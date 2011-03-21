@@ -20,6 +20,7 @@ task :uninstall do
   system "rvm", "--force", "gemset", "empty"
   File.unlink "Gemfile.lock"
 end
+
 task :install do
   system "gem", "install", "bundler"
   system "bundle", "install", "--without", "production"
