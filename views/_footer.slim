@@ -29,7 +29,7 @@ hr
     p.copyright Berlin Racing Team &copy; #{Date.today.year}<br/>Wir sind auch bei <a href="https://www.facebook.com/berlinracingteam" title="Zur Facebook Seite vom Berlin Racing Team">Facebook</a>.
     - unless current_person
       p.login
-        a href="/login?next=#{{env['SCRIPT_NAME']}}" Anmelden
+        a href="/login?next=#{{request.path_info}}" Anmelden
 
 hr
 
