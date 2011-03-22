@@ -1,0 +1,21 @@
+doctype html
+html
+  == slim :_head, :locals => {:title => 'Seite nicht gefunden'}
+  body
+    == slim :_header
+
+    #content.container
+
+      .c1-12
+        h1.page-title Leider konnte die gew&uuml;nschte Seite nicht gefunden werden.
+
+      .c1-12.entry-content
+        p Bitte pr&uuml;fen Sie:
+        ul
+          li die Schreibweise der URL (Gro&szlig;- und Kleinschreibung beachten)
+          li Ihren Bookmark
+          li die Seite, von der Sie gekommen sind.
+
+    /== footer
+    == slim :_google_analytics
+ 
