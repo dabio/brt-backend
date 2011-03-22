@@ -30,8 +30,8 @@ html
           p Neuigkeiten rund um das Berlin Racing Team
           /p
             a.droid-italic href="/news" title="Weitere Nachrichten" Archiv &raquo;
-        - for item in @news do
-          .news-box
+        - @news.each_with_index do |item, idx| 
+          div class="news-box#{'-last' if idx == 2}"
             h3 = item.title
             p.meta = l item.date, :full
             p = item.message

@@ -1,10 +1,11 @@
 source :rubygems
 
-gem "cuba", "2.0.0.rc3"
+gem "cuba"
 gem "slim"
 gem "sass"
 gem "rack-force_domain"
 gem "rack-r18n"
+gem "rack-flash"
 gem "dm-core"
 gem "dm-timestamps"
 gem "dm-validations"
