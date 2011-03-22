@@ -113,6 +113,14 @@ class BerlinRacingTeam < Sinatra::Base
   end
 
 
+  get '/rennen' do
+    @events = Event.all(:date.gte => "#{today.year}-01-01",
+                        :date.lte => "#{today.year}-12-31",
+                        :order => [:date, :updated_at.desc])
+    slim :events
+  end
+
+
   get '/css/styles.css' do
     scss :'css/styles'
   end

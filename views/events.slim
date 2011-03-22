@@ -1,0 +1,44 @@
+! doctype html
+html
+  == partial 'head', :title => 'Rennen'
+  body
+    == partial 'header', :active => 'Rennen'
+
+    #content.container
+
+      .c1-12
+        h1.page-title Rennkalender
+
+      .c1-12.entry-content.events
+        p Bei folgenden Rennen werden wir in diesem Jahr um Spitzenplatzierungen k&auml;mpfen.
+        - @events.each_with_index do |e, i|
+          - if i == 0 or @events[i-1].date.month < e.date.month
+            - @count = 0
+            | <div class="c1-3"><h3>#{l e.date, :month}</h3></div>
+            | <div class="c4-12">
+          - @count += 1
+          .hentry class="#{'last' if @count % 3 == 0}"
+            h3
+              /- if has_auth? or today >= e.date
+                a href="#{{e.permalink}}" #{e.title}<span class="raquo">&nbsp;&raquo;</span>
+              /- else
+              =e.title
+            .meta
+              span.date = l e.date, :full
+              - if e.participations.length > 0
+                span.participation  &middot; #{e.participations.length} Teilnehmer
+          - if i+1 == @events.length or @events[i+1].date.month > e.date.month
+            | </div>
+
+      /.c10-12.entry-content
+        - if has_admin?
+          .new
+            a.clean-gray href="/rennen/new" Neues Rennen
+        - if @results
+          h3.widget Letzte Ergebnisse
+
+    == footer
+    == partial 'google_analytics'
+
+
+
