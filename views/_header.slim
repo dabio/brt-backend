@@ -1,0 +1,19 @@
+- if current_person
+  #current_person
+    .container
+      .c1-1
+        img.avatar src="#{{current_person.avatar_url}}" alt="Das bin ich"
+      .c2-9
+        p
+          | Hallo #{current_person.first_name}, du bist angemeldet<br/>
+          | <a href="#{{current_person.editlink}}">Profil bearbeiten</a>
+
+#header.container
+  h1
+    a href='/'
+      span Berlin Racing Team
+
+== slim :_navigation
+
+hr
+

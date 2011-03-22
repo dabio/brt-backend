@@ -1,0 +1,76 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    addressable (2.2.4)
+    bcrypt-ruby (2.1.4)
+    configuration (1.2.0)
+    data_objects (0.10.3)
+      addressable (~> 2.1)
+    dm-core (1.1.0)
+      addressable (~> 2.2.4)
+    dm-do-adapter (1.1.0)
+      data_objects (~> 0.10.2)
+      dm-core (~> 1.1.0)
+    dm-postgres-adapter (1.1.0)
+      dm-do-adapter (~> 1.1.0)
+      do_postgres (~> 0.10.2)
+    dm-sqlite-adapter (1.1.0)
+      dm-do-adapter (~> 1.1.0)
+      do_sqlite3 (~> 0.10.2)
+    dm-timestamps (1.1.0)
+      dm-core (~> 1.1.0)
+    dm-validations (1.1.0)
+      dm-core (~> 1.1.0)
+    do_postgres (0.10.3)
+      data_objects (= 0.10.3)
+    do_sqlite3 (0.10.3)
+      data_objects (= 0.10.3)
+    heroku (1.18.3)
+      launchy (~> 0.3.2)
+      rest-client (< 1.7.0, >= 1.4.0)
+    launchy (0.3.7)
+      configuration (>= 0.0.5)
+      rake (>= 0.8.1)
+    mime-types (1.16)
+    r18n-core (0.4.9)
+    rack (1.2.2)
+    rack-force_domain (0.1.1)
+    rake (0.8.7)
+    rest-client (1.6.1)
+      mime-types (>= 1.16)
+    sass (3.1.0.alpha.249)
+    shotgun (0.9)
+      rack (>= 1.0)
+    sinatra (1.2.1)
+      rack (~> 1.1)
+      tilt (< 2.0, >= 1.2.2)
+    sinatra-flash (0.3.0)
+      sinatra (>= 1.0.0)
+    sinatra-r18n (0.4.9)
+      r18n-core (= 0.4.9)
+    slim (0.9.1)
+      temple (~> 0.1.8)
+      tilt (~> 1.2)
+    temple (0.1.8)
+    tilt (1.2.2)
+    unidecode (1.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bcrypt-ruby
+  dm-core
+  dm-postgres-adapter
+  dm-sqlite-adapter
+  dm-timestamps
+  dm-validations
+  heroku
+  rack-force_domain
+  sass
+  shotgun
+  sinatra
+  sinatra-flash
+  sinatra-r18n
+  slim
+  unidecode

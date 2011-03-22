@@ -5,308 +5,68 @@
 #   then a dot and a 'de')
 #
 
-require './shotgun'
+require_relative 'models'
 
-Cuba.use Rack::ForceDomain, ENV["DOMAIN"]
-Cuba.use Rack::R18n, :default => 'de'
 
-class Cuba::Ron
-  include R18n::Helpers
+module Sinatra
+  module PersonHelper
 
-  DataMapper::Logger.new($stdout, :debug) if development?
-  DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
+    # This gives us the currently logged in user. We keep track of that by just
+    # setting a session variable with their is. If it doesn't exist, we want to
+    # return nil.
+    def current_person
+      @cp = Person.first(:id => session[:person_id]) if session[:person_id] unless @cp
+    end
+
+    # Checks if this is a logged in person
+    def has_auth?
+      !current_person.nil?
+    end
+
+    # Check if current person is logged in and admin
+    def has_admin?
+      has_auth? && current_person.id == 1
+    end
+
+  end
+
+  helpers PersonHelper
+
+
+  module TemplateHelper
+    
+    def footer
+      @events = Event.all(:date.gte => Date.today, :order => [:date, :updated_at.desc],
+                          :limit => 3)
+      @people ||= Person.all(:order => [:last_name, :first_name])
+      slim :_footer
+    end
+
+    def today
+      @today = Date.today unless @today
+      @today
+    end
+
+  end
+
+  helpers TemplateHelper
+
 end
 
-Cuba.define do
-  extend Cuba::Prelude
 
-  # /
-  on '' do
-    @news = News.all(:date.lte => today,
-                     :order => [:date.desc, :updated_at.desc], :limit => 4)
-    res.write render 'views/index.slim'
-  end
+class BerlinRacingTeam < Sinatra::Base
+  register Sinatra::R18n
 
+  set :root, File.dirname(__FILE__)
+  set :cdn, '//berlinracingteam.commondatastorage.googleapis.com'
 
-  # /login
-  on 'login', param('next') do |n|
-    unless current_person
-      res.header['WWW-Authenticate'] = %(Basic realm='Berlin Racing Team')
-      res.status = 401
-      res.write 'Wir haben Dich trotzdem gern.'
-    else
-      n = '/' unless n
-      res.redirect n
-    end
-  end
+  helpers Sinatra::PersonHelper
+  helpers Sinatra::TemplateHelper
 
-
-  # /kontakt
-  on 'kontakt' do
-
-    on get do
-      @email = Email.new()
-      res.write render 'views/kontakt.slim'
-    end
-
-    on post, param('contact'), param('email') do |contact, email|
-      break unless email.length == 0
-
-      @email = Email.new(contact)
-      if @email.save
-        send_email(ENV['CONTACT_EMAIL'],
-                   :from => @email.email,
-                   :from_alias => @email.name,
-                   :subject => 'Nachricht von berlinracingteam.de',
-                   :body => @email.message)
-        @email.update(:send_at => Time.now)
-        res.redirect '/kontakt'
-      else
-        res.write render 'views/kontakt.slim'
-      end
-    end
-
-  end
-
-
-  on 'news/new' do
-    break unless has_admin?
-
-    on get do
-      @news = News.new()
-      res.write render 'views/news_form.slim'
-    end
-
-    on post, param('news') do |news|
-      @news = News.new(news)
-      @news.person = current_person
-      if @news.save
-        res.redirect @news.permalink
-      else
-        res.write render 'views/news_form.slim'
-      end
-    end
-
-  end
-
-  on 'news' do
-    break
-  end
-
-
-  on 'rennen/new' do
-    break unless has_admin?
-
-    on get do
-      @event = Event.new()
-      res.write render 'views/event_form.slim'
-    end
-
-    # POST
-    on post, param('event') do |event|
-      @event = Event.new(event)
-      @event.person = current_person
-      if @event.save
-        res.redirect @event.permalink
-      else
-        res.write render 'views/event_form.slim'
-      end
-    end
-
-  end
-
-  on 'rennen/:y/:m/:d/:slug' do |y, m, d, slug|
-    @event = Event.first(:date => Date.new(y.to_i, m.to_i, d.to_i), :slug => slug)
-    break not_found unless @event
-
-    on '' do
-      res.write render 'views/event.slim'
-    end
-
-    on 'edit' do
-      break not_found unless has_admin?
-
-      on get do
-        res.write render 'views/event_form.slim'
-      end
-
-      on post, param('event') do |e|
-        @event.attributes = {
-          :date => e['date'],
-          :title => e['title'],
-          :url => e['url'],
-          :distance => e['distance']
-        }
-
-        if @event.save
-          res.redirect @event.permalink
-        else
-          res.write render 'views/event_form.slim'
-        end
-      end
-    end
-  end
-
-  on 'rennen' do
-    @events = Event.all(:date.gte => "#{today.year}-01-01",
-                        :date.lte => "#{today.year}-12-31",
-                        :order => [:date, :updated_at.desc])
-    res.write render 'views/events.slim'
-  end
-
-
-  on 'teilnahme', param('event_id') do |event_id|
-    @event = Event.first :id => event_id
-    break not_found unless has_auth? and @event
-
-    on post do
-      Participation.create(:person => current_person, :event => @event)
-    end
-
-    on delete do
-      Participation.all(:person => current_person, :event => @event).destroy!
-    end
-  end
-
-
-  on 'diskussionen/new' do
-    break not_found unless has_auth?
-
-    on get do
-      @debate = Debate.new
-      @comment = Comment.new
-      res.write render 'views/debate_form.slim'
-    end
-
-    on post, param('debate'), param('comment') do |d, c|
-      @debate = Debate.new(d)
-      @debate.person = current_person
-
-      @comment = Comment.new(c)
-      @comment.person = current_person
-
-      if @debate.save
-        @comment.debate = @debate
-
-        if @comment.save
-          res.redirect @debate.permalink
-        else
-          @debate.destroy
-          res.write render 'views/debate_form.slim'
-        end
-      else
-        res.write render 'views/debate_form.slim'
-      end
-    end
-  end
-
-
-  on 'diskussionen/:id' do |id|
-    @debate = Debate.first(:id => id)
-    break not_found unless @has_auth or @debate
-
-    on '' do
-      #@comments = Comment.all(:debate => @debate, :order => [:created_at.desc])
-      res.write render 'views/debate.slim'
-    end
-
-    #on 'edit' do
-    #end
-
-  end
-
-
-  on 'diskussionen' do
-    break not_found unless has_auth?
-    @debates = Debate.all(:order => [:updated_at.desc])
-    res.write render 'views/debates.slim'
-  end
-
-
-  on 'comments/new' do
-    break not_found unless has_auth?
-    on post, param('comment') do |comment|
-      @foreign_model = Kernel.const_get(comment["type"]).first(:id => comment["type_id"])
-      @comment = Comment.new(:text => comment["text"],
-                             comment["type"].downcase => @foreign_model,
-                             :person => current_person)
-      if @comment.save
-        @foreign_model.update(:updated_at => Time.now)
-        res.redirect "#{@foreign_model.permalink}#comment_#{@comment.id}"
-      else
-        res.redirect @foreign_model.permalink
-      end
-    end
-  end
-
-
-  on 'team/new' do
-    break unless has_admin?
-
-    on get do
-      @person = Person.new
-      res.write render 'views/person_form.slim'
-    end
-
-    on post, param('person') do |p|
-      @person = Person.new(p)
-
-      if @person.save
-        res.redirect @person.permalink
-      else
-        res.write render 'views/person_form.slim'
-      end
-    end
-  end
-
-  on 'team/:slug' do |slug|
-    break unless @person = Person.first(:slug => slug)
-
-    on '' do
-      res.redirect '/'
-    end
-
-    on 'edit' do
-      on get do
-        break unless @person == current_person or has_admin?
-        res.write render 'views/person_form.slim'
-      end
-
-      on post, param('person') do |p|
-        @person.attributes = {
-          :email  => p['email'],
-          :info   => p['info']
-        }
-
-        unless p['password'].empty?
-          @person.password = p['password']
-          @person.password_confirmation = p['password_confirmation']
-        end
-
-        if @person.save
-          res.redirect @person.permalink
-        else
-          res.write render 'views/person_form.slim'
-        end
-      end
-    end
-  end
-
-  on 'team' do
-    @people = Person.all(:order => [:last_name, :first_name])
-    res.write render 'views/people.slim'
-  end
-
-
-  # /css/styles.css
-  on 'css/styles.css' do
-    res.write stylesheet('css/styles.scss')
-  end
-
-
-  # 404
-  on default do
-    not_found
+  get '/' do
+    @news = News.all(:date.lte => today, :order => [:date.desc, :updated_at.desc],
+                     :limit => 3)
+    slim :index
   end
 
 end

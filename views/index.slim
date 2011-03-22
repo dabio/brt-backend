@@ -1,0 +1,48 @@
+doctype html
+html
+  == slim :_head
+  body
+    == slim :_header, :locals => {:active => 'Home'}
+
+    #content.container
+      #slider.c1-12
+        .slides_container
+          div
+            img width=826 height=465 src='#{{settings.cdn}}/slides/1.jpg'
+          div
+            img width=826 height=465 src='#{{settings.cdn}}/slides/2.jpg'
+          div
+            img width=826 height=465 src='#{{settings.cdn}}/slides/3.jpg'
+        .slides-nav
+          a class="prev" Zur&uuml;ck
+          a class="next" Weiter
+        ul.pagination
+          li
+            a
+          li
+            a
+          li
+            a
+      hr
+      .c1-12.home-wrap
+        .news-box
+          h3 Nachrichten
+          p Neuigkeiten rund um das Berlin Racing Team
+          /p
+            a.droid-italic href="/news" title="Weitere Nachrichten" Archiv &raquo;
+        - @news.each_with_index do |item, idx| 
+          div class="news-box#{'-last' if idx == 2}"
+            h3 = item.title
+            p.meta = l item.date, :full
+            p = item.message
+
+    == footer
+    == slim :_google_analytics
+
+    / i hate the sliding while developing
+    - if production?
+      script src='#{{settings.cdn}}/js/jquery.min.js'
+      script src='#{{settings.cdn}}/js/jquery.slides.min.js'
+      javascript:
+        $(function(){var a=$("#slider"),b=$(".slides-nav");a.slides({preload:!0,preloadImage:"#{{settings.cdn}}/img/loader.gif",effect:"fade",fadeSpeed:250,play:5e3,crossfade:!0,generatePagination:!1}),a.hover(function(){b.fadeIn("medium")},function(){b.fadeOut("medium")})})
+

@@ -2,6 +2,7 @@ source :rubygems
 
 gem "sinatra"
 gem "sinatra-r18n", :require => "sinatra/r18n"
+gem "sinatra-flash", :require => "sinatra/flash"
 gem "slim"
 gem "sass"
 gem "rack-force_domain"
