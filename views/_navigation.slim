@@ -1,7 +1,11 @@
-- nav = [{:url => "/", :name => "Home"}, {:url => "/team", :name => "Rennen"}, {:url => "/diskussionen", :name => "Diskussionen", :needs => "has_auth?"}, {:url => "/kontakt", :name => "Kontakt"}]
+- nav = [{:url => "/", :name => "Home"}, {:url => "/team", :name => "Team"}, {:url => "/rennen", :name => "Rennen"}, {:url => "/diskussionen", :name => "Diskussionen", :needs => "has_auth?"}, {:url => "/kontakt", :name => "Kontakt"}]
 
 #primary-nav
   ul
     - nav.each do |item|
-      li class="#{request.path_info == item[:url] ? 'active' : ''}"
-        a href="#{{item[:url]}}" = item[:name]
+      li
+        - if request.path_info == item[:url]
+          a.active href="#{{item[:url]}}" = item[:name]
+        - else
+          a href="#{{item[:url]}}" = item[:name]
+

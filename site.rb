@@ -5,10 +5,33 @@
 #   then a dot and a 'de')
 #
 
+require 'sinatra/base'
+require 'sinatra/flash'
+require 'sinatra/r18n'
+
+require 'slim'
+require 'sass'
+require 'rack-force_domain'
+require 'dm-core'
+require 'dm-timestamps'
+require 'dm-validations'
+require 'bcrypt'
+require 'unidecode'
+require 'digest/md5'
+
 require_relative 'models'
 
 
 module Sinatra
+  module MainHelper
+
+    def today
+      @today = Date.today unless @today
+      @today
+    end
+
+  end
+
   module PersonHelper
 
     # This gives us the currently logged in user. We keep track of that by just
@@ -34,17 +57,17 @@ module Sinatra
 
 
   module TemplateHelper
-    
+
+    def coat(file)
+      hash = Digest::MD5.file("views#{file}").hexdigest[0..4]
+      "#{file.gsub(/\.scss$/, '.css')}?#{hash}"
+    end
+
     def footer
-      @events = Event.all(:date.gte => Date.today, :order => [:date, :updated_at.desc],
+      @events = Event.all(:date.gte => today, :order => [:date, :updated_at.desc],
                           :limit => 3)
       @people ||= Person.all(:order => [:last_name, :first_name])
       slim :_footer
-    end
-
-    def today
-      @today = Date.today unless @today
-      @today
     end
 
   end
@@ -60,13 +83,38 @@ class BerlinRacingTeam < Sinatra::Base
   set :root, File.dirname(__FILE__)
   set :cdn, '//berlinracingteam.commondatastorage.googleapis.com'
 
+  helpers Sinatra::MainHelper
   helpers Sinatra::PersonHelper
   helpers Sinatra::TemplateHelper
+
+  helpers do
+    [:development, :production, :test].each do |environment|
+      define_method "#{environment.to_s}?" do
+        return settings.environment == environment.to_sym
+      end
+    end
+  end
+
+  configure :development do
+    DataMapper::Logger.new($stdout, :debug)
+  end
+
 
   get '/' do
     @news = News.all(:date.lte => today, :order => [:date.desc, :updated_at.desc],
                      :limit => 3)
     slim :index
+  end
+
+
+  get '/team' do
+    @people = Person.all :order => [:last_name, :first_name]
+    slim :people
+  end
+
+
+  get '/css/styles.css' do
+    scss :'css/styles'
   end
 
 end
