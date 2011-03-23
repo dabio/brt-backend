@@ -468,9 +468,11 @@ input.widget {
 /* ------------------------------------------------------------------------------ */
 #slider {
     border-bottom: 1px solid #e5ecf7;
+    height: 465px;
     padding: 40px 0 39px 0;
 }
 #slider .slides_container {
+    display: none;
     width: 826px;
     height: 465px;
     overflow: hidden;
