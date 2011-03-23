@@ -28,6 +28,7 @@ module Sinatra
     # return nil.
     def current_person
       @cp = Person.first(:id => session[:person_id]) if session[:person_id] unless @cp
+      @cp
     end
 
     # Checks if this is a logged in person
@@ -68,8 +69,9 @@ end
 
 
 class BerlinRacingTeam < Sinatra::Base
-  register Sinatra::R18n
+  enable :sessions
   register Sinatra::Flash
+  register Sinatra::R18n
 
   set :root, File.dirname(__FILE__)
   set :cdn, '//berlinracingteam.commondatastorage.googleapis.com'
@@ -123,11 +125,11 @@ class BerlinRacingTeam < Sinatra::Base
 
     @email = Email.new params[:contact]
     if @email.save
-      send_email(ENV['CONTACT_EMAIL'], :from => @email.email,
-                 :from_alias => @email.name,
-                 :subject => 'Nachricht von berlinracingteam.de',
-                 :body => @email.message)
       @email.update :send_at => Time.now
+
+      send_email(ENV['CONTACT_EMAIL'], :from => @email.email, :from_alias => @email.name, :subject => 'Nachricht von berlinracingteam.de', :body => @email.message)
+      flash.now[:notice] = "#{@email.name}, vielen Dank für deine Nachricht! Wir werden sie so schnell wie möglich beantworten."
+
       redirect to('/kontakt')
     else
       slim :kontakt
@@ -136,7 +138,7 @@ class BerlinRacingTeam < Sinatra::Base
 
 
   get '/css/styles.css' do
-    # cache-control
+    cache_control :public, :max_age => 29030400
     scss :'css/styles'
   end
 
