@@ -5,21 +5,10 @@
 #   then a dot and a 'de')
 #
 
-require 'sinatra/base'
-require 'sinatra/flash'
-require 'sinatra/r18n'
+require 'bundler'
+Bundler.require
 
-require 'slim'
-require 'sass'
-require 'rack-force_domain'
-require 'dm-core'
-require 'dm-timestamps'
-require 'dm-validations'
-require 'bcrypt'
-require 'unidecode'
-require 'digest/md5'
-
-require_relative 'models'
+require_relative 'models/init'
 
 
 module Sinatra
@@ -59,6 +48,7 @@ module Sinatra
   module TemplateHelper
 
     def coat(file)
+      require 'digest/md5'
       hash = Digest::MD5.file("views#{file}").hexdigest[0..4]
       "#{file.gsub(/\.scss$/, '.css')}?#{hash}"
     end
