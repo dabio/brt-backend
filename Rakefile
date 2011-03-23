@@ -8,11 +8,10 @@
 
 task :default => :test
 task :test do
-  require './shotgun'
-  require 'cutest'
-
-  ENV['RACK_ENV'] = "test"
-  Cutest.run(Dir['test/test_*.rb'])
+  require 'rake/testtask'
+  Rake::TestTask.new do |t|
+    t.pattern = "test/*_test.rb"
+  end
 end
 
 
