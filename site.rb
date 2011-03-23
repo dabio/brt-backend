@@ -69,6 +69,7 @@ end
 
 class BerlinRacingTeam < Sinatra::Base
   register Sinatra::R18n
+  register Sinatra::Flash
 
   set :root, File.dirname(__FILE__)
   set :cdn, '//berlinracingteam.commondatastorage.googleapis.com'
@@ -122,6 +123,12 @@ class BerlinRacingTeam < Sinatra::Base
 
     @email = Email.new params[:contact]
     if @email.save
+      send_email(ENV['CONTACT_EMAIL'], :from => @email.email,
+                 :from_alias => @email.name,
+                 :subject => 'Nachricht von berlinracingteam.de',
+                 :body => @email.message)
+      @email.update :send_at => Time.now
+      redirect to('/kontakt')
     else
       slim :kontakt
     end
@@ -129,6 +136,7 @@ class BerlinRacingTeam < Sinatra::Base
 
 
   get '/css/styles.css' do
+    # cache-control
     scss :'css/styles'
   end
 
