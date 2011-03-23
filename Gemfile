@@ -16,7 +16,7 @@ group :development, :test do
   gem "dm-sqlite-adapter"
   gem "shotgun"
   gem "heroku"
-  gem "rack-test"
+  gem "capybara"
 end
 
 group :production do

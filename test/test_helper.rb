@@ -8,14 +8,15 @@
 
 ENV['RACK_ENV'] = "test"
 
-
-require 'rack/test'
+require 'capybara/dsl'
 require 'minitest/autorun'
+require 'rack/test'
 
 require_relative '../site'
 
 
 module TestHelper
+  include Capybara
   include Rack::Test::Methods
   include Sinatra::MainHelper
   include Sinatra::PersonHelper
@@ -27,5 +28,7 @@ module TestHelper
   def setup; end
 
   def teardown; end
+
+  Capybara.app = BerlinRacingTeam
 
 end

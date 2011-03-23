@@ -13,8 +13,17 @@ class SiteTest < MiniTest::Unit::TestCase
   include TestHelper
 
   def test_hello_world
-    get '/'
-    assert_equal 200, last_response.status
+    visit '/'
+    assert_equal 200, page.status_code
+
+    visit '/rennen'
+    assert_equal 200, page.status_code
+
+    visit '/team'
+    assert_equal 200, page.status_code
+
+    visit '/kontakt'
+    assert_equal 200, page.status_code
   end
 
 end
