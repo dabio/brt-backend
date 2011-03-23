@@ -121,9 +121,27 @@ class BerlinRacingTeam < Sinatra::Base
   end
 
 
+  get '/kontakt' do
+    @email = Email.new()
+    slim :kontakt
+  end
+
+
+  post '/kontakt' do
+    raise not_found unless params[:email].length == 0
+
+    @email = Email.new params[:contact]
+    if @email.save
+    else
+      slim :kontakt
+    end
+  end
+
+
   get '/css/styles.css' do
     scss :'css/styles'
   end
+
 
   not_found do
     slim :'404'
