@@ -101,6 +101,7 @@ class BerlinRacingTeam < Sinatra::Base
 
 
   get '/login' do
+    redirect to('/') if has_auth?
     slim :login
   end
 
@@ -120,6 +121,7 @@ class BerlinRacingTeam < Sinatra::Base
 
 
   get '/logout' do
+    not_found unless has_auth?
     session[:person_id] = nil
     redirect to('/')
   end
@@ -128,6 +130,49 @@ class BerlinRacingTeam < Sinatra::Base
   get '/team' do
     @people = Person.all :order => [:last_name, :first_name]
     slim :people
+  end
+
+
+  get '/team/:slug' do
+    not_found unless @person = Person.first(:slug => params[:slug])
+    @person.name
+  end
+
+
+  get '/team/:slug/edit' do
+    not_found unless @person = Person.first(:slug => params[:slug])
+
+    if @person == current_person or has_admin?
+      slim :person_form
+    else
+      redirect to(@person.permalink)
+    end
+  end
+
+
+  post '/team/:slug/edit'do
+    not_found unless @person = Person.first(:slug => params[:slug])
+
+    if @person == current_person or has_admin?
+      @person.attributes = {
+        :email  => params[:person]['email'],
+        :info   => params[:person]['info']
+      }
+
+      unless params[:person]['password'].empty?
+        @person.password = params[:person]['password']
+        @person.password_confirmation = params[:person]['password_confirmation']
+      end
+
+      if @person.save
+        flash.now[:notice] = 'Änderung gesichert.'
+        redirect to(@person.permalink)
+      else
+        slim :person_form
+      end
+    else
+      redirect to(@person.permalink)
+    end
   end
 
 
