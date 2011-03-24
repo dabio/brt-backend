@@ -69,10 +69,10 @@ end
 
 
 class BerlinRacingTeam < Sinatra::Base
-  enable :sessions
   register Sinatra::Flash
   register Sinatra::R18n
 
+  set :sessions, true
   set :root, File.dirname(__FILE__)
   set :cdn, '//berlinracingteam.commondatastorage.googleapis.com'
 
@@ -89,7 +89,6 @@ class BerlinRacingTeam < Sinatra::Base
   end
 
   configure :development do
-    DataMapper::Logger.new($stdout, :debug)
   end
 
 
@@ -97,6 +96,25 @@ class BerlinRacingTeam < Sinatra::Base
     @news = News.all(:date.lte => today, :order => [:date.desc, :updated_at.desc],
                      :limit => 3)
     slim :index
+  end
+
+
+  get '/login' do
+    puts session
+    slim :login
+  end
+
+
+  post '/login' do
+    @person = Person.authenticate(params[:email], params[:password])
+
+    if @person
+      session[:person_id] = @person.id
+      redirect to(params[:next])
+    else
+      flash.now[:error] = 'Unbekannte E-Mail oder falsches Password eingegeben.'
+      slim :login
+    end
   end
 
 

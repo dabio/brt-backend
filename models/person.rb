@@ -57,6 +57,11 @@ class Person
     "#{permalink}/edit"
   end
 
+  def self.authenticate(email, password)
+    return nil unless person = Person.first(:email => email)
+    person.password == password ? person : nil
+  end
+
 private
   def password_required?
     !password.empty?

@@ -1,0 +1,44 @@
+doctype html
+html
+  == slim :_head, :locals => {:title => 'Anmelden'}
+  body
+    == slim :_header
+
+    #content.container
+
+      .c1-12
+        h1.page-title Anmelden
+
+      .c1-12.entry-content
+
+        == styled_flash
+
+        form method="post" action="/login"
+
+          input type="hidden" name="next" value="#{{params[:next] ||= '/'}}"
+
+          p
+            label for="email"
+              small Benutzername/E-Mail
+            - if params[:email]
+              input type="text" id="email" name="email" required="required" value=params[:email]
+            - else
+              input type="text" id="email" name="email" required="required" autofocus="autofocus"
+          p
+            label for="password"
+              small Passwort
+            - if params[:email]
+              input type="password" id="password" name="password" required="required" autofocus="autofocus"
+            - else
+              input type="password" id="password" name="password" required="required"
+          p
+            button.clean-gray type="submit"
+              span Anmelden
+
+      /.c10-12.entry-content
+        h3.widget Anschrift
+        address Berlin Racing Team<br/>Danilo Braband<br/>Simon-Bolivar-Str. 24<br/>13055 Berlin
+
+    == footer
+    == slim :_google_analytics
+
