@@ -3,9 +3,10 @@
 #primary-nav
   ul
     - nav.each do |item|
-      li
-        - if request.path_info == item[:url]
-          a.active href="#{{item[:url]}}" = item[:name]
-        - else
-          a href="#{{item[:url]}}" = item[:name]
+      - unless item[:needs] or item[:needs] and !send(item[:needs])
+        li
+          - if request.path_info == item[:url]
+            a.active href="#{{item[:url]}}" = item[:name]
+          - else
+            a href="#{{item[:url]}}" = item[:name]
 
