@@ -72,7 +72,8 @@ class BerlinRacingTeam < Sinatra::Base
   register Sinatra::Flash
   register Sinatra::R18n
 
-  set :sessions, true
+  use Rack::Session::Cookie
+
   set :root, File.dirname(__FILE__)
   set :cdn, '//berlinracingteam.commondatastorage.googleapis.com'
 
@@ -115,6 +116,12 @@ class BerlinRacingTeam < Sinatra::Base
       flash.now[:error] = 'Unbekannte E-Mail oder falsches Password eingegeben.'
       slim :login
     end
+  end
+
+
+  get '/logout' do
+    session[:person_id] = nil
+    redirect to('/')
   end
 
 
