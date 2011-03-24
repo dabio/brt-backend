@@ -5,7 +5,7 @@
 #   then a dot and a 'de')
 #
 
-DataMapper::Logger.new($stdout, :debug)
+DataMapper::Logger.new($stdout, :debug) if ENV['RACK_ENV'] == 'development'
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
 
 module DataMapper
