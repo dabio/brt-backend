@@ -101,12 +101,12 @@ class BerlinRacingTeam < Sinatra::Base
 
 
   get '/login' do
-    puts session
     slim :login
   end
 
 
   post '/login' do
+    params[:email] << '@berlinracingteam.de' unless params[:email]['@']
     @person = Person.authenticate(params[:email], params[:password])
 
     if @person
