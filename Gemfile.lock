@@ -41,7 +41,7 @@ GEM
       data_objects (= 0.10.3)
     ffi (1.0.7)
       rake (>= 0.8.7)
-    heroku (1.19.0)
+    heroku (1.19.1)
       activesupport (>= 2.1.0)
       launchy (~> 0.3.2)
       rest-client (< 1.7.0, >= 1.4.0)

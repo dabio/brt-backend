@@ -1,0 +1,44 @@
+doctype html
+html
+  == slim :_head, locals: {title: @debate.title}
+  body
+    == slim :_header
+
+    #content.container
+
+      .c1-12
+        h1.page-title
+          a href="/diskussionen" Diskussionen
+          |  &raquo; #{@debate.title}
+
+      .c1-12.entry-content
+      .c1-12
+          ul.debate
+            - @debate.comments.each do |c|
+              li id="comment_#{c.id}"
+                .c1-1
+                  img.avatar src="#{{settings.cdn}}#{{c.person.avatar_url}}" width=45 height=45 alt=c.person.name
+                .c2-9
+                  .meta #{c.person.name} am #{l c.created_at, :full} um #{c.created_at.strftime "%H:%M"} Uhr
+                  .comment ==simple_format(auto_link(c.text))
+            li#answer
+              .c1-1
+                img.avatar src="#{{settings.cdn}}#{{current_person.avatar_url}}" width=45 height=45 alt=current_person.name
+              .c2-9
+                .comment
+                  form method="post" action="/comments/new"
+                    input type="hidden" name="comment[type]" value="Debate"
+                    input type="hidden" name="comment[type_id]" value=@debate.id
+                    p
+                      textarea id="comment_text" name="comment[text]" rows=5
+                    p
+                      button.clean-gray type="submit"
+                        span Antworten
+ 
+
+    == footer
+    == slim :_google_analytics
+
+
+
+

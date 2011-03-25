@@ -48,6 +48,31 @@ module Sinatra
 
   module TemplateHelper
 
+    # Taken from rails
+    AUTO_LINK_RE = %r{(?:([\w+.:-]+:)//|www\.)[^\s<]+}x
+    BRACKETS = {']' => '[', ')' => '(', '}' => '{'}
+    def auto_link(text, limit=nil)
+      trim = lambda {|s, l| l != nil and (s.length > limit and "#{s[0,l-1]}…") or s}
+      text.gsub(AUTO_LINK_RE) do
+        scheme, href = $1, $&
+        punctuation = []
+        # don't include trailing punctiation character as part of the URL
+        while href.sub!(/[^\w\/-]$/, '')
+          punctuation.push $&
+          if opening = BRACKETS[punctuation.last] and href.scan(opening).size > href.scan(punctuation.last).size
+            href << punctuation.pop
+            break
+          end
+        end
+
+        link_text = block_given? ? yield(href) : href
+        href = 'http://' + href unless scheme
+
+        "<a href=\"#{href}\">#{trim[link_text, limit]}</a>" + punctuation.reverse.join('')
+      end
+    end
+
+
     def coat(file)
       require 'digest/md5'
       hash = Digest::MD5.file("views#{file}").hexdigest[0..4]
@@ -59,6 +84,17 @@ module Sinatra
                           :limit => 3)
       @people ||= Person.all(:order => [:last_name, :first_name])
       slim :_footer
+    end
+
+    def simple_format str
+      str = '' if str.nil?
+      start_tag = '<p>'
+      end_tag = '</p>'
+      str.gsub! /\r\n?/, "\n"
+      str.gsub! /\n\n+/, "#{end_tag}\n\n#{start_tag}"
+      str.gsub! /([^\n]\n)(?=[^\n])/, '\1<br />'
+      str.insert 0, start_tag
+      str.concat end_tag
     end
 
   end
@@ -140,7 +176,7 @@ class BerlinRacingTeam < Sinatra::Base
 
 
   get '/team/:slug/edit' do
-    not_found unless @person = Person.first(:slug => params[:slug])
+    not_found unless @person = Person.first(slug: params[:slug])
 
     if @person == current_person or has_admin?
       slim :person_form
@@ -151,7 +187,7 @@ class BerlinRacingTeam < Sinatra::Base
 
 
   post '/team/:slug/edit'do
-    not_found unless @person = Person.first(:slug => params[:slug])
+    not_found unless @person = Person.first(slug: params[:slug])
 
     if @person == current_person or has_admin?
       @person.attributes = {
@@ -179,8 +215,25 @@ class BerlinRacingTeam < Sinatra::Base
   get '/rennen' do
     @events = Event.all(:date.gte => "#{today.year}-01-01",
                         :date.lte => "#{today.year}-12-31",
-                        :order => [:date, :updated_at.desc])
+                        order: [:date, :updated_at.desc])
     slim :events
+  end
+
+
+  get '/diskussionen' do
+    not_found unless @debates = Debate.all(order: [:updated_at.desc]) or has_auth?
+    slim :debates
+  end
+
+
+  get '/diskussionen/:id' do
+    not_found unless @debate = Debate.first(id: params[:id]) or has_auth?
+    slim :debate
+  end
+
+
+  post '/comments/new' do
+    not_found unless has_auth?
   end
 
 
