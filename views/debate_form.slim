@@ -1,0 +1,42 @@
+doctype html
+html
+  == slim :_head, locals: {title: 'Diskussionen'}
+  body
+    == slim :_header
+
+    #content.container
+
+      .c1-12
+        - if @debate.new?
+          h1.page-title
+            a href="/diskussionen" Diskussionen
+            |  » Neues Thema anlegen
+        - else
+          h1.page-title Thema bearbeiten
+
+      .c1-9.entry-content
+        form method="post" action="#{{@debate.new? ? '/diskussionen/new' : @debate.editlink}}"
+
+          == slim :_errors, locals: {items: @debate}
+
+          p
+            label for="debate_title"
+              small Titel
+            input.full type="text" id="debate_title" name="debate[title]" value=@debate.title required="required"
+
+          == slim :_errors, locals: {items: @comment}
+
+          p
+            label for="comment_text"
+              small Text
+            textarea id="comment_text" name="comment[text]" rows=15 required="required" =@comment.text
+          p
+            button.clean-gray type="submit"
+              span Erstellen
+          
+
+    == footer
+    == slim :_google_analytics
+
+
+
