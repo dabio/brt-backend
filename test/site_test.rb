@@ -24,6 +24,26 @@ class SiteTest < MiniTest::Unit::TestCase
 
     visit '/kontakt'
     assert_equal 200, page.status_code
+
+    # site is only visible for logged in users
+    visit '/diskussionen'
+    assert_equal 404, page.status_code
+  end
+
+
+  def test_login
+    login
+    assert_match 'Hallo Dummy, du bist angemeldet', page.body
+    assert_match 'Diskussionen', page.body
+    logout
+  end
+
+
+  def test_person_edit
+    visit '/team/dummy-user/edit'
+    assert_equal 404, page.status_code
+
+    #login
   end
 
 end
