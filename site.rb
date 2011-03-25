@@ -145,7 +145,7 @@ class BerlinRacingTeam < Sinatra::Base
     if @person == current_person or has_admin?
       slim :person_form
     else
-      redirect to(@person.permalink)
+      not_found
     end
   end
 
@@ -171,7 +171,7 @@ class BerlinRacingTeam < Sinatra::Base
         slim :person_form
       end
     else
-      redirect to(@person.permalink)
+      not_found
     end
   end
 
