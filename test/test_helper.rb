@@ -42,6 +42,11 @@ module TestHelper
     click_button 'Anmelden'
   end
 
+  def logout
+    visit '/'
+    click_link 'Abmelden'
+  end
+
   Capybara.app = BerlinRacingTeam
 
 end
