@@ -27,10 +27,10 @@ html
               .c2-9
                 .comment
                   form method="post" action="/comments/new"
-                    input type="hidden" name="comment[type]" value="Debate"
-                    input type="hidden" name="comment[type_id]" value=@debate.id
+                    input type="hidden" name="type" value="Debate"
+                    input type="hidden" name="type_id" value=@debate.id
                     p
-                      textarea id="comment_text" name="comment[text]" rows=5
+                      textarea id="text" name="text" rows=5
                     p
                       button.clean-gray type="submit"
                         span Antworten

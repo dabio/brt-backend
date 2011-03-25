@@ -221,19 +221,30 @@ class BerlinRacingTeam < Sinatra::Base
 
 
   get '/diskussionen' do
-    not_found unless @debates = Debate.all(order: [:updated_at.desc]) or has_auth?
+    not_found unless @debates = Debate.all(order: [:updated_at.desc]) and has_auth?
     slim :debates
   end
 
 
   get '/diskussionen/:id' do
-    not_found unless @debate = Debate.first(id: params[:id]) or has_auth?
+    not_found unless @debate = Debate.first(id: params[:id]) and has_auth?
     slim :debate
   end
 
 
   post '/comments/new' do
     not_found unless has_auth?
+
+    @foreign_model = Kernel.const_get(params[:type]).first(id: params[:type_id])
+    @comment = Comment.new(text: params[:text],
+                           params[:type].downcase => @foreign_model,
+                           person: current_person)
+    if @comment.save
+      @foreign_model.update updated_at: Time.now
+      redirect to("#{@foreign_model.permalink}#comment_#{@comment.id}")
+    else
+      redirect to(@foreign_model.permalink)
+    end
   end
 
 
