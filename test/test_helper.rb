@@ -25,9 +25,22 @@ module TestHelper
     BerlinRacingTeam
   end
 
-  def setup; end
+  def setup
+    Person.create(first_name: 'Dummy', last_name: 'User', email: 'dummy@user.com',
+                  password: 'test123', password_confirmation: 'test123')
+  end
 
-  def teardown; end
+  def teardown
+    Person.all(email: 'dummy@user.com').destroy!
+  end
+
+  def login
+    visit '/login'
+
+    fill_in 'email', :with => 'dummy@user.com'
+    fill_in 'password', :with => 'test123'
+    click_button 'Anmelden'
+  end
 
   Capybara.app = BerlinRacingTeam
 
