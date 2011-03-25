@@ -70,7 +70,19 @@ module DataMapper
     end # class URI
 
   end
+
 end
+
+
+def slugify(str)
+  s = str.to_ascii
+  s.gsub!(/\W+/, ' ')
+  s.strip!
+  s.downcase!
+  s.gsub!(/\ +/, '-')
+  s
+end
+
 
 
 require_relative 'comment'
