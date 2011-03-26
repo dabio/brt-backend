@@ -31,7 +31,7 @@ module TestHelper
   end
 
   def teardown
-    Person.all(email: 'dummy@user.com').destroy!
+    Person.all(first_name: 'Dummy', last_name: 'User').destroy!
   end
 
   def login

@@ -25,8 +25,14 @@ class SiteTest < MiniTest::Unit::TestCase
     visit '/kontakt'
     assert_equal 200, page.status_code
 
-    # site is only visible for logged in users
+    # sites are only visible for logged in users
     visit '/diskussionen'
+    assert_equal 404, page.status_code
+
+    visit '/diskussionen/6'
+    assert_equal 404, page.status_code
+
+    visit '/team/danilo-braband/edit'
     assert_equal 404, page.status_code
   end
 
@@ -40,10 +46,26 @@ class SiteTest < MiniTest::Unit::TestCase
 
 
   def test_person_edit
+    login
+    # change email
     visit '/team/dummy-user/edit'
-    assert_equal 404, page.status_code
+    fill_in 'E-Mail', with: 'dummy@email.com'
+    click_button 'Speichern'
+    visit '/team/dummy-user/edit'
+    assert_match 'dummy@email.com', page.body
 
-    #login
+    # invalid email
+    fill_in 'E-Mail', with: 'invalidemail.com'
+    click_button 'Speichern'
+    assert_match 'invalid format', page.body
+
+    # confirm email
+    fill_in 'Passwort', with: 1234
+    fill_in 'Passwort wiederholen', with: 4321
+    click_button 'Speichern'
+    assert_match 'does not match the confirmation', page.body
+
+    logout
   end
 
 end
