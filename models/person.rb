@@ -34,15 +34,15 @@ class Person
   validates_confirmation_of :password, :if => :password_required?
 
   def image_url
-    "/people/#{slug}.jpg"
+    "/people/big/#{slug}_big.jpg"
   end
 
   def avatar_url
-    "/people/#{slug}_avatar.jpg"
+    "/people/avatar/#{slug}_avatar.jpg"
   end
 
   def medium_url
-    "/people/#{slug}_medium.jpg"
+    "/people/medium/#{slug}_medium.jpg"
   end
 
   def name
