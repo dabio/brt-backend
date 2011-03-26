@@ -11,6 +11,7 @@ gem 'dm-timestamps'
 gem 'dm-validations'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'unidecode'
+gem 'rdiscount'
 
 group :development, :test do
   gem 'dm-sqlite-adapter'
