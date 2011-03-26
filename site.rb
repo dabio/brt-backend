@@ -171,7 +171,7 @@ class BerlinRacingTeam < Sinatra::Base
 
   get '/team/:slug' do
     not_found unless @person = Person.first(:slug => params[:slug])
-    @person.name
+    slim :person
   end
 
 

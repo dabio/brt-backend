@@ -1,0 +1,20 @@
+doctype html
+html
+  == slim :_head, locals: {title: @person.name}
+  body
+    == slim :_header
+
+    #content.container
+
+      .c1-12
+        h1.page-title Team
+
+      .c1-9.entry-content
+        h2.entry-title = @person.name
+        img src=@person.image_url width=616 height=347 alt=@person.name
+
+      .c10-12.entry-content
+        h3.widget Rennkilometer #{today.year}
+
+    == footer
+    == slim :_google_analytics
