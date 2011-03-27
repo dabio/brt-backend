@@ -14,7 +14,7 @@ class Event
   property :title,      String, :length => 250
   property :url,        URI
   property :distance,   Integer
-  #property :type,       Enum[:race, :training], :default => :race
+  property :type,       Enum[:race, :training], :default => :race
   timestamps :at
   property :slug,       String, :length => 2000, :default => lambda { |r, p|
     slugify(r.title)
