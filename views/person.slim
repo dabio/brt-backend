@@ -11,9 +11,8 @@ html
 
       .c1-9.entry-content
         h2.entry-title = @person.name
-        img src=[settings.cdn, @person.image_url].join width=616 height=347 alt=@person.name
-        .c4-9.person_content
-          markdown: = @person.info
+        img src=[settings.cdn, @person.image_url].join width=616 height=199 alt=@person.name
+        .person-content == markdown @person.info
 
       .c10-12.entry-content
         h3.widget Rennkilometer #{today.year}
