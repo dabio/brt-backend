@@ -18,7 +18,7 @@ class Person
   timestamps :at
   property :slug,       String, length: 50, default: lambda { |r, p| slugify(r.name) }
 
-  #has 1, :visit
+  has 1, :visit
   has n, :news
   has n, :reports
   has n, :comments

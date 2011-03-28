@@ -180,4 +180,5 @@ require_relative 'news'
 require_relative 'participation'
 require_relative 'person'
 require_relative 'report'
+require_relative 'visit'
 
