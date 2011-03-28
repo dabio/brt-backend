@@ -10,16 +10,13 @@ class Person
   include DataMapper::Resource
 
   property :id,         Serial
-  property :first_name, String, :required => true
-  property :last_name,  String, :required => true
-  property :email,      String, :required => true, :format => :email_address,
-    :unique => true
-  property :password,   BCryptHash, :required => true
-  property :info,       Text
+  property :first_name, String, required: true
+  property :last_name,  String, required: true
+  property :email,      String, required: true, format: :email_address, unique: true
+  property :password,   BCryptHash, required: true
+  property :info,       Text, lazy: false
   timestamps :at
-  property :slug,       String, :length => 50, :default => lambda { |r, p|
-    slugify(r.name)
-  }
+  property :slug,       String, length: 50, default: lambda { |r, p| slugify(r.name) }
 
   #has 1, :visit
   has n, :news
@@ -27,11 +24,11 @@ class Person
   has n, :comments
   has n, :comments
   has n, :participations
-  has n, :events, :through => :participations
+  has n, :events, through: :participations
 
   attr_accessor :password_confirmation
 
-  validates_confirmation_of :password, :if => :password_required?
+  validates_confirmation_of :password, if: :password_required?
 
   def image_url
     "/people/big/#{slug}_big.jpg"
@@ -58,7 +55,7 @@ class Person
   end
 
   def self.authenticate(email, password)
-    return nil unless person = Person.first(:email => email)
+    return nil unless person = Person.first(email: email)
     person.password == password ? person : nil
   end
 
