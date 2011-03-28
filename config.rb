@@ -10,6 +10,7 @@ class BerlinRacingTeam
   register Sinatra::Flash
   register Sinatra::R18n
 
+  use Rack::ForceDomain, ENV['DOMAIN']
   use Rack::Session::Cookie
 
   set :root, File.dirname(__FILE__)
@@ -23,9 +24,6 @@ class BerlinRacingTeam
         return settings.environment == environment.to_sym
       end
     end
-  end
-
-  configure :development do
   end
 
 end
