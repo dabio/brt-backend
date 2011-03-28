@@ -26,4 +26,9 @@ class BerlinRacingTeam
     end
   end
 
+  configure :development do
+    require 'new_relic/rack_app'
+    use NewRelic::Rack::DeveloperMode
+  end
+
 end
