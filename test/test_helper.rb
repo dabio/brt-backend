@@ -18,8 +18,6 @@ require_relative '../site'
 module TestHelper
   include Capybara
   include Rack::Test::Methods
-  include Sinatra::MainHelper
-  include Sinatra::PersonHelper
 
   def app
     BerlinRacingTeam
