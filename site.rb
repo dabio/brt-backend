@@ -92,7 +92,7 @@ class BerlinRacingTeam
 
       if @person.save
         flash.now[:notice] = 'Änderung gesichert.'
-        redirect to(@person.permalink)
+        redirect to(@person.editlink)
       else
         slim :person_form
       end
