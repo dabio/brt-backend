@@ -302,6 +302,11 @@ class BerlinRacingTeam < Sinatra::Base
   end
 
 
+  get '/sponsoren' do
+    slim :sponsoren
+  end
+
+
   get '/css/styles.css' do
     cache_control :public, :max_age => 29030400
     scss :'css/styles'
