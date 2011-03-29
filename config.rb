@@ -12,6 +12,10 @@ class BerlinRacingTeam
 
   use Rack::ForceDomain, ENV['DOMAIN']
   use Rack::Session::Cookie
+  # We're using rack-timeout to ensure that our dynos don't get starved by
+  # renegade processes.
+  use Rack::Timeout
+  Rack::Timeout.timeout = 10
 
   set :root, File.dirname(__FILE__)
   set :cdn, '//berlinracingteam.commondatastorage.googleapis.com'
