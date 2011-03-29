@@ -19,9 +19,9 @@ require_relative 'config'
 # It's a good form to make your Sinatra applications be a subclass of
 class BerlinRacingTeam
 
-  after do
-    Visit.first_or_create(person: current_person).update(person: current_person) if has_auth?
-  end
+#  after do
+#    Visit.first_or_create(person: current_person).update(person: current_person) if has_auth?
+#  end
 
 
   get '/' do
