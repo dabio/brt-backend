@@ -19,11 +19,6 @@ require_relative 'config'
 # It's a good form to make your Sinatra applications be a subclass of
 class BerlinRacingTeam
 
-  after do
-    Visit.first_or_create(person: current_person).update(created_at: Time.now) if has_auth?
-  end
-
-
   get '/' do
     @news = News.all(:date.lte => today, :order => [:date.desc, :updated_at.desc],
                      :limit => 3)
@@ -55,6 +50,12 @@ class BerlinRacingTeam
     not_found unless has_auth?
     session[:person_id] = nil
     redirect to('/')
+  end
+
+
+  put '/visit' do
+    not_found unless has_auth?
+    Visit.first_or_create(person: current_person).update(created_at: Time.now)
   end
 
 
