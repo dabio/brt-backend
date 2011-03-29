@@ -17,6 +17,9 @@ class BerlinRacingTeam
   use Rack::Timeout
   Rack::Timeout.timeout = 10
 
+  # This method enables the ability for forms to use the _method hack for
+  # actual RESTful stuff.
+  set :method_override, true
   set :root, File.dirname(__FILE__)
   set :cdn, '//berlinracingteam.commondatastorage.googleapis.com'
 

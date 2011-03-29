@@ -14,6 +14,7 @@ html
       
       .c1-9.entry-content
         form method="post" action="#{{@person.new? ? '/team/new' : @person.editlink}}"
+          input type="hidden" name="_method" value="put"
 
           == slim :_errors, :locals => {:items => @person}
 
