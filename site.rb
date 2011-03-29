@@ -19,6 +19,11 @@ require_relative 'config'
 # It's a good form to make your Sinatra applications be a subclass of
 class BerlinRacingTeam
 
+  after do
+    Visit.first_or_create(person: current_person).update(person: current_person) if has_auth?
+  end
+
+
   get '/' do
     @news = News.all(:date.lte => today, :order => [:date.desc, :updated_at.desc],
                      :limit => 3)
@@ -105,6 +110,14 @@ class BerlinRacingTeam
   get '/rennen' do
     @events = Event.all(:date.gte => "#{today.year}-01-01",
                         :date.lte => "#{today.year}-12-31",
+                        order: [:date, :updated_at.desc])
+    slim :events
+  end
+
+
+  get '/rennen/:year' do
+    @events = Event.all(:date.gte => "#{params[:year]}-01-01",
+                        :date.lte => "#{params[:year]}-12-31",
                         order: [:date, :updated_at.desc])
     slim :events
   end

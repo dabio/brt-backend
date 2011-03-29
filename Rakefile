@@ -47,12 +47,12 @@ namespace "db" do
 
   desc 'Pull database from heroku'
   task :pull do
-    system "heroku", "db:pull", "sqlite://db/local.db"
+    system "heroku", "db:pull", "sqlite://db/local.db?encoding=utf8"
   end
 
   desc 'Push database to heroku'
   task :push do
-    system "heroku", "db:push", "sqlite://db/local.db"
+    system "heroku", "db:push", "sqlite://db/local.db?encoding=utf8"
   end
 end
 
