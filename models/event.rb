@@ -11,14 +11,12 @@ class Event
 
   property :id,         Serial
   property :date,       Date
-  property :title,      String, :length => 250
+  property :title,      String, length: 250
   property :url,        URI
   property :distance,   Integer
-  property :type,       Enum[:race, :training], :default => :race
+  property :type,       Enum[:race, :training], default: :race
   timestamps :at
-  property :slug,       String, :length => 2000, :default => lambda { |r, p|
-    slugify(r.title)
-  }
+  property :slug,       String, length: 2000, default: lambda { |r, p| slugify r.title }
  
   belongs_to :person
   has n, :reports
@@ -28,6 +26,8 @@ class Event
 
   validates_presence_of :date, :title, :distance#, :type
 
+  # this defaults the ordering when retreiving objects
+  default_scope(:default).update(order: [:date.desc, :updated_at.desc])
 #  after :save do |event|
 #    # save link in mixing table
 #    Mixing.first_or_create(:event => event).update(:date => event.date)

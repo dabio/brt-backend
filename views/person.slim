@@ -11,8 +11,28 @@ html
 
       .c1-9.entry-content
         h2.entry-title = @person.name
-        img src=[settings.cdn, @person.image_url].join width=616 height=199 alt=@person.name
-        .person-content == markdown @person.info
+        img src="#{settings.cdn}#{@person.image_url}" width=616 height=199 alt=@person.name
+        .person-content
+          - if @person.info
+            == markdown @person.info
+
+          - if @participations
+            h2 Ergebnisse
+            table
+              tr
+                th Rennen
+                th Pos.
+                th AK
+                th Datum
+              - @participations.each_with_index do |p, i|
+                - if i == 0 or p.date.year < @participations[i-1].date.year
+                  tr
+                    th colspan=4 = p.date.year
+                tr
+                  td = p.title
+                  td = p.position_overall
+                  td = p.position_age_class
+                  td = l p.date, :full
 
       .c10-12.entry-content
         h3.widget Rennkilometer #{today.year}
