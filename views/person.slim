@@ -17,25 +17,38 @@ html
             == markdown @person.info
 
           - if @participations.length > 0
-            h2 Ergebnisse
-            table
-              tr
-                th Rennen
-                th Pos.
-                th AK
-                th Datum
-              - @participations.each_with_index do |p, i|
-                - if i == 0 or p.date.year < @participations[i-1].date.year
-                  tr
-                    th colspan=4 = p.date.year
+            .participations
+              h2 Ergebnisse
+              table
                 tr
-                  td = p.title
-                  td = p.position_overall
-                  td = p.position_age_class
-                  td = l p.date, :full
+                  th
+                    h3 = @participations[0].date.year
+                  th
+                  th Ges.
+                  th AK
+                - @participations.each_with_index do |p, i|
+                  - if p.date.year < @participations[i-1].date.year
+                    tr
+                      th
+                        h3 = p.date.year
+                      th colspan="3"
+                  tr
+                    - if [3, 5, 6, 7].include? p.date.month
+                      td.date = "#{p.date.day}. #{l p.date, :month}"
+                    - else
+                      td.date = "#{p.date.day}. #{l(p.date, :month)[0..2]}."
+                    td = p.title
+                    td = p.position_overall
+                    td = p.position_age_class
 
       .c10-12.entry-content
-        h3.widget Rennkilometer #{today.year}
+        - if @participations.length > 0
+          - @participations.each_with_index do |p, i|
+            - if i == 0 or p.date.year < @participations[i-1].date.year
+              h3.widget = "Statistiken #{p.date.year}"
+              ul
+                li #{@participations.inject(0) { |s,v| v.date.year == p.date.year ? s+=v.distance : s+=0 }} Rennkilometer
+                li in #{@participations.inject(0) { |s,v| v.date.year == p.date.year ? s+=1 : s+=0 }} Rennteilnahmen
 
     == footer
     == slim :_javascript

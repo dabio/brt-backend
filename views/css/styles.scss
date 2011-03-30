@@ -300,10 +300,12 @@ form .error {
 }
 
 table th, table td {
-  padding: 0 20px 0 0;
+  padding-right: 15px;
 }
 table th {
     font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
     text-align: left;
 }
 table th .participate {
@@ -316,7 +318,10 @@ table th .participate input {
 table td.even {
     background: #fcfcfc;
 }
-
+table td.date,
+table th.date {
+  text-align: right;
+}
 
 /* ------------------------------------------------------------------------------ */
 /* 5. Footer Styles                                                               */
@@ -661,7 +666,12 @@ ul.debate {
 .person-content {
   padding-left: 142px;
 }
-
+.participations {
+  margin-top: 30px;
+}
+.participations h2 {
+  margin-bottom: 10px;
+}
 
 
 /* ------------------------------------------------------------------------------ */

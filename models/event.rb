@@ -26,8 +26,6 @@ class Event
 
   validates_presence_of :date, :title, :distance#, :type
 
-  # this defaults the ordering when retreiving objects
-  default_scope(:default).update(order: [:date.desc, :updated_at.desc])
 #  after :save do |event|
 #    # save link in mixing table
 #    Mixing.first_or_create(:event => event).update(:date => event.date)
