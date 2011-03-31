@@ -40,15 +40,31 @@ html
                     td = p.title
                     td = p.position_overall
                     td = p.position_age_class
+                  - if i == @participations.length-1 or p.date.year > @participations[i+1].date.year
+                    - km = @participations.inject(0) { |s,v| v.date.year == p.date.year ? s+=v.distance : s+=0 }
+                    - races = @participations.inject(0) { |s,v| v.date.year == p.date.year ? s+=1 : s+=0 }
+                    - top10 = @participations.inject(0) { |s,v| (v.date.year == p.date.year and v.position_overall < 11) ? s+=1 : s+=0 }
+                    tr
+                      td
+                      td.total colspan=3
+                        | #{races} Rennen mit #{km} km
+                        - if top10 == 1
+                          |  und einer Top10 Platzierung
+                        - if top10 > 1
+                          |  und #{top10} Top10 Platzierungen
 
       .c10-12.entry-content
+        h3.widget Kontakt
+        p.email = @person.email
+
         - if @participations.length > 0
-          - @participations.each_with_index do |p, i|
-            - if i == 0 or p.date.year < @participations[i-1].date.year
-              h3.widget = "Statistiken #{p.date.year}"
-              ul
-                li #{@participations.inject(0) { |s,v| v.date.year == p.date.year ? s+=v.distance : s+=0 }} Rennkilometer
-                li in #{@participations.inject(0) { |s,v| v.date.year == p.date.year ? s+=1 : s+=0 }} Rennteilnahmen
+          - @top10 = @participations.inject(0) { |s,v| v.position_overall < 11 ? s+=1 : s+=0 }
+          h3.widget Statistiken
+          p
+            | Rennkilometer: #{@participations.inject(0) { |s,v| s+=v.distance }} km<br/>
+            | Rennen: #{@participations.length}<br/>
+            - if @top10 > 0
+              | Top10: #{@top10}
 
     == footer
     == slim :_javascript

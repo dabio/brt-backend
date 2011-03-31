@@ -303,10 +303,10 @@ table th, table td {
   padding-right: 15px;
 }
 table th {
-    font-weight: bold;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    text-align: left;
+  font-weight: bold;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: left;
 }
 table th .participate {
     font-weight: normal;
@@ -321,6 +321,9 @@ table td.even {
 table td.date,
 table th.date {
   text-align: right;
+}
+table td.total {
+  padding: 5px 0 15px;
 }
 
 /* ------------------------------------------------------------------------------ */
@@ -337,6 +340,9 @@ table th.date {
     float: left;
     margin: 0 4px 4px 0;
     padding: 3px;
+}
+#footer .team a:hover img {
+  border: 1px solid #ccc;
 }
 #footer .next_events .date {
     display: block;
