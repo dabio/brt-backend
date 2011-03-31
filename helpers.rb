@@ -47,6 +47,12 @@ module Sinatra
       @cp
     end
 
+    # Encrypts given email-strings to format address [at] domain . tld. Every
+    # email is count and hold in the variable @encrypt_email_count
+    def encrypt_email email
+
+    end
+
     def footer
       @events = Event.all(:date.gte => today, :order => [:date, :updated_at.desc],
                           :limit => 3)
