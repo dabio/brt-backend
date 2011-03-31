@@ -47,10 +47,11 @@ class BerlinRacingTeam
       @cp
     end
 
-    # Encrypts given email-strings to format address [at] domain . tld. Every
-    # email is count and hold in the variable @encrypt_email_count
+    # Encrypts given email-strings to format address [at] domain . tld.
     def encrypt_email email
-
+      email = '' if email.nil?
+      email.gsub! /@/, ' [at] '
+      email.gsub! /\./, ' . '
     end
 
     def footer

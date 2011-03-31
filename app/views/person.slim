@@ -55,7 +55,7 @@ html
 
       .c10-12.entry-content
         h3.widget Kontakt
-        p.email = @person.email
+        p.email = encrypt_email(@person.email)
 
         - if @participations.length > 0
           - @top10 = @participations.inject(0) { |s,v| v.position_overall < 11 ? s+=1 : s+=0 }
