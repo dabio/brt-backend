@@ -12,7 +12,7 @@ require 'capybara/dsl'
 require 'minitest/autorun'
 require 'rack/test'
 
-require_relative '../site'
+require_relative '../init'
 
 
 module TestHelper

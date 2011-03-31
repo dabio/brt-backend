@@ -6,8 +6,8 @@
 #
 
 
-module Sinatra
-  module BerlinRacingTeamHelper
+class BerlinRacingTeam
+  helpers do
 
     # Taken from rails
     AUTO_LINK_RE = %r{(?:([\w+.:-]+:)//|www\.)[^\s<]+}x
@@ -35,7 +35,7 @@ module Sinatra
 
     def coat(file)
       require 'digest/md5'
-      hash = Digest::MD5.file("views#{file}").hexdigest[0..4]
+      hash = Digest::MD5.file("#{settings.views}/#{file}").hexdigest[0..4]
       "#{file.gsub(/\.scss$/, '.css')}?#{hash}"
     end
 
@@ -88,4 +88,3 @@ module Sinatra
 
   end
 end
-

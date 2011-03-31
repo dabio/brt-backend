@@ -5,7 +5,11 @@
 #   then a dot and a 'de')
 #
 
-require './init'
+class BerlinRacingTeam
 
-run BerlinRacingTeam
+  not_found do
+    slim :'404'
+  end
+
+end
 

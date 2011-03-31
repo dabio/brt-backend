@@ -5,7 +5,10 @@
 #   then a dot and a 'de')
 #
 
-require './init'
+class BerlinRacingTeam
 
-run BerlinRacingTeam
+  get '/sponsoren' do
+    slim :sponsoren
+  end
 
+end

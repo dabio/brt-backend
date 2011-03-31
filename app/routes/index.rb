@@ -5,7 +5,13 @@
 #   then a dot and a 'de')
 #
 
-require './init'
+class BerlinRacingTeam
 
-run BerlinRacingTeam
+  get '/' do
+    @news = News.all(:date.lte => today, :order => [:date.desc, :updated_at.desc],
+                     :limit => 3)
+    slim :index
+  end
+
+end
 

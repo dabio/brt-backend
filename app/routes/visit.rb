@@ -5,7 +5,12 @@
 #   then a dot and a 'de')
 #
 
-require './init'
+class BerlinRacingTeam
 
-run BerlinRacingTeam
+  put '/visit' do
+    not_found unless has_auth?
+    Visit.first_or_create(person: current_person).update(created_at: Time.now)
+  end
+
+end
 

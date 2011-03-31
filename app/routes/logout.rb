@@ -5,7 +5,13 @@
 #   then a dot and a 'de')
 #
 
-require './init'
+class BerlinRacingTeam
 
-run BerlinRacingTeam
+  get '/logout' do
+    not_found unless has_auth?
+    session[:person_id] = nil
+    redirect to('/')
+  end
+
+end
 
