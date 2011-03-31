@@ -11,9 +11,10 @@ hr
           span Team 
           span.raquo &raquo;
       ul
-        - for person in @people
+        - @people.each do |person|
           li
-            img src="#{{settings.cdn}}#{{person.avatar_url}}" width=45 height=45 alt=person.name
+            a href=person.permalink
+              img src="#{{settings.cdn}}#{{person.avatar_url}}" width=45 height=45 alt=person.name
     .c10-12.next_events
       h3.widget
         a href="/rennen"
