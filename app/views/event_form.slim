@@ -1,0 +1,49 @@
+doctype html
+html
+  == slim :_head, locals: {title: 'Rennen'}
+  body
+    == slim :_header
+
+    #content.container
+
+      .c1-12
+        h1.page-title
+          a href="/rennen" Rennen
+          - unless @event.new?
+            |  › #{@event.title}
+          - else
+            |  › Neu
+
+      .c1-9.entry-content
+
+        == styled_flash
+
+        form method="post" action="#{{@event.new? ? '/rennen/new' : @event.editlink}}"
+          input type="hidden" name="_method" value="put"
+
+          == slim :_errors, locals: {items: @event}
+
+          p
+            label for="event_date"
+              small Datum 
+              small.format YYYY-MM-DD
+            input type="date" id="event_date" name="event[date]" placeholder="#{Date.today}" value=@event.date
+          p
+            label for="event_title"
+              small Bezeichnung
+            input.full type="text" id="event_title" name="event[title]" value=@event.title
+          p
+            label for="event_url"
+              small URL
+            input.full type="url" id="event_url" name="event[url]" placeholder="http://" value=@event.url
+          p
+            label for="event_distance"
+              small Distanz
+            input type="number" id="event_distance" name="event[distance]" placeholder="80" value=@event.distance
+          p
+            button.clean-gray type="submit"
+              span Speichern
+
+    == footer
+    == slim :_javascript
+

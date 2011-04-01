@@ -19,10 +19,10 @@ html
           - @count += 1
           .hentry class="#{'last' if @count % 3 == 0}"
             h3
-              /- if has_auth? or today >= e.date
+              - if has_admin?# or today >= e.date
                 a href="#{{e.permalink}}" #{e.title}<span class="raquo">&nbsp;&raquo;</span>
-              /- else
-              =e.title
+              - else
+                =e.title
             .meta
               span.date = l e.date, :full
               - if e.participations.length > 0

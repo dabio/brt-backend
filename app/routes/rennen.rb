@@ -22,5 +22,28 @@ class BerlinRacingTeam
     slim :events
   end
 
+
+  get '/rennen/:y/:m/:d/:slug/edit' do
+    not_found unless @event = Event.first(
+      date: Date.new(params[:y].to_i, params[:m].to_i, params[:d].to_i),
+      slug: params[:slug]) and has_admin?
+
+    slim :event_form
+  end
+
+
+  put '/rennen/:y/:m/:d/:slug/edit' do
+    not_found unless @event = Event.first(
+      date: Date.new(params[:y].to_i, params[:m].to_i, params[:d].to_i),
+      slug: params[:slug]) and has_admin?
+
+    if @event.update(params[:event])
+      flash.now[:notice] = 'Deine Änderungen wurden gesichert'
+      redirect to(@event.editlink)
+    else
+      slim :event_form
+    end
+  end
+
 end
 
