@@ -5,6 +5,7 @@
 #   then a dot and a 'de')
 #
 
+require './app/helpers/dm'
 
 class Event
   include DataMapper::Resource

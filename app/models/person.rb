@@ -6,6 +6,8 @@
 #
 
 
+require './app/helpers/dm'
+
 class Person
   include DataMapper::Resource
 
