@@ -161,12 +161,12 @@ textarea {
 }
 
 .page-title {
-    font-size: 24px;
-    line-height: 28px;
-    font-family: "Droid Serif", Georgia, Times, serif;
-    font-style: italic;
-    padding: 38px 0;
-    border-bottom: 1px solid #e5ecf7;
+  font-size: 24px;
+  line-height: 28px;
+  font-family: "Droid Serif", Georgia, Times, serif;
+  font-style: italic;
+  padding: 38px 0;
+  border-bottom: 1px solid #e5ecf7;
 }
 
 /* ------------------------------------------------------------------------------ */
@@ -409,7 +409,7 @@ h2.entry-title {
     font-style: italic;
     color: #444;
     padding-left: 142px;
-    margin-bottom: 14px;
+    margin-bottom: 24px;
 }
 
 .entry-content .last {
@@ -679,6 +679,9 @@ ul.debate {
   margin-bottom: 10px;
 }
 
+.c10-12 .email {
+  color: #444;
+}
 
 /* ------------------------------------------------------------------------------ */
 /* 11. Flash-Messages                                                             */
