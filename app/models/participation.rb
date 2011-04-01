@@ -19,7 +19,7 @@ class Participation
 
   def self.get_person_results(person_id)
     # select out results from database with a sql
-    result = repository(:default).adapter.select('SELECT events.title, events.date, events.distance, position_overall, position_age_class FROM participations JOIN events ON participations.event_id = events.id WHERE participations.person_id = ? AND events.date <= ? AND position_overall ORDER BY events.date DESC;', person_id, Date.today)
+    result = repository(:default).adapter.select('SELECT events.title, events.date, events.distance, position_overall, position_age_class FROM participations JOIN events ON participations.event_id = events.id WHERE participations.person_id = ? AND events.date <= ? AND position_overall IS NOT NULL ORDER BY events.date DESC;', person_id, Date.today)
 
     # convert string date to Date object
     result.each { |item| item.date = Date.parse(item.date) }
