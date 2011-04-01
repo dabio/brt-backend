@@ -43,7 +43,7 @@ class BerlinRacingTeam
     # setting a session variable with their is. If it doesn't exist, we want to
     # return nil.
     def current_person
-      @cp = Person.first(:id => session[:person_id]) if session[:person_id] unless @cp
+      @cp = Person.first(id: session[:person_id]) if session[:person_id] unless @cp
       @cp
     end
 
@@ -57,7 +57,7 @@ class BerlinRacingTeam
     def footer
       @events = Event.all(:date.gte => today, :order => [:date, :updated_at.desc],
                           :limit => 3)
-      @people ||= Person.all(:order => [:last_name, :first_name])
+      @people ||= Person.all(order: [:last_name, :first_name])
       slim :_footer
     end
 
