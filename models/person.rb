@@ -6,7 +6,7 @@
 #
 
 
-require './app/helpers/dm'
+require(root_path('models/dm'))
 
 class Person
   include DataMapper::Resource

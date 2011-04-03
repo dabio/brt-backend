@@ -5,7 +5,7 @@
 #   then a dot and a 'de')
 #
 
-require './app/helpers/dm'
+require(root_path('models/dm'))
 
 class Event
   include DataMapper::Resource

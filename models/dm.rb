@@ -8,9 +8,9 @@
 module DataMapper
   class Property
 
-    autoload :BCryptHash,         './app/helpers/dm/bcrypt_hash'
-    autoload :Enum,               './app/helpers/dm/enum'
-    autoload :URI,                './app/helpers/dm/uri'
+    autoload :BCryptHash,         root_path('models/dm/bcrypt_hash')
+    autoload :Enum,               root_path('models/dm/enum')
+    autoload :URI,                root_path('models/dm/uri')
 
   end
 end

@@ -28,7 +28,6 @@ class BerlinRacingTeam < Sinatra::Base; end
 class BerlinRacingTeam
   set :method_override, true
   set :root, root_path
-  set :views, root_path('app', 'views')
 
   set :cdn, '//berlinracingteam.commondatastorage.googleapis.com'
 
@@ -62,9 +61,18 @@ end
 DataMapper::Logger.new($stdout, :debug) if RACK_ENV == 'development'
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
 
-Dir[root_path('app/**/*.rb')].each do |file|
+# controllers
+Dir[root_path('controllers/*.rb')].each do |file|
   require(file)
 end
+
+# models
+Dir[root_path('models/*.rb')].each do |file|
+  require(file)
+end
+
+# helpers
+require(root_path('helpers.rb'))
 
 if defined? Encoding
   Encoding.default_external = Encoding::UTF_8
