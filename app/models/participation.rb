@@ -12,18 +12,21 @@ class Participation
   property :event_id,   Integer, :key => true
   property :position_overall,   Integer
   property :position_age_class, Integer
+  # this property is needed only for ordering the participation on the person
+  # detail view
+  property :date,       Date
   timestamps :at
 
   belongs_to :person,   :key => true
   belongs_to :event,    :key => true
 
-  def self.get_person_results(person_id)
-    # select out results from database with a sql
-    result = repository(:default).adapter.select('SELECT events.title, events.date, events.distance, position_overall, position_age_class FROM participations JOIN events ON participations.event_id = events.id WHERE participations.person_id = ? AND events.date <= ? AND position_overall IS NOT NULL ORDER BY events.date DESC;', person_id, Date.today)
-
-    # convert string date to Date object
-    result.each { |item| item.date = Date.parse(item.date) } unless RACK_ENV == 'production'
+  before :save do |p|
+    # this hook adds the event date to this participation. this is needed to
+    # order the participations on a person detailed page.
+    p.date = p.event.date
   end
+
+  default_scope(:default).update(order: [:date.desc, :updated_at.desc])
 
 end
 

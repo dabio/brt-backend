@@ -14,8 +14,8 @@ class BerlinRacingTeam
 
 
   get '/team/:slug' do
-    not_found unless @person = Person.first(:slug => params[:slug])
-    @participations = Participation.get_person_results(@person.id) || []
+    not_found unless @person = Person.first(slug: params[:slug])
+    @participations = Participation.all(person: @person, :position_overall.not => nil)
     slim :person
   end
 
