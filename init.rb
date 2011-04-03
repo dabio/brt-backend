@@ -56,10 +56,10 @@ class BerlinRacingTeam
     end
   end
 
-end
+  DataMapper::Logger.new($stdout, :debug) if development?
+  DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
 
-DataMapper::Logger.new($stdout, :debug) if RACK_ENV == 'development'
-DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
+end
 
 # controllers
 Dir[root_path('controllers/*.rb')].each do |file|
