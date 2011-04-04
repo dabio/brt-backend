@@ -19,7 +19,8 @@ html
         == styled_flash
 
         form method="post" action="#{{@event.new? ? '/rennen/new' : @event.editlink}}"
-          input type="hidden" name="_method" value="put"
+          - unless @event.new?
+            input type="hidden" name="_method" value="put"
 
           == slim :_errors, locals: {items: @event}
 
