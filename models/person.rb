@@ -56,6 +56,34 @@ class Person
     "#{permalink}/edit"
   end
 
+  def events_distance(year=nil)
+    if year
+      participations.inject(0) do |s,v|
+        v.date.year == year ? s+=v.event.distance : s+=0
+      end
+    else
+      events.inject(0) { |s,v| s+=v.distance }
+    end
+  end
+
+  def participations_count(year=nil)
+    if year
+      participations.inject(0) { |s,v| v.date.year == year ? s+=1 : s+=0 }
+    else
+      participations.length
+    end
+  end
+
+  def participations_top10_count(year=nil)
+    if year
+      participations.inject(0) do |s,v|
+        (v.date.year == year and v.position_overall.to_i < 11) ? s+=1 : s+=0
+      end
+    else
+      participations.inject(0) { |s,v| v.position_overall.to_i < 11 ? s+=1 : s+=0 }
+    end
+  end
+
   def self.authenticate(email, password)
     return nil unless person = Person.first(email: email)
     person.password == password ? person : nil
