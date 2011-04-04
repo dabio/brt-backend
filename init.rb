@@ -28,6 +28,7 @@ class BerlinRacingTeam < Sinatra::Base; end
 class BerlinRacingTeam
   set :method_override, true
   set :root, root_path
+  set :default_locale, 'de'
 
   set :cdn, '//berlinracingteam.commondatastorage.googleapis.com'
 
