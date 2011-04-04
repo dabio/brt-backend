@@ -48,7 +48,7 @@ html
                     tr
                       td
                       td.total colspan=3
-                        | #{@person.events_distance(year)} Rennen mit #{@person.events_distance(year)} km
+                        | #{@person.participations_count(year)} Rennen mit #{@person.events_distance(year)} km
                         - if top10 == 1
                           |  und einer Top10 Platzierung
                         - if top10 > 1
