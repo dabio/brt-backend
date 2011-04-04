@@ -18,7 +18,7 @@ html
           - if @person.info
             == markdown @person.info
 
-          - if @participations
+          - if @participations.length > 0
             .participations
               h2 Ergebnisse
               table
