@@ -1,6 +1,6 @@
 # coding:utf-8
 #
-#   this is berlinracingteam.de, a cuba application
+#   this is berlinracingteam.de, a sinatra application
 #   it is copyright (c) 2009-2011 danilo braband (danilo @ berlinracingteam,
 #   then a dot and a 'de')
 #
@@ -24,6 +24,13 @@ class SiteTest < MiniTest::Unit::TestCase
 
     visit '/kontakt'
     assert_equal 200, page.status_code
+
+    visit '/team/nina-buhne'
+    assert_equal 200, page.status_code
+
+    visit '/team/danilo-braband'
+    assert_equal 200, page.status_code
+    assert_match'11 Rennen mit 758 km und 3 Top10 Platzierungen', page.body
 
     # sites are only visible for logged in users
     visit '/diskussionen'
