@@ -61,13 +61,12 @@ html
           a.email = encrypt_email(@person.email)
 
         - if @participations.length > 0
-          - @top10 = @participations.inject(0) { |s,v| v.position_overall.to_i < 11 ? s+=1 : s+=0 }
           h3.widget Statistiken
           p
-            | Rennkilometer: #{@participations.inject(0) { |s,v| s+=v.event.distance }} km<br/>
-            | Rennen: #{@participations.length}<br/>
-            - if @top10 > 0
-              | Top10: #{@top10}
+            | Rennkilometer: #{@overall_distance} km<br/>
+            | Rennen: #{@overall_events}<br/>
+            - if @overall_top10 > 0
+              | Top10: #{@overall_top10}
 
     == footer
     == slim :_javascript

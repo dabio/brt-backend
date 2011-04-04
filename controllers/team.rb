@@ -16,6 +16,15 @@ class BerlinRacingTeam
   get '/team/:slug' do
     not_found unless @person = Person.first(slug: params[:slug])
     @participations = Participation.all(person: @person, :position_overall.not => nil)
+
+    @overall_events = @participations.length
+    @overall_distance = @participations.inject(0) do |s,v|
+      s+=v.event.distance
+    end
+    @overall_top10 = @participations.inject(0) do |s,v|
+      v.position_overall.to_i < 11 ? s+=1 : s+=0
+    end
+
     slim :person
   end
 
