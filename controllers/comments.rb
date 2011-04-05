@@ -17,9 +17,9 @@ class BerlinRacingTeam
     if @comment.save
       @foreign_model.update updated_at: Time.now
       redirect to("#{@foreign_model.permalink}#comment_#{@comment.id}")
-    else
-      redirect to(@foreign_model.permalink)
     end
+
+    redirect to(@foreign_model.permalink)
   end
 
 end

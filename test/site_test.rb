@@ -46,7 +46,7 @@ class SiteTest < MiniTest::Unit::TestCase
 
   def test_login
     login
-    assert_match 'Hallo Dummy, du bist angemeldet', page.body
+    assert_match ', du bist angemeldet', page.body
     assert_match 'Diskussionen', page.body
     logout
   end

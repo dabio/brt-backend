@@ -188,10 +188,13 @@ textarea {
 }
 #current_person img.avatar {
     background: #fff;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #e5ecf7;
     padding: 3px;
     overflow: auto;
     float: left;
+}
+#current_person a:hover img.avatar {
+  border: 1px solid #ccc;
 }
 #current_person p {
     margin-top: 1px;
