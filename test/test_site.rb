@@ -16,6 +16,10 @@ class TestSite < Test::Unit::TestCase
     BerlinRacingTeam
   end
 
+  def login
+    post '/login', email: 'dummy@user.com', password: 'test123'
+  end
+
   def test_main_css
     get '/css/styles.css'
     assert last_response.ok?
@@ -60,6 +64,13 @@ class TestSite < Test::Unit::TestCase
     person = Person.first(slug: 'danilo-braband')
     get person.editlink
     assert_equal 404, last_response.status
+  end
+
+  def test_person_edit
+    login
+    person = Person.first(slug: 'dummy-user')
+    get person.editlink
+    assert last_response.ok?
   end
 
   def test_404
