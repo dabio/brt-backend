@@ -16,6 +16,11 @@ require './app'
 require 'test/unit'
 require 'rack/test'
 
+# create dummy user for testing authenticated views
+Person.create(first_name: 'Dummy', last_name: 'User', email: 'dummy@user.com',
+              password: 'test123', password_confirmation: 'test123')
+
+
 #DataMapper::Logger.new($stdout, :debug)
 DataMapper.setup(:default, 'sqlite3:db/test.db?encoding=utf8')
 
