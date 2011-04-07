@@ -17,7 +17,11 @@ class TestSite < Test::Unit::TestCase
   end
 
   def login
-    post '/login', email: 'dummy@user.com', password: 'test123'
+    post '/login', {email: 'dummy@user.com', password: 'test123'}
+  end
+
+  def logout
+    get '/logout'
   end
 
   def test_main_css
@@ -71,6 +75,7 @@ class TestSite < Test::Unit::TestCase
     person = Person.first(slug: 'dummy-user')
     get person.editlink
     assert last_response.ok?
+    assert last_response.body.include?(person.email)
   end
 
   def test_404
