@@ -1,6 +1,6 @@
 # encoding: utf-8
 #
-#   this is berlinracingteam.de, a cuba application
+#   this is berlinracingteam.de, a sinatra application
 #   it is copyright (c) 2009-2011 danilo braband (danilo @ berlinracingteam,
 #   then a dot and a 'de')
 #
@@ -59,6 +59,48 @@ class BerlinRacingTeam
 
   DataMapper::Logger.new($stdout, :debug) if development?
   DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
+
+
+  head '/' do; end
+
+
+  get '/' do
+    @news = News.all(:date.lte => today, :order => [:date.desc, :updated_at.desc],
+                     :limit => 3)
+    slim :index
+  end
+
+
+  get '/team' do
+    @people = Person.all :order => [:last_name, :first_name]
+    slim :people
+  end
+
+
+  get '/team/:slug' do
+    not_found unless @person = Person.first(slug: params[:slug])
+    slim :person
+  end
+
+
+  get '/team/:slug/edit' do
+    not_found unless @person = Person.first(slug: params[:slug])
+    not_found unless @person == current_person or has_admin?
+
+    slim :person_form
+  end
+
+
+  get '/css/:stylesheet.css' do
+    content_type 'text/css', charset: 'UTF-8'
+    cache_control :public, max_age: 29030400
+    scss :"css/#{params[:stylesheet]}"
+  end
+
+
+  not_found do
+    slim :'404'
+  end
 
 end
 

@@ -13,15 +13,16 @@ gem 'dm-validations'
 gem 'bcrypt-ruby', require: 'bcrypt'
 gem 'unidecode'
 gem 'rdiscount'
-gem 'newrelic_rpm'
 
 group :development, :test do
   gem 'dm-sqlite-adapter'
-  gem 'shotgun'
-  gem 'heroku'
-  gem 'capybara'
+  gem 'shotgun', require: false
+  gem 'heroku', require: false
+  gem 'simplecov', require: false
+  gem 'rack-test', require: false
 end
 
 group :production do
   gem 'dm-postgres-adapter'
+  gem 'newrelic_rpm'
 end

@@ -5,7 +5,7 @@
 #   then a dot and a 'de')
 #
 
-require './init'
+require './app'
 
 run BerlinRacingTeam
 

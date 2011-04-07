@@ -8,10 +8,18 @@
 
 task :default => :test
 task :test do
+  require 'fileutils'
   require 'rake/testtask'
+
+  # copy actual database file aside for testing
+  FileUtils.cp 'db/local.db', 'db/test.db'
+
   Rake::TestTask.new do |t|
-    t.pattern = "test/*_test.rb"
+    t.libs << 'test'
+    t.pattern = 'test/test_*.rb'
+    t.verbose = true
   end
+
 end
 
 
