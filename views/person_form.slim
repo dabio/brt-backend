@@ -13,6 +13,9 @@ html
           h1.page-title Mein Profil
       
       .c1-9.entry-content
+
+        == styled_flash
+
         form method="post" action="#{{@person.new? ? '/team/new' : @person.editlink}}"
           input type="hidden" name="_method" value="put"
 

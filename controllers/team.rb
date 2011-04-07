@@ -9,50 +9,46 @@ class BerlinRacingTeam
 
   get '/team' do
     @people = Person.all :order => [:last_name, :first_name]
+
     slim :people
   end
 
 
   get '/team/:slug' do
     not_found unless @person = Person.first(slug: params[:slug])
+
     slim :person
   end
 
 
   get '/team/:slug/edit' do
     not_found unless @person = Person.first(slug: params[:slug])
+    not_found unless @person == current_person or has_admin?
 
-    if @person == current_person or has_admin?
-      slim :person_form
-    else
-      not_found
-    end
+    slim :person_form
   end
 
 
   put '/team/:slug/edit'do
     not_found unless @person = Person.first(slug: params[:slug])
+    not_found unless @person == current_person or has_admin?
 
-    if @person == current_person or has_admin?
-      @person.attributes = {
-        :email  => params[:person]['email'],
-        :info   => params[:person]['info']
-      }
+    @person.attributes = {
+      :email  => params[:person]['email'],
+      :info   => params[:person]['info']
+    }
 
-      unless params[:person]['password'].empty?
-        @person.password = params[:person]['password']
-        @person.password_confirmation = params[:person]['password_confirmation']
-      end
-
-      if @person.save
-        flash.now[:notice] = 'Änderung gesichert.'
-        redirect to(@person.editlink)
-      else
-        slim :person_form
-      end
-    else
-      not_found
+    unless params[:person]['password'].empty?
+      @person.password = params[:person]['password']
+      @person.password_confirmation = params[:person]['password_confirmation']
     end
+
+    if @person.save
+      flash[:notice] = 'Änderung gesichert.'
+      redirect to(@person.editlink)
+    end
+
+    slim :person_form
   end
 
 end

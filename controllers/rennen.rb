@@ -30,7 +30,7 @@ class BerlinRacingTeam
     @event.person = current_person
 
     if @event.save
-      flash.now[:notice] = 'Rennen erstellt'
+      flash[:notice] = 'Rennen erstellt'
       redirect to('/rennen')
     end
 
@@ -61,7 +61,7 @@ class BerlinRacingTeam
       slug: params[:slug]) and has_admin?
 
     if @event.update(params[:event])
-      flash.now[:notice] = 'Deine Änderungen wurden gesichert'
+      flash[:notice] = 'Deine Änderungen wurden gesichert'
       redirect to(@event.editlink)
     end
 
