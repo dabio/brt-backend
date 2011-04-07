@@ -1,0 +1,20 @@
+doctype html
+html
+  == slim :_head, locals: {title: 'Dashboard'}
+  body
+    == slim :_header
+
+    #content.container
+
+      .c1-12
+        h1.page-title Dashboard
+
+      .c1-12.entry-content
+        
+        - @visits.each do |visit|
+          p =visit.person.name
+
+    == footer
+    == slim :_javascript
+ 
+
