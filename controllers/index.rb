@@ -7,6 +7,8 @@
 
 class BerlinRacingTeam
 
+  head '/' do; end
+
   get '/' do
     @news = News.all(:date.lte => today, :order => [:date.desc, :updated_at.desc],
                      :limit => 3)
