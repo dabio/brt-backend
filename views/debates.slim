@@ -17,7 +17,7 @@ html
                 img.avatar src="#{{settings.cdn}}#{{d.person.avatar_url}}" width=45 height=45 alt=d.person.name
               .2-9
                 h3
-                  a href=d.permalink #{d.title} <span class="raquo">&raquo;</span>
+                  a href="#{{d.permalink}}" #{d.title} <span class="raquo">&raquo;</span>
                 .meta
                   span Erstellt von <strong>#{d.person.name}</strong>, 
                   - if d.comments.count == 2
