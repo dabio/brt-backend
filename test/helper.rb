@@ -15,6 +15,7 @@ SimpleCov.start
 require './app'
 require 'test/unit'
 require 'rack/test'
+require 'slim'
 
 # create dummy user for testing authenticated views
 Person.create(first_name: 'Dummy', last_name: 'User', email: 'dummy@user.com',

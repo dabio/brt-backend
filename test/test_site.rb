@@ -43,6 +43,30 @@ class TestSite < Test::Unit::TestCase
     assert last_response.body.include?('Neuigkeiten rund um das Berlin Racing Team')
   end
 
+  def test_dashboard_404
+    get '/dashboard'
+    assert_equal 404, last_response.status
+  end
+
+  def test_dashboard
+    login
+    get '/dashboard'
+    assert last_response.ok?
+    logout
+  end
+
+  def test_login
+    get '/login'
+    assert last_response.ok?
+    assert last_response.body.include?('Anmelden')
+  end
+
+  def test_login_wrong_credentials
+    post '/login', {email: 'dummy@user.com', password: 'blahblah'}
+    assert last_response.ok?
+    assert last_response.body.include?('Unbekannte E-Mail oder falsches Password')
+  end
+
   def test_team_site_essentials
     get '/team'
     assert last_response.ok?
@@ -65,17 +89,42 @@ class TestSite < Test::Unit::TestCase
   end
 
   def test_person_edit_404
-    person = Person.first(slug: 'danilo-braband')
+    person = Person.first(slug: 'dummy-user')
     get person.editlink
     assert_equal 404, last_response.status
   end
 
-  def test_person_edit
-    login
-    person = Person.first(slug: 'dummy-user')
-    get person.editlink
+  def test_person_visit_404
+    put '/visit'
+    assert_equal 404, last_response.status
+  end
+
+  def test_events_site_essentials
+    year = today.year
+    @events = Event.all(:date.gte => "#{year}-01-01", :date.lte => "#{year}-12-31")
+
+    get '/rennen'
     assert last_response.ok?
-    assert last_response.body.include?(person.email)
+    @events.each do |event|
+      assert last_response.body.include?("<h3>#{event.title.sub(/\s.+/, '')}")
+    end
+  end
+
+  def test_events_previous_year
+    year = today.year-1
+
+    @events = Event.all(:date.gte => "#{year}-01-01", :date.lte => "#{year}-12-31")
+
+    get "/rennen/#{year}"
+    assert last_response.ok?
+    @events.each do |event|
+      assert last_response.body.include?("<h3>#{event.title.sub(/\s.+/, '')}")
+    end
+  end
+
+  def test_sponsoren
+    get '/sponsoren'
+    assert last_response.ok?
   end
 
   def test_404

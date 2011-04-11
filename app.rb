@@ -71,6 +71,41 @@ class BerlinRacingTeam
   end
 
 
+  get '/dashboard' do
+    not_found unless has_auth?
+
+    @visits = Visit.all(order: [:updated_at.desc])
+    slim :dashboard
+  end
+
+
+  get '/login' do
+    redirect to('/') if has_auth?
+    slim :login
+  end
+
+
+  post '/login' do
+    params[:email] << '@berlinracingteam.de' unless params[:email]['@']
+    @person = Person.authenticate(params[:email], params[:password])
+
+    if @person
+      session[:person_id] = @person.id
+      redirect to(params[:next])
+    else
+      flash.now[:error] = 'Unbekannte E-Mail oder falsches Password eingegeben.'
+      slim :login
+    end
+  end
+
+
+  get '/logout' do
+    not_found unless has_auth?
+    session[:person_id] = nil
+    redirect to('/')
+  end
+
+
   get '/team' do
     @people = Person.all :order => [:last_name, :first_name]
     slim :people
@@ -91,6 +126,186 @@ class BerlinRacingTeam
   end
 
 
+  put '/team/:slug/edit'do
+    not_found unless @person = Person.first(slug: params[:slug])
+    not_found unless @person == current_person or has_admin?
+
+    @person.attributes = {
+      :email  => params[:person]['email'],
+      :info   => params[:person]['info']
+    }
+
+    unless params[:person]['password'].nil? or params[:person]['password'].empty?
+      @person.password = params[:person]['password']
+      @person.password_confirmation = params[:person]['password_confirmation']
+    end
+
+    if @person.save
+      flash[:notice] = 'Änderung gespeichert.'
+      redirect to(@person.editlink)
+    end
+
+    slim :person_form
+  end
+
+
+  get '/rennen' do
+    @events = Event.all(:date.gte => "#{today.year}-01-01",
+                        :date.lte => "#{today.year}-12-31",
+                        order: [:date, :updated_at.desc])
+    slim :events
+  end
+
+
+  get '/rennen/:y/:m/:d/:slug/edit' do
+    date = Date.new params[:y].to_i, params[:m].to_i, params[:d].to_i
+    not_found unless @event = Event.first(date: date, slug: params[:slug])
+    not_found unless has_auth?
+
+    slim :event_form
+  end
+
+
+  put '/rennen/:y/:m/:d/:slug/edit' do
+    date = Date.new params[:y].to_i, params[:m].to_i, params[:d].to_i
+    not_found unless @event = Event.first(date: date, slug: params[:slug])
+    not_found unless has_auth?
+
+    if @event.update(params[:event])
+      flash[:notice] = 'Deine Änderungen wurden gesichert'
+      redirect to(@event.editlink)
+    end
+
+    slim :event_form
+  end
+
+
+  get '/rennen/new' do
+    not_found unless has_auth?
+    @event = Event.new
+    slim :event_form
+  end
+
+
+  post '/rennen/new' do
+    not_found unless has_auth?
+
+    @event = Event.new(params[:event])
+    @event.person = current_person
+
+    if @event.save
+      flash[:notice] = 'Rennen erstellt'
+      redirect to('/rennen')
+    end
+
+    slim :event_form
+  end
+
+
+  get '/rennen/:year' do
+    @events = Event.all(:date.gte => "#{params[:year]}-01-01",
+                        :date.lte => "#{params[:year]}-12-31",
+                        order: [:date, :updated_at.desc])
+    slim :events
+  end
+
+
+  get '/diskussionen' do
+    not_found unless @debates = Debate.all(order: [:updated_at.desc]) and has_auth?
+
+    slim :debates
+  end
+
+
+  get '/diskussionen/new' do
+    not_found unless has_auth?
+
+    @debate = Debate.new
+    @comment = Comment.new
+
+    slim :debate_form
+  end
+
+
+  post '/diskussionen/new' do
+    not_found unless has_auth?
+
+    @debate = Debate.new params[:debate]
+    @debate.person = current_person
+
+    @comment = Comment.new params[:comment]
+    @comment.person = current_person
+    @comment.debate = @debate
+
+    if @debate.valid? and @comment.valid?
+      @debate.save
+      @comment.save
+
+      flash[:notice] = 'Thema erfolgreich erstellt.'
+      redirect to(@debate.permalink)
+    end
+
+    slim :debate_form
+  end
+
+
+  get '/diskussionen/:id' do
+    not_found unless @debate = Debate.first(id: params[:id]) and has_auth?
+
+    slim :debate
+  end
+
+
+  put '/visit' do
+    not_found unless has_auth?
+    Visit.first_or_create(person: current_person).update(created_at: Time.now)
+  end
+
+
+  get '/sponsoren' do
+    slim :sponsoren
+  end
+
+
+  get '/kontakt' do
+    @email = Email.new()
+    slim :kontakt
+  end
+
+
+  post '/kontakt' do
+    raise not_found unless params[:email].length == 0
+
+    @email = Email.new params[:contact]
+    if @email.save
+      @email.update :send_at => Time.now
+
+      send_email(ENV['CONTACT_EMAIL'], :from => @email.email, :from_alias => @email.name, :subject => 'Nachricht von berlinracingteam.de', :body => @email.message)
+      flash[:notice] = "#{@email.name}, vielen Dank für deine Nachricht! Wir werden sie so schnell wie möglich beantworten."
+
+      redirect to('/kontakt')
+    else
+      slim :kontakt
+    end
+  end
+
+
+  post '/comments/new' do
+    not_found unless has_auth?
+
+    @foreign_model = Kernel.const_get(params[:type]).first(id: params[:type_id])
+    @comment = Comment.new(text: params[:text],
+                           params[:type].downcase => @foreign_model,
+                           person: current_person)
+    if @comment.save
+      @foreign_model.update updated_at: Time.now
+      redirect to("#{@foreign_model.permalink}#comment_#{@comment.id}")
+    end
+
+    redirect to(@foreign_model.permalink)
+  end
+
+
   get '/css/:stylesheet.css' do
     content_type 'text/css', charset: 'UTF-8'
     cache_control :public, max_age: 29030400
@@ -104,21 +319,12 @@ class BerlinRacingTeam
 
 end
 
-# controllers
-Dir[root_path('controllers/*.rb')].each do |file|
-  require(file)
-end
-
-# models
-Dir[root_path('models/*.rb')].each do |file|
-  require(file)
-end
 
 # helpers
 require(root_path('helpers.rb'))
 
-if defined? Encoding
-  Encoding.default_external = Encoding::UTF_8
-  Encoding.default_internal = Encoding::UTF_8
+# models
+Dir[root_path('models/*.rb')].each do |file|
+  require(file)
 end
 
