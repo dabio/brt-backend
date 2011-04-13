@@ -8,7 +8,7 @@
 
 require 'helper'
 
-class TestEvent < Test::Unit::TestCase
+class TestDebate < Test::Unit::TestCase
   include Rack::Test::Methods
   include Helpers
 
@@ -59,6 +59,17 @@ class TestEvent < Test::Unit::TestCase
     # get last response and check if it is in our redirect url
     debate = Debate.first(order: [:created_at.desc])
     assert last_response.headers['Location'].include?(debate.permalink)
+    get debate.permalink
+    assert last_response.body.include?(debate.title)
+    logout
+  end
+
+  def test_debate_new_wrong_input
+    login
+    post '/diskussionen/new'
+    assert last_response.body.include?('Korrigiere bitte folgende Angabe')
+    post '/diskussionen/new', {'debate[title]' => 'test titel'}
+    assert last_response.body.include?('Korrigiere bitte folgende Angabe')
     logout
   end
 
@@ -75,6 +86,28 @@ class TestEvent < Test::Unit::TestCase
       get debate.permalink
       assert last_response.body.include?(" › #{debate.title.sub(/\s.+/, '')}")
     end
+    logout
+  end
+
+  def test_debate_comment_404
+    post '/comments/new'
+    assert_equal 404, last_response.status
+  end
+
+  def test_debate_comment
+    login
+    debate = Debate.first(order: [:created_at.desc])
+    post '/comments/new', {'type' => 'Debate', 'type_id' => debate.id,
+      'text' => 'Testcomment'}
+    assert last_response.headers['Location'].include?("#{debate.permalink}#comment_")
+    logout
+  end
+
+  def test_debate_comment_missing_text
+    login
+    debate = Debate.first(order: [:created_at.desc])
+    post '/comments/new', {'type' => 'Debate', 'type_id' => debate.id}
+    assert last_response.headers['Location'].include?(debate.permalink)
     logout
   end
 
