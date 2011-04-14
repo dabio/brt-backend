@@ -91,7 +91,7 @@ class BerlinRacingTeam
 
     if @person
       session[:person_id] = @person.id
-      redirect to(params[:next])
+      redirect to('/dashboard')
     else
       flash.now[:error] = 'Unbekannte E-Mail oder falsches Password eingegeben.'
       slim :login
