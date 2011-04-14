@@ -8,21 +8,7 @@
 
 require 'helper'
 
-class TestKontakt < Test::Unit::TestCase
-  include Rack::Test::Methods
-  include Helpers
-
-  def app
-    BerlinRacingTeam
-  end
-
-  def login
-    post '/login', {email: 'dummy@user.com', password: 'test123'}
-  end
-
-  def logout
-    get '/logout'
-  end
+class TestKontakt < TestHelper
 
   def test_kontakt
     get '/kontakt'
@@ -34,4 +20,6 @@ class TestKontakt < Test::Unit::TestCase
     post '/kontakt', {email: 'this@email.spam'}
     assert_equal 404, last_response.status
   end
+
 end
+

@@ -8,56 +8,43 @@
 
 require 'helper'
 
-class TestEvent < Test::Unit::TestCase
-  include Rack::Test::Methods
-  include Helpers
-
-  def app
-    BerlinRacingTeam
-  end
-
-  def login
-    post '/login', {email: 'dummy@user.com', password: 'test123'}
-  end
-
-  def logout
-    get '/logout'
-  end
-
-  def setup
-    @event = Event.first(id: 10)
-  end
+class TestEvent < TestHelper
 
   def test_event_view_404
-    get @event.permalink
+    event = Event.first(id: 10)
+    get event.permalink
     assert_equal 404, last_response.status
   end
 
   def test_event_edit_404
-    get @event.editlink
+    event = Event.first(id: 10)
+    get event.editlink
     assert_equal 404, last_response.status
-    put @event.editlink
+    put event.editlink
     assert_equal 404, last_response.status
   end
 
   def test_event_edit
     login
-    get @event.editlink
+    event = Event.first(id: 10)
+    get event.editlink
     assert last_response.ok?
-    assert last_response.body.include?(@event.title)
+    assert last_response.body.include?(event.title)
     logout
   end
 
   def test_event_edit_title
     login
-    put @event.editlink, {'event[title]' => 'testtitel'}
-    assert last_response.headers['Location'].include?(@event.editlink)
+    event = Event.first(id: 10)
+    put event.editlink, {'event[title]' => 'testtitel'}
+    assert last_response.headers['Location'].include?(event.editlink)
     logout
   end
 
   def test_event_edit_title_to_none
     login
-    put @event.editlink, {'event[title]' => ''}
+    event = Event.first(id: 10)
+    put event.editlink, {'event[title]' => ''}
     assert last_response.body.include?('Title must not be blank')
     logout
   end

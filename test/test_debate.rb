@@ -8,21 +8,7 @@
 
 require 'helper'
 
-class TestDebate < Test::Unit::TestCase
-  include Rack::Test::Methods
-  include Helpers
-
-  def app
-    BerlinRacingTeam
-  end
-
-  def login
-    post '/login', {email: 'dummy@user.com', password: 'test123'}
-  end
-
-  def logout
-    get '/logout'
-  end
+class TestDebate < TestHelper
 
   def test_debates_404
     get '/diskussionen'
