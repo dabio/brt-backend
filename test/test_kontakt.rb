@@ -34,4 +34,9 @@ class TestKontakt < Test::Unit::TestCase
     post '/kontakt', {email: 'this@email.spam'}
     assert_equal 404, last_response.status
   end
+
+  def test_kontakt_submit
+    post '/kontakt', {'contact[email]': 'dummy@user.com', 'contact[name]': '',
+      'contact[text]': ''}
+  end
 end
