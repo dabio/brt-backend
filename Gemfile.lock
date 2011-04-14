@@ -1,7 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    addressable (2.2.4)
+    addressable (2.2.5)
     bcrypt-ruby (2.1.4)
     configuration (1.2.0)
     data_objects (0.10.3)
@@ -43,13 +43,13 @@ GEM
     rdiscount (1.6.8)
     rest-client (1.6.1)
       mime-types (>= 1.16)
-    sass (3.1.0.alpha.252)
+    sass (3.1.0.alpha.253)
     shotgun (0.9)
       rack (>= 1.0)
     simplecov (0.4.2)
       simplecov-html (~> 0.4.4)
     simplecov-html (0.4.4)
-    sinatra (1.2.1)
+    sinatra (1.2.3)
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
     sinatra-flash (0.3.0)
