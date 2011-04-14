@@ -8,21 +8,7 @@
 
 require 'helper'
 
-class TestSite < Test::Unit::TestCase
-  include Rack::Test::Methods
-  include Helpers
-
-  def app
-    BerlinRacingTeam
-  end
-
-  def login
-    post '/login', {email: 'dummy@user.com', password: 'test123'}
-  end
-
-  def logout
-    get '/logout'
-  end
+class TestSite < TestHelper
 
   def test_main_css
     get '/css/styles.css'
@@ -73,30 +59,6 @@ class TestSite < Test::Unit::TestCase
     Person.all.each do |person|
       assert last_response.body.include?(person.medium_url)
     end
-  end
-
-  def test_person_detail
-    person = Person.first(slug: 'danilo-braband')
-
-    get person.permalink
-    assert last_response.ok?
-
-    person.participations.each do |p|
-      assert last_response.body.include?(p.event.title)
-    end
-    assert last_response.body.include?("Rennen: #{person.participations.length}")
-    assert last_response.body.include?(encrypt_email(person.email))
-  end
-
-  def test_person_edit_404
-    person = Person.first(slug: 'dummy-user')
-    get person.editlink
-    assert_equal 404, last_response.status
-  end
-
-  def test_person_visit_404
-    put '/visit'
-    assert_equal 404, last_response.status
   end
 
   def test_events_site_essentials
