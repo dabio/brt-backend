@@ -277,10 +277,10 @@ class BerlinRacingTeam
     raise not_found unless params[:email].length == 0
 
     @email = Email.new params[:contact]
-    if @email.save
-      @email.update :send_at => Time.now
-
-      send_email(ENV['CONTACT_EMAIL'], :from => @email.email, :from_alias => @email.name, :subject => 'Nachricht von berlinracingteam.de', :body => @email.message)
+    if @email.valid?
+      @email.send_at = Time.now
+      @email.save
+      @email.send_email(ENV['CONTACT_EMAIL']) if production?
       flash[:notice] = "#{@email.name}, vielen Dank für deine Nachricht! Wir werden sie so schnell wie möglich beantworten."
 
       redirect to('/kontakt')

@@ -15,7 +15,6 @@ SimpleCov.start
 require './app'
 require 'test/unit'
 require 'rack/test'
-require 'slim'
 
 #DataMapper::Logger.new($stdout, :debug)
 DataMapper.setup(:default, 'sqlite3:db/test.db?encoding=utf8')

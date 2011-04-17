@@ -22,8 +22,8 @@ class TestKontakt < TestHelper
   end
 
   def test_kontakt_submit
-    post '/kontakt', {'contact[email]': 'dummy@user.com', 'contact[name]': '',
-      'contact[text]': ''}
+    post '/kontakt', {email: '', 'contact[email]' => 'dummy@user.com',
+      'contact[name]' => 'Dummy', 'contact[message]' => 'Dummytext'}
   end
 
 end
