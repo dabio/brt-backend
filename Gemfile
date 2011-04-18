@@ -13,6 +13,7 @@ gem 'dm-validations'
 gem 'bcrypt-ruby', require: 'bcrypt'
 gem 'unidecode'
 gem 'rdiscount'
+gem 'newrelic_rpm'
 
 group :development, :test do
   gem 'dm-sqlite-adapter'
@@ -24,5 +25,4 @@ end
 
 group :production do
   gem 'dm-postgres-adapter'
-  gem 'newrelic_rpm'
 end
