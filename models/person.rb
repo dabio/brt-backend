@@ -77,7 +77,7 @@ class Person
   def participations_top10_count(year=nil)
     if year
       participations.inject(0) do |s,v|
-        (v.date.year == year and v.position_overall.to_i < 11) ? s+=1 : s+=0
+        (v.date.year == year and v.position_overall.to_i < 11 and !v.position_overall.nil?) ? s+=1 : s+=0
       end
     else
       participations.inject(0) { |s,v| v.position_overall.to_i < 11 ? s+=1 : s+=0 }
