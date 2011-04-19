@@ -25,24 +25,30 @@ class Email
   property :send_at,    DateTime
   timestamps :at
 
-  def send_email(to, opts={})
+  before :save do |e|
+    e.send_at = Time.now
+    e.send_email
+  end
+
+  def send_email(opts={})
     require 'net/smtp'
 
+    opts[:to]         ||= ENV['CONTACT_EMAIL']
     opts[:server]     ||= 'smtp.sendgrid.net'
     opts[:port]       ||= 25
-    opts[:user]       ||= ENV["SENDGRID_USERNAME"]
-    opts[:password]   ||= ENV["SENDGRID_PASSWORD"]
+    opts[:user]       ||= ENV['SENDGRID_USERNAME']
+    opts[:password]   ||= ENV['SENDGRID_PASSWORD']
 
     msg = <<END_OF_MESSAGE
 From: #{name} <#{email}>
-To: <#{to}>
+To: <#{opts[:to]}>
 Subject: Nachricht von berlinracingteam.de
 
 #{message}
 END_OF_MESSAGE
 
     Net::SMTP.start(opts[:server], opts[:port], opts[:from], opts[:user], opts[:password], :plain) do |smtp|
-      smtp.send_message msg, opts[:from], to
+      smtp.send_message msg, opts[:from], opts[:to]
     end
     
   end
