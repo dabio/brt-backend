@@ -36,6 +36,19 @@ html
             p.meta = l item.date, :full
             p = item.message
 
+      .c1-12.home-wrap
+        .news-box
+          h3 Rennen
+          p Bei diesen Rennen haben wir um Spitzenplätze gekämpft
+          p
+            a.droid-italic href="/rennen" title="Weitere Rennen" Zur Übersicht »
+        - @events.each_with_index do |item, idx|
+          div class="news-box#{'-last' if idx == 2}"
+            h3
+              a href="#{{item.permalink}}" title=item.title = "#{item.title} »"
+            p.meta = l item.date, :full
+            p = item.participations_summary
+
     == footer
     == slim :_javascript
 

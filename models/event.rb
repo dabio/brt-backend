@@ -39,5 +39,30 @@ class Event
   def editlink
     "#{permalink}/edit"
   end
+
+  def participations_summary
+    return if participations.length < 1
+    s = ''
+    # participations
+    if participations.length == 1
+      s+= 'Mit einem Teilnehmer'
+    else
+      s+= "Mit #{participations.length} Teilnehmern"
+    end
+
+    # top10
+    top10 = participations.inject(0) do |s,v|
+      (!v.position_overall.nil? and v.position_overall.to_i < 11) ? s+=1 : s+=0
+    end
+
+    if top10 == 1
+      s+= ' und einer Top10 Platzierung'
+    elsif top10 > 1
+      s+= " und #{top10} Top10 Platzierungen"
+    end
+
+    s
+  end
+
 end
 

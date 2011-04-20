@@ -67,6 +67,7 @@ class BerlinRacingTeam
   get '/' do
     @news = News.all(:date.lte => today, :order => [:date.desc, :updated_at.desc],
                      :limit => 3)
+    @events = Event.all(:date.lte => today, :order => [:date.desc], :limit => 3)
     slim :index
   end
 
@@ -154,6 +155,11 @@ class BerlinRacingTeam
                         :date.lte => "#{today.year}-12-31",
                         order: [:date, :updated_at.desc])
     slim :events
+  end
+
+
+  get '/rennen/:y/:m/:d/:slug' do
+
   end
 
 
