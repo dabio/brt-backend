@@ -679,7 +679,7 @@ ul.debate {
 .person-content {
   padding-left: 142px;
 }
-.participations {
+.c1-9 .participations {
   margin-top: 30px;
 }
 .participations h2 {
@@ -691,7 +691,28 @@ ul.debate {
 }
 
 /* ------------------------------------------------------------------------------ */
-/* 11. Flash-Messages                                                             */
+/* 11. Event Detail                                                               */
+/* ------------------------------------------------------------------------------ */
+.participations a {
+  color: #444;
+}
+.participations a:hover {
+  color: $hover_color;
+  text-decoration: none;
+}
+.participations a .raquo {
+  visibility: hidden;
+}
+.participations a:hover .raquo {
+  visibility: visible;
+}
+table th .widget {
+  font-weight: normal;
+  margin-bottom: 0;
+}
+
+/* ------------------------------------------------------------------------------ */
+/* 13. Flash-Messages                                                             */
 /* ------------------------------------------------------------------------------ */
 
 .flash {

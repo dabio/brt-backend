@@ -160,7 +160,11 @@ class BerlinRacingTeam
 
 
   get '/rennen/:y/:m/:d/:slug' do
+    date = Date.new params[:y].to_i, params[:m].to_i, params[:d].to_i
+    not_found unless @event = Event.first(date: date, slug: params[:slug])
+    @report = Report.new if has_admin?
 
+    slim :event
   end
 
 
@@ -214,6 +218,22 @@ class BerlinRacingTeam
                         :date.lte => "#{params[:year]}-12-31",
                         order: [:date, :updated_at.desc])
     slim :events
+  end
+
+
+  post '/reports/new' do
+    not_found unless has_admin? and @event = Event.first(id: params[:event_id])
+
+    @report = Report.new params[:report]
+    @report.date = today
+    @report.event = @event
+    @report.person = current_person
+
+    if @report.save
+      redirect to(@event.permalink)
+    end
+
+    slim :event
   end
 
 

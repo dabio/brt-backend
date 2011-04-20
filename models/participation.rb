@@ -26,7 +26,7 @@ class Participation
     p.date = p.event.date
   end
 
-  default_scope(:default).update(order: [:date.desc, :updated_at.desc])
+  default_scope(:default).update(order: [:date.desc, :position_overall])
 
 end
 

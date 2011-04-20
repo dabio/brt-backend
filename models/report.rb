@@ -17,5 +17,14 @@ class Report
   belongs_to :event
 
   validates_presence_of :date, :text
+
+  def permalink
+    "/reports/#{id}"
+  end
+
+  def editlink
+    "#{permalink}/edit"
+  end
+
 end
 
