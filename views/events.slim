@@ -19,8 +19,8 @@ html
           - @count += 1
           .hentry class="#{'last' if @count % 3 == 0}"
             h3
-              - if has_admin?# or today >= e.date
-                a href="#{{e.permalink}}" #{e.title}<span class="raquo">&nbsp;&raquo;</span>
+              - if e.date <= today and e.participations.length > 0
+                a href="#{{e.permalink}}" #{e.title} »
               - else
                 =e.title
             .meta

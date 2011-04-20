@@ -45,7 +45,7 @@ html
         - @events.each_with_index do |item, idx|
           div class="news-box#{'-last' if idx == 2}"
             h3
-              a href="#{{item.permalink}}" title=item.title = "#{item.title} »"
+              a href="#{{item.permalink}}" title=item.title #{item.title} »
             p.meta = l item.date, :full
             p = item.participations_summary
 

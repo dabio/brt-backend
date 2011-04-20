@@ -65,9 +65,10 @@ class BerlinRacingTeam
 
 
   get '/' do
-    @news = News.all(:date.lte => today, :order => [:date.desc, :updated_at.desc],
-                     :limit => 3)
-    @events = Event.all(:date.lte => today, :order => [:date.desc], :limit => 3)
+    @news = News.all(:date.lte => today, order: [:date.desc, :updated_at.desc],
+                     limit: 3)
+    @events = Event.all(:date.lte => today, :participations.not => nil,
+                        order: [:date.desc, :updated_at.desc], limit: 3)
     slim :index
   end
 
