@@ -42,7 +42,7 @@ html
                       td.date = "#{p.date.day}. #{l(p.date, :month)[0..2]}."
                     td = "#{p.event.title}, #{p.event.distance} km"
                     td = p.position_overall
-                    td = p.position_age_class
+                    td.last = p.position_age_class
                   - if i == @person.participations.length-1 or year > @person.participations[i+1].date.year
                     - top10 = @person.participations_top10_count(year)
                     tr

@@ -4,7 +4,7 @@ html
   body
     == slim :_header
 
-    #content.container
+    #content.container.event
 
       .c1-12
         h1.page-title
@@ -53,17 +53,17 @@ html
                 - if !p.position_overall.nil?
                   tr
                     td
-                      a href="#{{p.person.permalink}}" #{p.person.name} <span class="raquo">»</span>
+                      a href="#{{p.person.permalink}}" #{p.person.name}
                     td = p.position_overall
-                    td = p.position_age_class
+                    td.last = p.position_age_class
               / now the drivers without a result
               - @event.participations.each do |p|
                 - if p.position_overall.nil?
                   tr
                     td
-                      a href="#{{p.person.permalink}}" #{p.person.name} <span class="raquo">»</span>
+                      a href="#{{p.person.permalink}}" #{p.person.name}
                     td = p.position_overall
-                    td = p.position_age_class
+                    td.last = p.position_age_class
 
     == footer
     == slim :_javascript

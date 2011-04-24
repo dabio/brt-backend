@@ -125,7 +125,7 @@ textarea {
     margin-bottom: 40px;
 }
 
-.c1-1, .c1-3, .c1-9, .c1-12, .c2-9, .c4-9, .c4-12, .c10-12 {
+.c1-1, .c1-3, .c1-6, .c1-9, .c1-12, .c2-9, .c4-9, .c4-12, .c7-12, .c10-12 {
     display: inline;
     float: left;
     margin-right: 18px;
@@ -135,6 +135,9 @@ textarea {
 }
 .c1-3 {
     width: 196px;
+}
+.c1-6 {
+  width: 406px;
 }
 .c1-9 {
     width: 616px;
@@ -152,6 +155,10 @@ textarea {
 .c4-12 {
     margin-right: 0;
     width: 612px;
+}
+.c7-12 {
+  margin-right: 0;
+  width: 402px;
 }
 .c10-12 {
     margin-right: 0;
@@ -304,6 +311,9 @@ form .error {
 
 table th, table td {
   padding-right: 15px;
+}
+table th.last, table td.last {
+  padding-right: 0;
 }
 table th {
   font-weight: bold;
@@ -691,20 +701,19 @@ ul.debate {
 }
 
 /* ------------------------------------------------------------------------------ */
-/* 11. Event Detail                                                               */
+/* 12 Event Detail                                                               */
 /* ------------------------------------------------------------------------------ */
 .participations a {
   color: #444;
 }
 .participations a:hover {
   color: $hover_color;
-  text-decoration: none;
 }
-.participations a .raquo {
-  visibility: hidden;
+.event table th, .event table td {
+  padding-right: 11px;
 }
-.participations a:hover .raquo {
-  visibility: visible;
+.event table th.last, .event table td.last {
+  padding-right: 0;
 }
 table th .widget {
   font-weight: normal;
@@ -712,7 +721,15 @@ table th .widget {
 }
 
 /* ------------------------------------------------------------------------------ */
-/* 13. Flash-Messages                                                             */
+/* 13. Sponsorer                                                                  */
+/* ------------------------------------------------------------------------------ */
+.sponsor {
+  margin-bottom: 40px;
+}
+
+
+/* ------------------------------------------------------------------------------ */
+/* 14. Flash-Messages                                                             */
 /* ------------------------------------------------------------------------------ */
 
 .flash {
