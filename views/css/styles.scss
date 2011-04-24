@@ -428,6 +428,9 @@ h2.entry-title {
 .entry-content .last {
     margin-right: 0;
 }
+.entry-content .first {
+  clear: both;
+}
 .hentry h2 a {
     color: #444;
     font-weight: bold;
@@ -600,7 +603,6 @@ input.widget {
 .events .c4-12 {
     margin-top: 30px;
 }
-
 .meta {
     font-family: "Droid Serif", Georgia, Times, serif;
     font-size: 11px;

@@ -4,20 +4,20 @@ html
   body
     == slim :_header
 
-    #content.container
+    #content.container.events
 
       .c1-12
         h1.page-title Rennkalender #{@events[0].date.year}
 
-      .c1-12.entry-content.events
-        /p Bei folgenden Rennen werden wir in diesem Jahr um Spitzenplatzierungen k&auml;mpfen.
+      .c1-12.entry-content
+        - count = 0
         - @events.each_with_index do |e, i|
           - if i == 0 or @events[i-1].date.month < e.date.month
-            - @count = 0
+            - count = 0
             | <div class="c1-3"><h3>#{l e.date, :month}</h3></div>
             | <div class="c4-12">
-          - @count += 1
-          .hentry class="#{'last' if @count % 3 == 0}"
+          - count += 1
+          .hentry class="#{'last' if count % 3 == 0}#{'first' if count % 3 == 1}"
             h3
               - if e.date <= today and e.participations.length > 0
                 a href="#{{e.permalink}}" #{e.title} »
