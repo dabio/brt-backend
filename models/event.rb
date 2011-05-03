@@ -40,6 +40,10 @@ class Event
     "#{permalink}/edit"
   end
 
+  def deletelink
+    "#{permalink}/delete"
+  end
+
   def participations_summary
     return if participations.length < 1
     s = ''

@@ -27,6 +27,11 @@ html
               span.date = l e.date, :full
               - if e.distance
                 span.distance  · #{e.distance} km
+              - if has_auth?
+                span.admin
+                  br
+                  a href="#{{e.editlink}}" bearbeiten
+                  /a href="#{{e.deletelink}}" entfernen
           - if i+1 == @events.length or @events[i+1].date.month > e.date.month
             | </div>
 
