@@ -12,7 +12,7 @@ gem 'dm-timestamps'
 gem 'dm-validations'
 gem 'bcrypt-ruby', require: 'bcrypt'
 gem 'unidecode'
-gem 'rdiscount'
+gem 'redcarpet'
 gem 'newrelic_rpm'
 
 group :development, :test do
