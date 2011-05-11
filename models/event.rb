@@ -41,7 +41,7 @@ class Event
   end
 
   def deletelink
-    "#{permalink}/delete"
+    permalink
   end
 
   def participations_summary

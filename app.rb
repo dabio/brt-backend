@@ -191,6 +191,16 @@ class BerlinRacingTeam
   end
 
 
+  delete '/rennen/:y/:m/:d/:slug' do
+    date = Date.new params[:y].to_i, params[:m].to_i, params[:d].to_i
+    not_found unless event = Event.first(date: date, slug: params[:slug])
+    not_found unless has_auth?
+
+    event.destroy
+    'success'
+  end
+
+
   get '/rennen/new' do
     not_found unless has_auth?
     @event = Event.new

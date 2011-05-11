@@ -31,7 +31,8 @@ html
                 span.admin
                   br
                   a href="#{{e.editlink}}" bearbeiten
-                  /a href="#{{e.deletelink}}" entfernen
+                  span  · 
+                  a href="#{{e.deletelink}}" class="delete" löschen
           - if i+1 == @events.length or @events[i+1].date.month > e.date.month
             | </div>
 
