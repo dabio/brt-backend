@@ -13,7 +13,7 @@ html
 
 
       .c1-9.entry-content
-        img src="#{settings.cdn}#{@person.image_url}" width=616 height=200 alt=@person.name
+        img src="#{{settings.cdn}}#{{@person.image_url}}" width=616 height=200 alt=@person.name
         .person-content
           - if @person.info
             == markdown @person.info
