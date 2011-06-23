@@ -231,6 +231,29 @@ class BerlinRacingTeam
   end
 
 
+  get '/news/new' do
+    not_found unless has_auth?
+
+    @news = News.new
+    slim :news_form
+  end
+
+
+  post '/news/new' do
+    not_found unless has_auth?
+
+    @news = News.new(params[:news])
+    @news.person = current_person
+
+    if @news.save
+      flash[:notice] = 'Meldung gesichert'
+      redirect to('/')
+    end
+
+    slim :news_form
+  end
+
+
   post '/reports/new' do
     not_found unless has_admin? and @event = Event.first(id: params[:event_id])
 

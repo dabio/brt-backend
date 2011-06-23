@@ -34,7 +34,7 @@ html
           div class="news-box#{'-last' if idx == 2}"
             h3 = item.title
             p.meta = l item.date, :full
-            p = item.message
+            p == item.message
 
       .c1-12.home-wrap
         .news-box
