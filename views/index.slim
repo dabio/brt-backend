@@ -8,10 +8,10 @@ html
       #slider.c1-12
         .slides_container
           div
-            img width=826 height=465 src='#{{settings.cdn}}/slides/1.jpg'
-          div
+            img width=826 height=465 src='#{{settings.cdn}}/slides/4.jpg'
+          /div
             img width=826 height=465 src='#{{settings.cdn}}/slides/2.jpg'
-          div
+          /div
             img width=826 height=465 src='#{{settings.cdn}}/slides/3.jpg'
         .slides-nav
           a class="prev" Zur&uuml;ck
@@ -53,7 +53,7 @@ html
     == slim :_javascript
 
     / i hate the sliding while developing
-    - if production?
+    /- if production?
       script src='#{{settings.cdn}}/js/jquery.slides.min.js'
       javascript:
         $(function(){var a=$("#slider"),b=$(".slides-nav");a.slides({preload:!0,preloadImage:"#{{settings.cdn}}/img/loader.gif",effect:"fade",fadeSpeed:250,play:5e3,crossfade:!0,generatePagination:!1}),a.hover(function(){b.fadeIn("medium")},function(){b.fadeOut("medium")})})
