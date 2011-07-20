@@ -159,6 +159,14 @@ class BerlinRacingTeam
   end
 
 
+  get '/rennen.ics' do
+    @events = Event.all(order: [:date, :updated_at.desc])
+
+    content_type 'text/calendar'
+    erb :events
+  end
+
+
   get '/rennen/:y/:m/:d/:slug' do
     date = Date.new params[:y].to_i, params[:m].to_i, params[:d].to_i
     not_found unless @event = Event.first(date: date, slug: params[:slug])
