@@ -163,7 +163,7 @@ class BerlinRacingTeam
     @events = Event.all(order: [:date, :updated_at.desc])
 
     content_type 'text/calendar'
-    erb :events
+    erb :'ical/events'
   end
 
 

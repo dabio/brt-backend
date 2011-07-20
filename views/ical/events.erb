@@ -7,6 +7,6 @@ X-WR-CALNAME:Berlin Racing Team Rennen
 X-WR-TIMEZONE:UTC
 X-WR-CALDESC:Berlin Racing Team Rennen
 <% @events.each do |event| %>
-<%= erb :event, locals: {event: event} %>
+<%= erb :'ical/event', locals: {event: event} %>
 <% end %>
 END:VCALENDAR
