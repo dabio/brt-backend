@@ -11,11 +11,11 @@
           | <a href="/logout">Abmelden</a>
 
 #header.container
-  h1
-    a href='/'
-      span Berlin Racing Team
+  - unless has_auth?
+    h1
+      a href='/'
+        span Berlin Racing Team
 
-  == slim :_navigation
-
+  == navigation
 hr
 

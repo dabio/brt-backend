@@ -1,8 +1,6 @@
-- nav = [{url: '/', name: 'Home'}, {url: '/team', name: 'Team'}, {url: '/rennen', name: 'Rennen'}, {url: '/diskussionen', name: 'Diskussionen', needs: 'has_auth?'}, {url: '/sponsoren', name: 'Sponsoren'}, {url: '/kontakt', name: 'Kontakt'}]
-
 #primary-nav
   ul
-    - nav.each do |item|
+    - @nav.each do |item|
       - unless item[:needs] or item[:needs] and !send(item[:needs])
         li
           - if request.path_info[0..4] == item[:url][0..4]
