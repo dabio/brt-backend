@@ -70,6 +70,21 @@ module Helpers
     has_auth? && current_person.id == 1
   end
 
+  # the navigation
+  def navigation
+    @nav = [
+      {url: '/', name: 'Home'},
+      {url: '/dashboard', name: 'Dashboard', needs: 'has_auth?'},
+      {url: '/team', name: 'Team'},
+      {url: '/rennen', name: 'Rennen'},
+      {url: '/diskussionen', name: 'Diskussionen', needs: 'has_auth?'},
+      {url: '/sponsoren', name: 'Sponsoren'},
+      {url: '/kontakt', name: 'Kontakt'}
+    ]
+
+    slim :_navigation
+  end
+
   def simple_format str
     str = '' if str.nil?
     start_tag = '<p>'
