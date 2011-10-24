@@ -35,7 +35,7 @@ module Helpers
   def coat(file)
     require 'digest/md5'
     hash = Digest::MD5.file("#{settings.views}/#{file}").hexdigest[0..4]
-    "#{file.gsub(/\.scss$/, '.css')}?#{hash}"
+    "#{file.gsub(/\.scss$/, '.css')}?h=#{hash}"
   end
 
   # This gives us the currently logged in user. We keep track of that by just
