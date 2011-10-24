@@ -36,21 +36,24 @@ end
 
 namespace "db" do
   task :prepare do
-    require './shotgun'
-    DataMapper::Logger.new($stdout, :debug) unless production?
+    require './app'
+    DataMapper::Logger.new($stdout, :debug) unless RACK_ENV == 'production'
     DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
   end
 
   desc 'Create the database tables.'
   task :migrate => :prepare do
     require 'dm-migrations'
-    DataMapper.auto_migrate!
+    #DataMapper.auto_migrate!
   end
 
   desc 'Upgrade the database tables.'
   task :upgrade => :prepare do
-    require 'dm-migrations'
-    DataMapper.auto_upgrade!
+    adapter = DataMapper.repository(:default).adapter
+    adapter.execute('ALTER TABLE news ADD COLUMN `teaser` text NOT NULL DEFAULT \'\';')
+    adapter.execute('ALTER TABLE news ADD COLUMN `event_id` integer;')
+    adapter.execute('INSERT INTO news (date, title, message, slug, event_id, person_id, created_at, updated_at) SELECT r.date, e.title, r.text, e.slug, r.event_id, r.person_id, r.created_at, r.updated_at FROM reports AS r JOIN events AS e ON r.event_id = e.id;')
+    adapter.execute('DELETE FROM reports;')
   end
 
   desc 'Pull database from heroku'
