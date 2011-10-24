@@ -15,16 +15,18 @@ hr
           li
             a href="#{{person.permalink}}"
               img src="#{{settings.cdn}}#{{person.avatar_url}}" width=45 height=45 alt=person.name
-    .c10-12.next_events
-      h3.widget
-        a href="/rennen"
-          span Nächste Rennen 
-          span.raquo »
-      ul
-        - for event in @events
-          li
-            .date = l event.date, :full
-            .title = event.title
+    
+    - if @events.length > 0
+      .c10-12.next_events
+        h3.widget
+          a href="/rennen"
+            span Nächste Rennen 
+            span.raquo »
+        ul
+          - for event in @events
+            li
+              .date = l event.date, :full
+              .title = event.title
   hr
   .container.border
     p.copyright Berlin Racing Team © #{today.year}<br/>Wir sind auch bei <a href="https://www.facebook.com/berlinracingteam" title="Zur Facebook Seite vom Berlin Racing Team">Facebook</a>.
