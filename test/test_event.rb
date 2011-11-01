@@ -10,10 +10,10 @@ require 'helper'
 
 class TestEvent < TestHelper
 
-  def test_event_view_404
+  def test_event_view_200
     event = Event.first(id: 10)
     get event.permalink
-    assert_equal 404, last_response.status
+    assert_equal 200, last_response.status
   end
 
   def test_event_edit_404
@@ -79,6 +79,11 @@ class TestEvent < TestHelper
     assert last_response.ok?
     assert last_response.body.include?('Korrigiere bitte folgende Angabe')
     logout
+  end
+
+  def test_next_year_events_404
+    get "/rennen/#{today.year + 2}"
+    assert_equal 404, last_response.status
   end
 
 end

@@ -26,7 +26,7 @@ class TestSite < TestHelper
     get '/'
     assert last_response.ok?
     assert last_response.body.include?('DOCTYPE html')
-    assert last_response.body.include?('Neuigkeiten rund um das Berlin Racing Team')
+    assert last_response.body.include?('Rennberichte und Neuigkeiten des Berlin Racing Team')
   end
 
   def test_dashboard_404
@@ -68,7 +68,7 @@ class TestSite < TestHelper
     get '/rennen'
     assert last_response.ok?
     @events.each do |event|
-      assert last_response.body.include?("<h3>#{event.title.sub(/\s.+/, '')}")
+      assert last_response.body.include?(event.title.sub(/\s.+/, ''))
     end
   end
 
@@ -80,7 +80,7 @@ class TestSite < TestHelper
     get "/rennen/#{year}"
     assert last_response.ok?
     @events.each do |event|
-      assert last_response.body.include?("<h3>#{event.title.sub(/\s.+/, '')}")
+      assert last_response.body.include?(event.title.sub(/\s.+/, ''))
     end
   end
 

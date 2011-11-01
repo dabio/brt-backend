@@ -17,7 +17,7 @@ class TestPerson < TestHelper
     assert last_response.ok?
 
     person.participations.each do |p|
-      assert last_response.body.include?(p.event.title)
+      assert last_response.body.include?(p.event.title.sub(/\s.+/, ''))
     end
     assert last_response.body.include?("Rennen: #{person.participations.length}")
     assert last_response.body.include?(encrypt_email(person.email))
