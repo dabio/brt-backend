@@ -34,20 +34,39 @@ class TestNews < TestHelper
 
   # News manipulation without authorization
   # PUT
-  def test_put_news_detail
+  def test_put_news
     news = News.first id:1
     put news.permalink
     assert_equal 404, last_response.status
   end
 
   # DELETE
-  def test_delete_news_detail
+  def test_delete_news
     news = News.first id:1
     delete news.permalink
     assert_equal 404, last_response.status
   end
 
   # News manipulation with authorization
+  # PUT
+  def test_put_news_auth
+    login
+    news = News.first id:1
+    put news.permalink, {'news[title]' => 'testitle'}
+    assert last_response.headers['Location'].include?(news.permalink)
+    logout
+  end
+
+  # DELETE
+  # def test_delete_news_auth
+  def test_delete_news_auth
+    login
+    news = News.first id:4
+    delete news.permalink
+    assert last_response.ok?
+    assert last_response.body.include?('success')
+    logout
+  end
 
 end
 
