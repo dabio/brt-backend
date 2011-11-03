@@ -5,7 +5,7 @@
 #   then a dot and a 'de')
 #
 
-require(root_path('models/dm'))
+require(root_path('app/models/dm'))
 
 class Event
   include DataMapper::Resource
@@ -42,6 +42,10 @@ class Event
 
   def deletelink
     permalink
+  end
+
+  def participation_editlink
+    "#{permalink}/participation"
   end
 
   def participations_summary

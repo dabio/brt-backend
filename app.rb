@@ -29,6 +29,7 @@ class BerlinRacingTeam
   set :method_override, true
   set :root, root_path
   set :default_locale, 'de'
+  set :views, "#{settings.root}/app/views"
 
   set :cdn, '//berlinracingteam.commondatastorage.googleapis.com'
 
@@ -41,6 +42,7 @@ class BerlinRacingTeam
   # renegade processes.
   use Rack::Timeout
   Rack::Timeout.timeout = 10
+  use Rack::Protection
 
   configure :development, :test do
     begin
@@ -66,9 +68,7 @@ class BerlinRacingTeam
 
   get '/' do
     @news = News.all(:date.lte => today, order: [:date.desc, :updated_at.desc],
-                     limit: 3)
-    @events = Event.all(:date.lte => today, :participations.not => nil,
-                        order: [:date.desc, :updated_at.desc], limit: 3)
+                     limit: 6)
     slim :index
   end
 
@@ -77,6 +77,9 @@ class BerlinRacingTeam
     not_found unless has_auth?
 
     @visits = Visit.all(order: [:updated_at.desc])
+    #@participations = 
+    @events = Event.all(:date.gte => today, order: [:date, :updated_at], limit: 3)
+
     slim :dashboard
   end
 
@@ -105,160 +108,6 @@ class BerlinRacingTeam
     not_found unless has_auth?
     session[:person_id] = nil
     redirect to('/')
-  end
-
-
-  get '/team' do
-    @people = Person.all :order => [:last_name, :first_name]
-    slim :people
-  end
-
-
-  get '/team/:slug' do
-    not_found unless @person = Person.first(slug: params[:slug])
-    slim :person
-  end
-
-
-  get '/team/:slug/edit' do
-    not_found unless @person = Person.first(slug: params[:slug])
-    not_found unless @person == current_person or has_admin?
-
-    slim :person_form
-  end
-
-
-  put '/team/:slug/edit'do
-    not_found unless @person = Person.first(slug: params[:slug])
-    not_found unless @person == current_person or has_admin?
-
-    @person.attributes = {
-      :email  => params[:person]['email'],
-      :info   => params[:person]['info']
-    }
-
-    unless params[:person]['password'].nil? or params[:person]['password'].empty?
-      @person.password = params[:person]['password']
-      @person.password_confirmation = params[:person]['password_confirmation']
-    end
-
-    if @person.save
-      flash[:notice] = 'Änderung gespeichert.'
-      redirect to(@person.editlink)
-    end
-
-    slim :person_form
-  end
-
-
-  get '/rennen' do
-    @events = Event.all(:date.gte => "#{today.year}-01-01",
-                        :date.lte => "#{today.year}-12-31",
-                        order: [:date, :updated_at.desc])
-    slim :events
-  end
-
-
-  get '/rennen.ics' do
-    @events = Event.all(order: [:date, :updated_at.desc])
-
-    content_type 'text/calendar'
-    erb :'ical/events'
-  end
-
-
-  get '/rennen/:y/:m/:d/:slug' do
-    date = Date.new params[:y].to_i, params[:m].to_i, params[:d].to_i
-    not_found unless @event = Event.first(date: date, slug: params[:slug])
-    @report = Report.new if has_admin?
-
-    slim :event
-  end
-
-
-  get '/rennen/:y/:m/:d/:slug/edit' do
-    date = Date.new params[:y].to_i, params[:m].to_i, params[:d].to_i
-    not_found unless @event = Event.first(date: date, slug: params[:slug])
-    not_found unless has_auth?
-
-    slim :event_form
-  end
-
-
-  put '/rennen/:y/:m/:d/:slug/edit' do
-    date = Date.new params[:y].to_i, params[:m].to_i, params[:d].to_i
-    not_found unless @event = Event.first(date: date, slug: params[:slug])
-    not_found unless has_auth?
-
-    if @event.update(params[:event])
-      flash[:notice] = 'Deine Änderungen wurden gesichert'
-      redirect to(@event.editlink)
-    end
-
-    slim :event_form
-  end
-
-
-  delete '/rennen/:y/:m/:d/:slug' do
-    date = Date.new params[:y].to_i, params[:m].to_i, params[:d].to_i
-    not_found unless event = Event.first(date: date, slug: params[:slug])
-    not_found unless has_auth?
-
-    event.destroy
-    'success'
-  end
-
-
-  get '/rennen/new' do
-    not_found unless has_auth?
-    @event = Event.new
-    slim :event_form
-  end
-
-
-  post '/rennen/new' do
-    not_found unless has_auth?
-
-    @event = Event.new(params[:event])
-    @event.person = current_person
-
-    if @event.save
-      flash[:notice] = 'Rennen erstellt'
-      redirect to('/rennen')
-    end
-
-    slim :event_form
-  end
-
-
-  get '/rennen/:year' do
-    @events = Event.all(:date.gte => "#{params[:year]}-01-01",
-                        :date.lte => "#{params[:year]}-12-31",
-                        order: [:date, :updated_at.desc])
-    slim :events
-  end
-
-
-  get '/news/new' do
-    not_found unless has_auth?
-
-    @news = News.new
-    slim :news_form
-  end
-
-
-  post '/news/new' do
-    not_found unless has_auth?
-
-    @news = News.new(params[:news])
-    @news.person = current_person
-
-    if @news.save
-      flash[:notice] = 'Meldung gesichert'
-      redirect to('/')
-    end
-
-    slim :news_form
   end
 
 
@@ -384,12 +233,16 @@ class BerlinRacingTeam
 
 end
 
+# controllers
+Dir[root_path('app/controllers/*_controller.rb')].each do |file|
+  require(file)
+end
 
 # helpers
 require(root_path('helpers.rb'))
 
 # models
-Dir[root_path('models/*.rb')].each do |file|
+Dir[root_path('app/models/*.rb')].each do |file|
   require(file)
 end
 

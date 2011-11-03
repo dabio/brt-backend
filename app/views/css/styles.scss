@@ -102,6 +102,9 @@ input:focus, textarea:focus {
 input {
     width: 190px;
 }
+input[type=checkbox] {
+  width: auto;
+}
 input.full {
     width: 596px;
 }
@@ -557,7 +560,7 @@ input.widget {
 
 .home-wrap {
     border-bottom: 1px solid #e5ecf7;
-    padding: 40px 0 39px;
+    padding: 40px 0 24px;
 }
 
 .home-wrap h3 {
@@ -568,13 +571,16 @@ input.widget {
 .home-wrap p {
     margin-bottom: 15px;
 }
-.home-wrap .news-box {
+.home-wrap .news-box,
+.home-wrap .news-box-last {
     float: left;
+    margin-bottom: 25px;
+}
+.home-wrap .news-box {
     margin-right: 18px;
     width: 196px;
 }
 .home-wrap .news-box-last {
-    float: left;
     width: 184px;
 }
 .home-wrap .news-box h3 a,

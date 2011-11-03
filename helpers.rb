@@ -38,6 +38,10 @@ module Helpers
     "#{file.gsub(/\.scss$/, '.css')}?h=#{hash}"
   end
 
+  def current_page
+    @page = params[:page] && params[:page].match(/\d+/) ? params[:page].to_i : 1
+  end
+
   # This gives us the currently logged in user. We keep track of that by just
   # setting a session variable with their is. If it doesn't exist, we want to
   # return nil.
@@ -104,10 +108,28 @@ module Helpers
 
 end
 
-
-
 class BerlinRacingTeam
   helpers do
     include Helpers
   end
 end
+
+class Hash
+  def except(*keys)
+    dup.except!(*keys)
+  end
+
+  def except!(*keys)
+    keys.each { |key| delete(key) }
+    self
+  end
+
+  def reverse_merge(other_hash)
+    other_hash.merge(self)
+  end
+
+  def reverse_merge!(other_hash)
+    replace(reverse_merge(other_hash))
+  end
+end
+

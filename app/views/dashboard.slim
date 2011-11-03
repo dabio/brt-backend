@@ -1,0 +1,38 @@
+doctype html
+html
+  == slim :_head, locals: {title: 'Dashboard'}
+  body.dashboard
+    == slim :_header
+
+    #content.container
+
+      .c1-12
+        h1.page-title Dashboard
+
+      .c1-12.home-wrap
+        .news-box
+          h3 Nächste Rennen
+          p
+            a.droid-italic href='/rennen/new' title='Rennen erstellen' Neuen Renntermin »
+        - @events.each_with_index do |event, idx|
+          div class="news-box#{'-last' if idx == 2}"
+            h3 = event.title
+            p.meta = "#{l event.date, :full}, #{event.distance} km"
+            p
+              input type="checkbox" Ich fahre!
+
+      .c1-12.home-wrap
+        .c1-3
+          h3 Letzte Besucher
+
+        .c4-12
+          ul
+            - @visits.each do |visit|
+              li
+                a href="#{{visit.person.permalink}}" title=visit.person.name = visit.person.name
+                span.date  #{l visit.updated_at, :human}
+
+    == footer
+    == slim :_javascript
+ 
+
