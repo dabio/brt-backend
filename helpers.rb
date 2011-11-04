@@ -38,6 +38,17 @@ module Helpers
     "#{file.gsub(/\.scss$/, '.css')}?h=#{hash}"
   end
 
+  def comment_count(count, comment='Kommentar', comments='Kommentare')
+    str = "#{count} #{comments}"
+    if count == 0
+      str = "ohne #{comment}"
+    elsif count == 1
+      str = "ein #{comment}"
+    end
+    str
+  end
+
+  # Returns the current page given by the url request parameter. Defaults to 1.
   def current_page
     @page = params[:page] && params[:page].match(/\d+/) ? params[:page].to_i : 1
   end
@@ -105,6 +116,11 @@ module Helpers
     @today
   end
 
+  def truncate_words(text, length = 30, end_string = ' …')
+    return if text == nil
+    words = text.split()
+    words[0..(length-1)].join(' ') + (words.length > length ? end_string : '')
+  end
 
 end
 
