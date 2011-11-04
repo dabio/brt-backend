@@ -14,21 +14,12 @@ class BerlinRacingTeam
     @count, @news = News.paginated(page: current_page, per_page: 5,
                                    :date.lte => today,
                                    order: [:date.desc, :updated_at.desc])
-    not_found unless @news
-
-    slim :news
+    not_found if !@news or @news.length < 1
+    slim :'news/news'
   end
 
 
-  get '/news/new' do
-    not_found unless has_auth?
-
-    @news = News.new
-    slim :news_form
-  end
-
-
-  post '/news/new' do
+  post '/news' do
     not_found unless has_auth?
 
     @news = News.new(params[:news])
@@ -39,7 +30,7 @@ class BerlinRacingTeam
       redirect to('/')
     end
 
-    slim :news_form
+    redirect to('/news')
   end
 
 
