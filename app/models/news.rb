@@ -35,6 +35,14 @@ class News
     "/news/#{date.strftime("%Y/%m/%d")}/#{slug}"
   end
 
+  def deletelink
+    "#{permalink}#delete"
+  end
+
+  def editlink
+    "#{permalink}#edit"
+  end
+
   def self.paginated(options={})
     page = options.delete(:page) || 1
     per_page = options.delete(:per_page) || 5
