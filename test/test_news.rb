@@ -21,11 +21,6 @@ class TestNews < TestHelper
     end
   end
 
-  def test_post_news
-    post '/news'
-    assert_equal 404, last_response.status
-  end
-
   def test_get_news_detail
     news = News.first id:1
     get news.permalink
@@ -33,6 +28,12 @@ class TestNews < TestHelper
   end
 
   # News manipulation without authorization
+  # POST
+  def test_post_news
+    post '/news'
+    assert_equal 404, last_response.status
+  end
+
   # PUT
   def test_put_news
     news = News.first id:1
@@ -48,6 +49,20 @@ class TestNews < TestHelper
   end
 
   # News manipulation with authorization
+  # POST
+  def test_post_news_auth
+    get "/news/#{today.year}/#{today.month}/#{today.day}/testtitel"
+    assert_equal 404, last_response.status
+
+    login
+    post '/news', {'news[title]' => 'testtitel', 'news[date]' => today,
+                   'news[teaser]' => 'teaser'}
+    logout
+
+    get "/news/#{today.year}/#{today.month}/#{today.day}/testtitel"
+    assert last_response.ok?
+  end
+
   # PUT
   def test_put_news_auth
     login
