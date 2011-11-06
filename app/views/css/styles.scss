@@ -691,7 +691,6 @@ ul.debate {
     }
 }
 
-
 /* ------------------------------------------------------------------------------ */
 /* 11. Person Detail                                                              */
 /* ------------------------------------------------------------------------------ */
@@ -748,4 +747,116 @@ table th .widget {
 .notice {
   background-color: #cce89e;
   color: #495a4a;
+}
+
+/* ------------------------------------------------------------------------------ */
+/* 15. News                                                                       */
+/* ------------------------------------------------------------------------------ */
+.news-item {
+  .author {
+    color: #999;
+  }
+}
+.news-item-aside {
+  position: relative;
+}
+
+.news-listing {
+  .news-listing-item {
+    border-bottom: 1px solid #e5e5e5;
+    list-style: none;
+    margin-left: 0;
+    margin-bottom: 20px;
+    position: relative;
+
+    h2 {
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 20px;
+
+      a {
+        color: #444;
+      }
+    }
+    .meta {
+      margin: 10px 0;
+    }
+  }
+  .news-listing-item:hover .admin {
+    display: block;
+  }
+}
+
+/* ------------------------------------------------------------------------------ */
+/* 16. Utilities                                                                  */
+/* ------------------------------------------------------------------------------ */
+.admin {
+  position: absolute;
+  top: 0;
+  right: 0;
+  li {
+    float: left;
+    list-style: none;
+    margin-right: 3px;
+    margin-left: 3px;
+  }
+
+  .edit,
+  .delete {
+    border: 1px solid #e5e5e5;
+    color: #444;
+    display: block;
+    float: left;
+    padding: 3px 9px 2px 9px;
+    -webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  }
+  .edit:hover,
+  .delete:hover {
+    border: 1px solid #c5c5c5;
+    text-decoration: none;
+  }
+}
+
+#pagination {
+  overflow: auto;
+  padding: 20px 0 20px 0;
+
+  .pages {
+    display: block;
+    float: left;
+    font-family: "Droid Serif", Georgia, Times, serif;
+    font-style: italic;
+    padding: 4px 23px 0 0;
+  }
+  .pages-items span,
+  .pages-items a,
+  .pages-navigation span,
+  .pages-navigation a {
+    border: 1px solid #e5e5e5;
+    color: #c5c5c5;
+    display: block;
+    float: left;
+    margin-right: 6px;
+    padding: 3px 9px 2px 9px;
+    -webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  }
+  .pages-items a,
+  .pages-navigation a {
+    color: #444;
+  }
+  .pages-items a:hover,
+  .pages-navigation a:hover {
+    border: 1px solid #c5c5c5;
+    text-decoration: none;
+  }
+  .pages-navigation {
+    float: right;
+  }
+  .pages-navigation span,
+  .pages-navigation a {
+    margin-right: 3px;
+    margin-left: 3px;
+  }
 }
