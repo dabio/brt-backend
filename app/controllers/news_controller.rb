@@ -38,7 +38,7 @@ class BerlinRacingTeam
     date = Date.new(year.to_i, month.to_i, day.to_i)
     not_found unless @news = News.first(date: date, slug: slug)
 
-    ''
+    slim :'news/news_detail'
   end
 
   put '/news/:y/:m/:d/:slug' do |year, month, day, slug|
