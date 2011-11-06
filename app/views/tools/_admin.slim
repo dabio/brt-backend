@@ -1,0 +1,7 @@
+- if has_auth?
+  ul.admin
+    li
+      a id="edit_#{item.id}" class="edit" title="Bearbeiten" href==item.editlink ✎
+    li
+      a id="delete_#{item.id}" class="delete" title="Löschen" href==item.deletelink ✗
+
