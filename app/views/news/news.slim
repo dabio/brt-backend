@@ -16,15 +16,17 @@ html
             - @news.each do |item|
               li.news-listing-item
                 h2
-                  a href="#{{item.permalink}}" = item.title
+                  a href==item.permalink = item.title
                 p.meta
                   span.date #{l item.date, :full}, 
                   span.comments
                     a href="#{{item.permalink}}#comments" title=item.title #{comment_count item.comments.count}
                 - if item.teaser.length > 0
-                  p = item.teaser
+                  .teaser = item.teaser
                 - else
                   p == truncate_words(item.message, 40)
+                - if has_auth?
+                  == slim :'tools/_admin', locals: {item: item}
 
       hr
       .c1-9
