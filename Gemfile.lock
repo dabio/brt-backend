@@ -5,38 +5,40 @@ GEM
     bcrypt-ruby (3.0.1)
     data_objects (0.10.7)
       addressable (~> 2.1)
-    dm-aggregates (1.1.0)
-      dm-core (~> 1.1.0)
-    dm-core (1.1.0)
-      addressable (~> 2.2.4)
-    dm-do-adapter (1.1.0)
-      data_objects (~> 0.10.2)
-      dm-core (~> 1.1.0)
-    dm-postgres-adapter (1.1.0)
-      dm-do-adapter (~> 1.1.0)
-      do_postgres (~> 0.10.2)
-    dm-sqlite-adapter (1.1.0)
-      dm-do-adapter (~> 1.1.0)
-      do_sqlite3 (~> 0.10.2)
-    dm-timestamps (1.1.0)
-      dm-core (~> 1.1.0)
-    dm-validations (1.1.0)
-      dm-core (~> 1.1.0)
+    dm-aggregates (1.2.0)
+      dm-core (~> 1.2.0)
+    dm-core (1.2.0)
+      addressable (~> 2.2.6)
+    dm-do-adapter (1.2.0)
+      data_objects (~> 0.10.6)
+      dm-core (~> 1.2.0)
+    dm-postgres-adapter (1.2.0)
+      dm-do-adapter (~> 1.2.0)
+      do_postgres (~> 0.10.6)
+    dm-sqlite-adapter (1.2.0)
+      dm-do-adapter (~> 1.2.0)
+      do_sqlite3 (~> 0.10.6)
+    dm-timestamps (1.2.0)
+      dm-core (~> 1.2.0)
+    dm-validations (1.2.0)
+      dm-core (~> 1.2.0)
     do_postgres (0.10.7)
       data_objects (= 0.10.7)
     do_sqlite3 (0.10.7)
       data_objects (= 0.10.7)
-    heroku (2.11.1)
+    heroku (2.17.0)
       launchy (>= 0.3.2)
       rest-client (~> 1.6.1)
       rubyzip
       term-ansicolor (~> 1.0.5)
+    hike (1.2.1)
     launchy (2.0.5)
       addressable (~> 2.2.6)
     mime-types (1.17.2)
-    multi_json (1.0.3)
-    newrelic_rpm (3.2.0.1)
-    r18n-core (0.4.11)
+    multi_json (1.0.4)
+    mustache (0.99.4)
+    newrelic_rpm (3.3.1)
+    r18n-core (0.4.13)
     rack (1.3.5)
     rack-force_domain (0.2.0)
     rack-protection (1.1.4)
@@ -44,11 +46,11 @@ GEM
     rack-test (0.6.1)
       rack (>= 1.0)
     rack-timeout (0.0.3)
-    redcarpet (1.17.2)
+    redcarpet (2.0.1)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    rubyzip (0.9.4)
-    sass (3.1.10)
+    rubyzip (0.9.5)
+    sass (3.1.12)
     shotgun (0.9)
       rack (>= 1.0)
     simplecov (0.5.4)
@@ -61,13 +63,13 @@ GEM
       tilt (~> 1.3, >= 1.3.3)
     sinatra-flash (0.3.0)
       sinatra (>= 1.0.0)
-    sinatra-r18n (0.4.11)
-      r18n-core (= 0.4.11)
+    sinatra-r18n (0.4.13)
+      r18n-core (= 0.4.13)
       sinatra (>= 1.3)
-    slim (1.0.4)
-      temple (~> 0.3.4)
-      tilt (~> 1.3.2)
-    temple (0.3.4)
+    sprockets (2.1.2)
+      hike (~> 1.2)
+      rack (~> 1.0)
+      tilt (~> 1.1, != 1.3.0)
     term-ansicolor (1.0.7)
     tilt (1.3.3)
     unidecode (1.0.0)
@@ -77,13 +79,14 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt-ruby
-  dm-aggregates (~> 1.1.0)
-  dm-core (~> 1.1.0)
+  dm-aggregates
+  dm-core
   dm-postgres-adapter
   dm-sqlite-adapter
-  dm-timestamps (~> 1.1.0)
-  dm-validations (~> 1.1.0)
+  dm-timestamps
+  dm-validations
   heroku
+  mustache
   newrelic_rpm
   rack-force_domain
   rack-test
@@ -95,5 +98,5 @@ DEPENDENCIES
   sinatra
   sinatra-flash
   sinatra-r18n
-  slim
+  sprockets
   unidecode

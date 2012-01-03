@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ title }}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=900">
+  <link rel="stylesheet" href="/assets/application.css">
+</head>
+<body>
+
+  <div id="header" class="container">
+    <h1><a href="/"><span>Berlin Racing Team</span></a></h1>
+    <div id="primary-nav">
+      <ul>
+        <li><a href="/" class="{{nav_home}}">Home</a></li>
+        <li><a href="/news" class="{{nav_news}}">News</a></li>
+        <li><a href="/team" class="{{nav_team}}">Team</a></li>
+        <li><a href="/rennen" class="{{nav_rennen}}">Rennen</a></li>
+        <li><a href="/sponsoren" class="{{nav_sponsoren}}">Sponsoren</a></li>
+        <li><a href="/kontakt" class="{{nav_kontakt}}">Kontakt</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <hr/>
+
+  <div id="content" class="container">
+    {{{yield}}}
+  </div>
+
+  <div id="footer">
+
+    <div class="container">
+
+      <div class="c1-3">
+        <img style="margin-bottom: 14px" witdh="27" height="20" src="/img/gate_small.png"/>
+        <p>Berlin Racing Team, 2008 von vier ehemaligen Juniorenfahrern und Freizeitsportlern gegründet. Seither stetig gewachsen.</p>
+      </div>
+
+      <div class="c4-9 team">
+        <h3 class="widget">
+          <a href="/team">Team <span class="raquo">»</span></a>
+        </h3>
+        <ul>
+          {{#team}}
+          <li>
+            <a href="{{permalink}}" title="{{name}}">
+              <img src="{{avatar_url}}" width="45" height="45" alt="{{name}}"/>
+            </a>
+          </li>
+          {{/team}}
+        </ul>
+      </div>
+
+      <div class="c10-12 next_events">
+        {{#has_next_races}}
+        <h3 class="widget">
+          <a href="/rennen">Nächste Rennen <span class="raquo">»</span></a>
+        </h3>
+        <ul>
+          {{#next_races}}
+          <li>
+          <span class="date">{{full_date}}</span>
+            <span class="title">{{title}}</span>
+          </li>
+          {{/next_races}}
+        </ul>
+        {{/has_next_races}}
+      </div>
+
+    </div>
+
+    <hr/>
+
+    <div class="container border">
+      <p class="social">Wir sind auch bei <a href="https://www.facebook.com/berlinracingteam" title="Zur Facebook Seite vom Berlin Racing Team">Facebook</a>.</p>
+      <p class="copyright">Berlin Racing Team © {{copyright_year}}</p>
+    </div>
+
+  </div>
+
+  <script src="/assets/application.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<div class="c1-12">
+  <h1 class="page-title">Rennkalender {{active_year}}</h1>
+</div>
+
+<div class="c1-12 entry-content events">
+
+  {{#events}}
+  {{#new_month}}
+    <h2>{{new_month}}</h2>
+  {{/new_month}}
+  <div class="{{events_list_class_name}}">
+    <h3>{{title}}</h3>
+    <div class="meta">
+      <span class="date">{{full_date}}</span>
+      {{#distance}}<span class="distance"> · {{distance}} km</span>{{/distance}}
+    </div>
+  </div>
+  {{/events}}
+
+</div>
+

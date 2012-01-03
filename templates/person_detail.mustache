@@ -1,0 +1,68 @@
+<div class="c1-12">
+  <h1 class="page-title"><a href="/team">Team</a> › {{name}}</h1>
+</div>
+
+<div class="c1-12 entry-content">
+
+{{#person}}
+
+  <div class="c1-9">
+    <img src="{{image_url}}" width="616" height="200" alt="{{name}}"/>
+    <div class="person-content">
+      {{#participations?}}
+      <div class="participations">
+        <h2>Ergebnisse</h2>
+        <table>
+          <tr>
+            <th colspan="2"><h3>{{participation_latest_year}}</h3></th>
+            <th>Ges.</th>
+            <th>AK</th>
+          </tr>
+
+          {{#person_participations}}
+          {{#summary}}
+          <tr>
+            <td></td>
+            <td colspan="3">{{summary}}</td>
+          </tr>
+          {{/summary}}
+          {{#year}}
+          <tr>
+            <th><h3>{{year}}</h3></th>
+            <th colspan="3"></th>
+          </tr>
+          {{/year}}
+          <tr>
+            <td class="date">{{date}}</td>
+            <td>{{title}}</td>
+            <td>{{position_overall}}</td>
+            <td class="last">{{position_age_class}}</td>
+          </tr>
+          {{/person_participations}}
+
+          {{#last_participation_summary}}
+          <tr>
+            <td></td>
+            <td colspan="3">{{last_participation_summary}}</td>
+          </tr>
+          {{/last_participation_summary}}
+
+        </table>
+      </div>
+      {{/participations?}}
+    </div>
+  </div>
+
+  <div class="c10-12">
+    <h3 class="widget">Kontakt</h3>
+    <p><a class="email">{{encrypted_email}}</a></p>
+    {{#participations?}}
+      <h3 class="widget">Statistiken</h3>
+      <p>Rennkilometer: {{events_distance}} km<br/>Rennen: {{participations_count}}{{#participations_top10?}}<br/>Top10: {{participations_top10_count}}{{/participations_top10?}}</p>
+    {{/participations?}}
+  </div>
+
+{{/person}}
+
+</div>
+

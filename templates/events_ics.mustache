@@ -1,0 +1,18 @@
+BEGIN:VCALENDAR
+PRODID:-//berlinracingteam//events//DE
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Berlin Racing Team Rennen
+X-WR-TIMEZONE:UTC
+X-WR-CALDESC:Berlin Racing Team Rennen
+{{#events}}
+BEGIN:VEVENT
+UID:event-{{id}}@berlinracingteam.de
+DTSTAMP:{{ical_timestamp}}
+DTSTART;VALUE=DATE:{{ical_date_start}}
+DTEND;VALUE=DATE:{{ical_date_end}}
+SUMMARY:{{title}}
+END:VEVENT
+{{/events}}
+END:VCALENDAR

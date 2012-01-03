@@ -1,0 +1,44 @@
+<div class="c1-12">
+  <h1 class="page-title">Nachrichten & Rennberichte</h1>
+</div>
+
+<div class="c1-12 entry-content">
+
+  <div class="c1-9">
+    <ul class="news-listing">
+      {{#news}}
+      <li class="news-listing-item">
+        <h2><a href="{{permalink}}">{{title}}</a></h2>
+        <p class="meta">
+          <span class="date">{{full_date}}</span>
+        </p>
+        <p>{{teaser}}</p>
+      </li>
+      {{/news}}
+    </ul>
+  </div>
+
+  {{#pagination?}}
+  <hr/>
+
+  <div class="c1-9">
+    <div id="pagination">
+      <span class="pages">Seite {{page}} von {{page_count}}</span>
+      <span class="pages-items">
+        {{#pagination}}
+        {{#href}}<a href="{{href}}">{{title}}</a>{{/href}}
+        {{^href}}<span>{{title}}</span>{{/href}}
+        {{/pagination}}
+      </span>
+      <span class="pages-navigation">
+        {{#pagination_left_right}}
+        {{#href}}<a href="{{href}}">{{title}}</a>{{/href}}
+        {{^href}}<span>{{title}}</span>{{/href}}
+        {{/pagination_left_right}}
+      </span>
+    </div>
+  </div>
+  {{/pagination?}}
+
+</div>
+

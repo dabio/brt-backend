@@ -10,19 +10,6 @@
 #
 class BerlinRacingTeam
 
-
-  get '/team' do
-    @people = Person.all :order => [:last_name, :first_name]
-    slim :people
-  end
-
-
-  get '/team/:slug' do
-    not_found unless @person = Person.first(slug: params[:slug])
-    slim :person
-  end
-
-
   get '/team/:slug/edit' do
     not_found unless @person = Person.first(slug: params[:slug])
     not_found unless @person == current_person or has_admin?

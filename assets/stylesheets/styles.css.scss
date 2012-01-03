@@ -1,0 +1,872 @@
+$main_blue: #edf2f9;
+$anchor_color: #0046ad;
+$hover_color: #000;
+
+@mixin border-radius($radius) {
+    -moz-border-radius: $radius;
+    -webkit-border-radius: $radius;
+    border-radius: $radius;
+}
+@mixin box-shadow($h, $v, $blur, $color) {
+    -moz-box-shadow: $h $v $blur $color;
+    -webkit-box-shadow: $h $v $blur $color;
+    box-shadow: $h $v $blur $color;
+}
+
+//@import 'fonts';
+//@import 'reset';
+
+/* ------------------------------------------------------------------------------ */
+/* 1. Document Setup (body, common classes, vertical rhymes, structure, etc)      */
+/* ------------------------------------------------------------------------------ */
+body {
+    border-top: 10px solid $main_blue;
+    font: 12px/20px "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #fff;
+    color: #444;
+    overflow-y: scroll;
+}
+
+a {
+    color: $anchor_color;
+    cursor: pointer;
+    text-decoration: none;
+}
+a:hover {
+    color: $hover_color;
+    text-decoration: underline;
+}
+a img {
+    border: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+h1 {
+    font-size: 24px;
+    line-height: 28px;
+}
+h2 {
+    font-size: 20px;
+    line-height: 20px;
+}
+h3 {
+    font-size: 16px;
+    line-height: 20px;
+}
+h4 {
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 15px;
+    font-family: "Droid Serif", Georgia, Times, serif;
+    font-style: italic;
+}
+h5 {
+    font-size: 12px;
+    line-height: 18px;
+}
+h6 {
+    font-size: 10px;
+    line-height: 16px;
+}
+hr {
+    display: none;
+    clear: both;
+}
+ol, ul {
+    list-style: none;
+}
+p, pre, ul, ol, dl, dd, blockquote, address, table, fieldset, form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+select, input, textarea, button {
+    font: 12px/20px "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+input, textarea {
+    background: url('/img/sprite.png') 0 -172px repeat-x;
+    border: 1px solid #e0e0e0;
+    color: #999;
+    padding: 5px;
+    outline: 0;
+}
+input:focus, textarea:focus {
+    color: #444;
+}
+input {
+    width: 190px;
+}
+input[type=checkbox] {
+  width: auto;
+}
+input.full {
+    width: 596px;
+}
+textarea {
+    resize: none;
+    width: 596px;
+}
+
+.hidden {
+    display: none;
+}
+
+.container {
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    width: 826px;
+}
+
+#content {
+    margin-bottom: 40px;
+}
+
+.c1-1, .c1-3, .c1-6, .c1-9, .c1-12, .c2-9, .c4-9, .c4-12, .c7-12, .c10-12 {
+    display: inline;
+    float: left;
+    margin-right: 18px;
+}
+.c1-1 {
+    width: 53px;
+}
+.c1-3 {
+    width: 196px;
+}
+.c1-6 {
+  width: 406px;
+}
+.c1-9 {
+    width: 616px;
+}
+.c1-12 {
+    margin-right: 0;
+    width: 826px;
+}
+.c2-9 {
+    width: 544px;
+}
+.c4-9 {
+    width: 402px;
+}
+.c4-12 {
+    margin-right: 0;
+    width: 612px;
+}
+.c7-12 {
+  margin-right: 0;
+  width: 402px;
+}
+.c10-12 {
+    margin-right: 0;
+}
+.c10-12 {
+    width: 192px;
+}
+
+.page-title {
+  font-size: 24px;
+  line-height: 28px;
+  font-family: "Droid Serif", Georgia, Times, serif;
+  font-style: italic;
+  padding: 38px 0;
+  border-bottom: 1px solid #e5ecf7;
+}
+
+/* ------------------------------------------------------------------------------ */
+/* 2. Header Styles                                                               */
+/* ------------------------------------------------------------------------------ */
+#current_person {
+    background: $main_blue;
+    color: #999;
+    font-size: 11px;
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+#current_person a {
+    color: #666;
+}
+#current_person a:hover {
+    color: #444;
+    text-decoration: underline;
+}
+#current_person img.avatar {
+    background: #fff;
+    border: 1px solid #e5ecf7;
+    padding: 3px;
+    overflow: auto;
+    float: left;
+}
+#current_person a:hover img.avatar {
+  border: 1px solid #ccc;
+}
+#current_person p {
+    margin-top: 1px;
+    margin-bottom: 0;
+}
+
+#header {
+    border-bottom: 1px solid #e5ecf7;
+    padding: 27px 0 30px 0;
+}
+#header h1 a {
+    background-image: url('/img/logo.png');
+    display: block;
+    float: left;
+    height: 43px;
+    width: 276px;
+}
+#header h1 span {
+    display: none;
+}
+
+
+/* ------------------------------------------------------------------------------ */
+/* 3. Navigation & Menus                                                          */
+/* ------------------------------------------------------------------------------ */
+#primary-nav {
+    float: right;
+    font-size: 13px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin-top: 10px;
+}
+#primary-nav ul {
+    line-height: 35px;
+}
+#primary-nav li {
+    float: left;
+    margin-left: 30px;
+}
+#primary-nav a {
+    color: #999;
+    display: block;
+    font-weight: bold;
+}
+#primary-nav a:hover, #primary-nav a.active {
+    text-decoration: none;
+    color: #444;
+}
+
+
+/* ------------------------------------------------------------------------------ */
+/* 4. Main Content Styles                                                         */
+/* ------------------------------------------------------------------------------ */
+address {
+    font-style: italic;
+}
+.clean-gray {
+    background: #eee;
+    background: -moz-linear-gradient(top, #eee 0%, #ccc 100%);
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#ccc));
+    border: 1px solid #ccc;
+    border-bottom: 1px solid #bbb;
+    @include border-radius(3px);
+    @include box-shadow(0, 1px, 1px, rgba(0, 0, 0, 0.10));
+    color: #333;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 8px 25px;
+    text-align: center;
+    text-shadow: 0 1px 0 #eee;
+}
+
+.clean-gray:hover {
+    background: #ddd;
+    background: -moz-linear-gradient(top, #ddd 0%, #bbb 100%);
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ddd), to(#bbb));
+    border: 1px solid #bbb;
+    border-bottom: 1px solid #999;
+    cursor: pointer;
+    text-shadow: 0 1px 0 #ddd;
+}
+
+.clean-gray:active {
+    border: 1px solid #aaa;
+    border-bottom: 1px solid #888;
+    -moz-box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
+    -webkit-box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
+    box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
+}
+a.clean-gray:hover {
+    color: #333;
+    text-decoration: none;
+}
+small {
+    font-size: 11px;
+}
+small.format {
+    color: #999;
+}
+
+form .error {
+    color: red;
+}
+
+table th, table td {
+  padding-right: 15px;
+  vertical-align: bottom;
+}
+table th.last, table td.last {
+  padding-right: 0;
+}
+table th {
+  font-weight: bold;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: left;
+}
+table th .participate {
+    font-weight: normal;
+    margin-left: 80px;
+}
+table th .participate input {
+    width: auto;
+}
+table td.even {
+    background: #fcfcfc;
+}
+table td.date,
+table th.date {
+  text-align: right;
+}
+table td.total {
+  padding: 5px 0 15px;
+}
+
+/* ------------------------------------------------------------------------------ */
+/* 5. Footer Styles                                                               */
+/* ------------------------------------------------------------------------------ */
+#footer {
+    background: $main_blue;
+    margin-top: 80px;
+    padding: 30px 0 20px 0;
+}
+#footer .team img {
+    background: #fff;
+    border: 1px solid #e5ecf7;
+    float: left;
+    margin: 0 4px 4px 0;
+    padding: 3px;
+}
+#footer .team a:hover img {
+  border: 1px solid #ccc;
+}
+#footer .next_events .date {
+    display: block;
+    font-family: "Droid Serif", Georgia, Times, serif;
+    font-size: 11px;
+    font-style: italic;
+    color: #999;
+}
+#footer .next_events .title {
+    font-size: 11px;
+    margin-bottom: 20px;
+}
+#footer .container {
+    margin-top: 40px;
+}
+#footer .copyright, #footer .social {
+    color: #999;
+    float: left;
+    font-size: 11px;
+    padding-top: 35px;
+}
+#footer .copyright {
+    float: right;
+}
+#footer .border {
+    border-top: 1px solid #d5e0f2;
+}
+#footer a {
+    color: #666;
+}
+#footer a:hover {
+    color: #444;
+    text-decoration: underline;
+}
+
+/* ------------------------------------------------------------------------------ */
+/* 6. Page Templates                                                              */
+/* ------------------------------------------------------------------------------ */
+.entry-content {
+    margin-top: 58px;
+}
+.entry-content ul {
+    list-style-type: disc;
+}
+.entry-content ol {
+    list-style-type: decimal;
+}
+.entry-content li {
+    margin-left: 20px;
+}
+
+.entry-content ul.people {
+    list-style: none;
+}
+
+.entry-content .hentry {
+    float: left;
+    margin: 0 18px 40px 0;
+    width: 192px;
+}
+
+h2.entry-title {
+    font: 24px/36px "Droid Serif", Georgia, Times, serif;
+    font-style: italic;
+    color: #444;
+    padding-left: 142px;
+    margin-bottom: 24px;
+}
+
+.entry-content .last {
+    margin-right: 0;
+}
+.entry-content .first {
+  clear: both;
+}
+.hentry h2 a {
+    color: #444;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 21px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+.hentry h2 a:hover {
+    text-decoration: none;
+}
+.hentry a.thumb {
+    display: block;
+    overflow: hidden;
+    padding: 5px
+}
+.hentry a.thumb:hover {
+    background: #f5f5f5;
+}
+.hentry img {
+    float: left;
+    overflow: auto;
+}
+
+
+/* ------------------------------------------------------------------------------ */
+/* 7. Widgets                                                                     */
+/* ------------------------------------------------------------------------------ */
+h3.widget {
+    color: #999;
+    font-size: 9px;
+    font-style: normal;
+    font-family: "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    letter-spacing: 1px;
+    margin: 0 0 20px 0;
+    text-transform: uppercase;
+}
+h3.widget a .raquo {
+    color: $main_blue;
+    font-size: 11px;
+}
+h3.widget a:hover .raquo {
+    color: #444;
+}
+label.widget {
+    display: inline;
+}
+input.widget {
+    width: auto;
+}
+#footer h3.widget a {
+    color: #999;
+}
+#footer h3.widget a:hover {
+    color: #444;
+    text-decoration: none;
+}
+
+
+/* ------------------------------------------------------------------------------ */
+/* 8. Homepage Element                                                            */
+/* ------------------------------------------------------------------------------ */
+#slider {
+    border-bottom: 1px solid #e5ecf7;
+    height: 465px;
+    padding: 40px 0 39px 0;
+}
+#slider .slides_container {
+/*    display: none;*/
+    width: 826px;
+    height: 465px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+.slides-nav {
+    position: relative;
+    z-index: 100;
+    display: none;
+}
+.slides-nav a {
+    position: absolute;
+    display: block;
+    text-indent: -9999px;
+    width: 40px;
+    height: 40px;
+    background-image: url('/img/sprite.png');
+    z-index: 10;
+}
+.slides-nav a.prev {
+    background-position: 0 0;
+    margin: -243px 0 0 20px;
+}
+.slides-nav a:hover.prev {
+    background-position: 0 -80px;
+}
+.slides-nav a.next {
+    background-position: 0 -40px;
+    margin: -243px 0 0 766px;
+}
+.slides-nav a:hover.next {
+    background-position: 0 -120px;
+}
+.pagination {
+    position: absolute;
+    z-index: 10;
+    margin: -30px 0 0 20px;
+}
+.pagination li {
+    float: left;
+    margin: 0 5px 0 0;
+}
+.pagination li a {
+    display: block;
+    background: url('/img/sprite.png') 0 -160px;
+    width: 12px;
+    height: 12px;
+    outline: none;
+}
+.pagination li.current a {
+    background: url('/img/sprite.png') -12px -160px;
+}
+
+.home-wrap {
+    border-bottom: 1px solid #e5ecf7;
+    padding: 40px 0 24px;
+}
+
+.home-wrap h3 {
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+.home-wrap p {
+    margin-bottom: 15px;
+}
+.home-wrap .news-box,
+.home-wrap .news-box-last {
+    float: left;
+    margin-bottom: 25px;
+}
+.home-wrap .news-box {
+    margin-right: 18px;
+    width: 196px;
+}
+.home-wrap .news-box-last {
+    width: 184px;
+}
+.home-wrap .news-box h3 a,
+.home-wrap .news-box-last h3 a {
+  color: #444;
+}
+.home-wrap .meta {
+    margin-bottom: 10px;
+}
+
+/* ------------------------------------------------------------------------------ */
+/* 9. Event page                                                                  */
+/* ------------------------------------------------------------------------------ */
+.events h2 {
+    border-top: 1px solid #e5ecf7;
+    clear: both;
+    margin: 20px 0;
+    padding-top: 20px;
+
+}
+.events h2:first-child {
+    border-top: 0;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.events .hentry h3 {
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+.events h3 a {
+    color: #444;
+}
+.events h3 a:hover {
+    color: $hover_color;
+    text-decoration: none;
+}
+.events .c1-3,
+.events .c4-12 {
+    margin-top: 30px;
+}
+.meta {
+    font-family: "Droid Serif", Georgia, Times, serif;
+    font-size: 11px;
+    font-style: italic;
+    color: #999;
+}
+.meta a {
+    color: #999;
+}
+.meta a:hover {
+    color: #444;
+    text-decoration: none;
+}
+.meta strong {
+    color: #444;
+}
+.meta .info {
+    text-align: right;
+}
+
+.new {
+    margin-bottom: 15px;
+}
+
+.droid-italic {
+    font-family: "Droid Serif", Georgia, Times, serif;
+    font-style: italic;
+    font-size: 11px;
+}
+
+
+/* ------------------------------------------------------------------------------ */
+/* 10. Debates                                                                    */
+/* ------------------------------------------------------------------------------ */
+ul.debate,
+ul.debates {
+    list-style: none;
+
+    li {
+        margin-bottom: 20px;
+        margin-left: 0;
+        overflow: auto;
+    }
+    .avatar{
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        float: right;
+        padding: 3px;
+    }
+}
+ul.debates h3 a {
+    color: $anchor_color;
+
+    .raquo {
+        color: #fff;
+    }
+}
+ul.debates h3 a:hover {
+    color: #000;
+    text-decoration: none;
+
+    .raquo {
+        color: #000;
+    }
+}
+ul.debate {
+    .avatar {
+        margin-top: 20px;
+    }
+    li#answer {
+        margin-top: 20px;
+
+        .avatar {
+            margin-top: 0;
+        }
+    }
+    textarea {
+        width: 532px;
+    }
+}
+
+/* ------------------------------------------------------------------------------ */
+/* 11. Person Detail                                                              */
+/* ------------------------------------------------------------------------------ */
+.person-content {
+  padding-left: 142px;
+}
+.c1-9 .participations {
+  margin-top: 30px;
+}
+.participations h2 {
+  margin-bottom: 10px;
+}
+
+.c10-12 .email {
+  color: #444;
+}
+
+/* ------------------------------------------------------------------------------ */
+/* 12 Event Detail                                                               */
+/* ------------------------------------------------------------------------------ */
+.participations a {
+  color: #444;
+}
+.participations a:hover {
+  color: $hover_color;
+}
+.event table th, .event table td {
+  padding-right: 11px;
+}
+.event table th.last, .event table td.last {
+  padding-right: 0;
+}
+table th .widget {
+  font-weight: normal;
+  margin-bottom: 0;
+}
+
+/* ------------------------------------------------------------------------------ */
+/* 13. Sponsorer                                                                  */
+/* ------------------------------------------------------------------------------ */
+.sponsor {
+  margin-bottom: 60px;
+}
+
+
+/* ------------------------------------------------------------------------------ */
+/* 14. Flash-Messages                                                             */
+/* ------------------------------------------------------------------------------ */
+
+.flash {
+  margin-bottom: 20px;
+  padding: 20px;
+}
+.notice {
+  background-color: #cce89e;
+  color: #495a4a;
+}
+
+/* ------------------------------------------------------------------------------ */
+/* 15. News                                                                       */
+/* ------------------------------------------------------------------------------ */
+.news-item {
+  .author {
+    color: #999;
+  }
+}
+.news-item-aside {
+  position: relative;
+}
+
+.news-listing {
+  .news-listing-item {
+    border-bottom: 1px solid #e5e5e5;
+    list-style: none;
+    margin-left: 0;
+    margin-bottom: 20px;
+    position: relative;
+
+    h2 {
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 20px;
+
+      a {
+        color: #444;
+      }
+    }
+    .meta {
+      margin: 10px 0;
+    }
+  }
+  .news-listing-item:hover .admin {
+    display: block;
+  }
+}
+
+/* ------------------------------------------------------------------------------ */
+/* 16. Utilities                                                                  */
+/* ------------------------------------------------------------------------------ */
+.admin {
+  position: absolute;
+  top: 0;
+  right: 0;
+  li {
+    float: left;
+    list-style: none;
+    margin-right: 3px;
+    margin-left: 3px;
+  }
+
+  .edit,
+  .delete {
+    border: 1px solid #e5e5e5;
+    color: #444;
+    display: block;
+    float: left;
+    padding: 3px 9px 2px 9px;
+    @include box-shadow(0, 0, 4px, rgba(0, 0, 0, 0.1));
+  }
+  .edit:hover,
+  .delete:hover {
+    border: 1px solid #c5c5c5;
+    text-decoration: none;
+  }
+}
+
+#pagination {
+  overflow: auto;
+  padding: 20px 0 20px 0;
+
+  .pages {
+    display: block;
+    float: left;
+    font-family: "Droid Serif", Georgia, Times, serif;
+    font-style: italic;
+    padding: 4px 23px 0 0;
+  }
+  .pages-items span,
+  .pages-items a,
+  .pages-navigation span,
+  .pages-navigation a {
+    border: 1px solid #e5e5e5;
+    color: #c5c5c5;
+    display: block;
+    float: left;
+    margin-right: 6px;
+    padding: 3px 9px 2px 9px;
+    @include box-shadow(0, 0, 4px, rgba(0, 0, 0, 0.1));
+  }
+  .pages-items a,
+  .pages-navigation a {
+    color: #444;
+  }
+  .pages-items a:hover,
+  .pages-navigation a:hover {
+    border: 1px solid #c5c5c5;
+    text-decoration: none;
+  }
+  .pages-navigation {
+    float: right;
+  }
+  .pages-navigation span,
+  .pages-navigation a {
+    margin-right: 3px;
+    margin-left: 3px;
+  }
+}

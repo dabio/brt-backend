@@ -1,0 +1,46 @@
+{{#news}}
+<div class="c1-12">
+  <h1 class="page-title">{{title}}</h1>
+</div>
+
+<div class="c1-12 entry-content">
+
+  <div class="c1-9 news-item">
+    {{#teaser}}
+    <div class="teaser">{{teaser}}</div>
+    {{/teaser}}
+    {{#message}}
+    <div class="message">{{{message}}}</div>
+    <div class="author">– {{#author}}<a href="{{permalink}}" title="{{name}}">{{name}}</a>{{/author}}, am {{date}}</div>
+    {{/message}}
+  </div>
+
+  <div class="c10-12 news-item-aside">
+    {{#event}}
+
+      <h3 class="widget">Renninfos</h3>
+      <p>{{date}}<br/>{{distance}} km</p>
+      {{#participations?}}
+        <div class="participations">
+          <table>
+            <tr>
+              <th><h3 class="widget">Ergebnisse</h3></th>
+              <th><h3 class="widget">Ges.</h3></th>
+              <th><h3 class="widget">AK</h3></th>
+            </tr>
+            {{#participations}}
+              <tr>
+                <td>{{#person}}<a href="{{permalink}}" title="{{name}}">{{name}}</a>{{/person}}</td>
+                <td>{{position_overall}}</td>
+                <td>{{position_age_class}}</td>
+              </tr>
+            {{/participations}}
+          </table>
+        </div>
+      {{/participations?}}
+    {{/event}}
+  </div>
+
+</div>
+
+{{/news}}

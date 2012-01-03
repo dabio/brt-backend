@@ -10,31 +10,6 @@
 #
 class BerlinRacingTeam
 
-  get '/rennen' do
-    not_found unless @events = Event.all(:date.gte => "#{today.year}-01-01",
-                                         :date.lte => "#{today.year}-12-31",
-                                          order: [:date, :updated_at.desc])
-    slim :events
-  end
-
-
-  get '/rennen.ics' do
-    @events = Event.all(order: [:date, :updated_at.desc])
-
-    content_type 'text/calendar'
-    erb :'ical/events'
-  end
-
-
-  get '/rennen/:y/:m/:d/:slug' do
-    date = Date.new params[:y].to_i, params[:m].to_i, params[:d].to_i
-    not_found unless @event = Event.first(date: date, slug: params[:slug])
-    @report = Report.new if has_admin?
-
-    slim :event
-  end
-
-
   get '/rennen/:y/:m/:d/:slug/edit' do
     date = Date.new params[:y].to_i, params[:m].to_i, params[:d].to_i
     not_found unless @event = Event.first(date: date, slug: params[:slug])
