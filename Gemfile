@@ -25,7 +25,7 @@ group :development, :test do
   gem 'heroku', require: false
   gem 'simplecov', require: false
   gem 'rack-test', require: false
-  #gem 'thin', require: false
+  gem 'thin', require: false
 end
 
 group :production do
