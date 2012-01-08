@@ -1,10 +1,14 @@
 # coding:utf-8
 #
 #   this is berlinracingteam.de, a sinatra application
-#   it is copyright (c) 2009-2011 danilo braband (danilo @ berlinracingteam,
+#   it is copyright (c) 2009-2012 danilo braband (danilo @ berlinracingteam,
 #   then a dot and a 'de')
 #
 
+
+#
+# Tests
+#
 
 task :default => :test
 task :test do
@@ -23,6 +27,10 @@ task :test do
 end
 
 
+#
+# Install/Uninstall
+#
+
 task :uninstall do
   system "rvm", "--force", "gemset", "empty"
   File.unlink "Gemfile.lock"
@@ -34,17 +42,35 @@ task :install do
 end
 
 
+#
+# Environment
+#
+
+task :environment do
+  require File.join(File.dirname(__FILE__), 'env.rb')
+end
+
+
 namespace "db" do
+
   task :prepare do
     require './app'
     DataMapper::Logger.new($stdout, :debug) unless RACK_ENV == 'production'
     DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
   end
 
-  desc 'Create the database tables.'
-  task :migrate => :prepare do
+  desc 'Auto-migrate the database (destroys data)'
+  task :bootstrap => :environment do
     require 'dm-migrations'
-    #DataMapper.auto_migrate!
+    puts "Bootstrapping database..."
+    DataMapper.auto_migrate!
+  end
+
+  desc 'Auto-upgrade the database (preserves data)'
+  task :migrate => :environment do
+    require 'dm-migrations'
+    puts "Migrating database..."
+    DataMapper.auto_upgrade!
   end
 
   desc 'Upgrade the database tables.'
@@ -65,5 +91,6 @@ namespace "db" do
   task :push do
     system "heroku", "db:push", "sqlite://db/local.db?encoding=utf8"
   end
+
 end
 
