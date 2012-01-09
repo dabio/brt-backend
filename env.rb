@@ -46,7 +46,6 @@ class App
   set :root, root_path
   set :default_locale, 'de'
   set :views, root_path('views')
-  set :cdn, '//berlinracingteam.commondatastorage.googleapis.com'
   set :mustache , {
     views: root_path('views'),
     templates: root_path('templates')
@@ -57,8 +56,8 @@ class App
   register Mustache::Sinatra
 
   use Rack::ForceDomain, ENV['DOMAIN']
-  use Rack::Session::Cookie
   use Rack::Timeout
+  use Rack::Session::Cookie
   Rack::Timeout.timeout = 10
   use Rack::Protection
 
@@ -86,10 +85,10 @@ class App
 
 end
 
-require(root_path('app.rb'))
-
 # helpers
 require(root_path('helpers.rb'))
+
+require(root_path('app.rb'))
 
 # views
 require(root_path('views/layout.rb'))
