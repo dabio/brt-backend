@@ -7,11 +7,24 @@
 
 module ViewHelpers
 
+  # This gives us the currently logged in user. We keep track of that by just
+  # setting a session variable with their is. If it doesn't exist, we want to
+  # return nil.
+  def current_person
+    @cp = Person.first(id: @request.session[:person_id]) if @request.session[:person_id] unless @cp
+    @cp
+  end
+
   # Encrypts given email-strings to format address [at] domain . tld.
   def encrypt_email(email)
     email = '' if email.nil?
     email.gsub! /@/, ' [at] '
     email.gsub! /\./, ' . '
+  end
+
+  # Checks if this is a logged in person
+  def has_auth?
+    !current_person.nil?
   end
 
   def l(string, options)
@@ -33,10 +46,17 @@ module ViewHelpers
     end
   end
 
+  def truncate_words(text, length = 30, end_string = ' …')
+    return if text == nil
+    words = text.split()
+    words[0..(length-1)].join(' ') + (words.length > length ? end_string : '')
+  end
+
 end
 
 class Sinatra::Base
   helpers do
+    include ViewHelpers
 
     [:development, :production, :test].each do |environment|
       define_method "#{environment.to_s}?" do
@@ -89,27 +109,12 @@ class Sinatra::Base
       @page = params[:page] && params[:page].match(/\d+/) ? params[:page].to_i : 1
     end
 
-    # This gives us the currently logged in user. We keep track of that by just
-    # setting a session variable with their is. If it doesn't exist, we want to
-    # return nil.
-    def current_person
-      @cp = Person.first(id: session[:person_id]) if session[:person_id] unless @cp
-      @cp
-    end
-
-
-
     #def footer
     #  @events = Event.all(:date.gte => today, :order => [:date, :updated_at.desc],
     #                      :limit => 3)
     #  @people ||= Person.all(order: [:last_name, :first_name])
     #  slim :_footer
     #end
-
-    # Checks if this is a logged in person
-    def has_auth?
-      !current_person.nil?
-    end
 
     # Check if current person is logged in and is admin
     def has_admin?
