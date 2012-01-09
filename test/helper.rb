@@ -12,12 +12,12 @@ ENV['RACK_ENV'] = 'test'
 require 'simplecov'
 SimpleCov.start
 
-require './app'
+require File.join(File.dirname(__FILE__), '..', 'env.rb')
 require 'test/unit'
 require 'rack/test'
 
 #DataMapper::Logger.new($stdout, :debug)
-DataMapper.setup(:default, 'sqlite3:db/test.db?encoding=utf8')
+#DataMapper.setup(:default, 'sqlite3:db/test.db?encoding=utf8')
 
 # create dummy user for testing authenticated views
 Person.create(first_name: 'Dummy', last_name: 'User', email: 'dummy@user.com',
@@ -26,10 +26,10 @@ Person.create(first_name: 'Dummy', last_name: 'User', email: 'dummy@user.com',
 
 class TestHelper < Test::Unit::TestCase
   include Rack::Test::Methods
-  include Helpers
+  #include Helpers
 
   def app
-    BerlinRacingTeam
+    App
   end
 
   def login
