@@ -104,11 +104,12 @@ class App
 
   #
   # GET /rennen/[year]/[month]/[day]/[slug]
-  # Shows a single event from a given year, month, day and slug parameter.
+  # Redirects to a news if an report for the event exists. Otherwise 404.
+  #
   get '/rennen/:y/:m/:d/:slug' do |year, month, day, slug|
     date = Date.new(year.to_i, month.to_i, day.to_i)
-    not_found unless @event = Event.first(date: date, slug: slug)
-    slim :event
+    not_found unless event = Event.first(date: date, slug: slug)
+    redirect to(event.news.permalink), 301
   end
 
 
@@ -150,17 +151,124 @@ class App
     mustache :kontakt
   end
 
+
+  #
+  # Before filter to redirect all authenticated users to the main admin page.
+  #
+  before '/login' do
+    redirect(to('/admin')) if has_auth?
+  end
+
+
+  #
+  # GET /login
+  # Shows the login form.
+  #
+  get '/login' do
+    mustache :login
+  end
+
+
+  #
+  # POST /login
+  # Checks the submitted data, sets a cookie and redirects to the admin area.
+  #
+  post '/login' do
+    email = params[:email].clone
+    email << '@berlinracingteam.de' unless email['@']
+    person = Person.authenticate(email, params[:password])
+
+    if person
+      session[:person_id] = person.id
+      redirect to('/admin')
+    else
+      flash.now[:error] = 'Unbekannte E-Mail oder falsches Password eingegeben.'
+      mustache :login, locals: {email: params[:email]}
+    end
+  end
+
   #
   # GET /everythingelse
   # 404 Site with search and link to homepage
   #
   not_found do
-    mustache :not_found
+    halt mustache :not_found
   end
 
 
   # FROM HERE ON EVERYTHING SHOULD BE IN A SEPERATE FILE CONTAINING ALL ADMIN
   # FUNCTIONS.
+
+  #
+  # Before filter to make sure the admin area is only accessible for
+  # authenticated users.
+  #
+  before '/admin*' do
+    not_found unless has_auth?
+  end
+
+
+  #
+  # GET /admin/logout
+  # Checks if the user is authenticated, deletes the session and redirects to
+  # the homepage.
+  #
+  get '/admin/logout' do
+    session[:person_id] = nil
+    redirect to('/')
+  end
+
+
+  #
+  # GET /admin/news/new
+  # Creates a new news instance.
+  #
+  get '/admin/news/new' do
+    @news = News.new()
+    @events = Event.all_without_news
+    mustache :news_form
+  end
+
+
+  #
+  # POST /admin/news/new
+  # Creates a new news instance.
+  #
+  post '/admin/news/new' do
+    params[:news][:person] = current_person
+    @news = News.create(params[:news])
+    @events = Event.all_without_news
+    params[:news][:event_id] = nil unless params[:news][:event_id].length > 0
+    redirect(to(@news.permalink)) if @news.saved?
+    mustache :news_form
+  end
+
+
+  #
+  # GET /admin/news/[year]/[month]/[day]/[slug]/edit
+  # Shows the edit form for an existing news item.
+  #
+  get '/admin/news/:y/:m/:d/:slug' do |year, month, day, slug|
+    date = Date.new(year.to_i, month.to_i, day.to_i)
+    not_found unless @news = News.first(date: date, slug: slug)
+    @events = Event.all_without_news
+    mustache :news_form
+  end
+
+
+  #
+  # PUT /admin/news/[year]/[month]/[day]/[slug]
+  # Updates an already existing news item.
+  #
+  post '/admin/news/:y/:m/:d/:slug' do |year, month, day, slug|
+    date = Date.new(year.to_i, month.to_i, day.to_i)
+    not_found unless @news = News.first(date: date, slug: slug)
+    params[:news][:event_id] = nil unless params[:news][:event_id].length > 0
+    redirect(to(@news.permalink)) if @news.update(params[:news])
+    @events = Event.all_without_news
+    mustache :news_form
+  end
+
 
   #
   # PUT /visit
@@ -172,32 +280,7 @@ class App
 #  end
 #
 #
-#  #
-#  # GET /login
-#  # Shows the login form.
-#  #
-#  get '/login' do
-#    slim :login
-#  end
-#
-#
-#  #
-#  # POST /login
-#  # Checks the submitted data, sets a cookie and redirects to the admin area.
-#  #
-#  post '/login' do
-#    params[:email] << '@berlinracingteam.de' unless params[:email]['@']
-#    @person = Person.authenticate(params[:email], params[:password])
-#
-#    if @person
-#      session[:person_id] = @person.id
-#      redirect to('/dashboard')
-#    else
-#      flash.now[:error] = 'Unbekannte E-Mail oder falsches Password eingegeben.'
-#      slim :login
-#    end
-#  end
-#
+
 #
 #
 #
@@ -209,14 +292,6 @@ class App
 #    @events = Event.all(:date.gte => today, order: [:date, :updated_at], limit: 3)
 #
 #    slim :dashboard
-#  end
-#
-#
-#
-#  get '/logout' do
-#    not_found unless has_auth?
-#    session[:person_id] = nil
-#    redirect to('/')
 #  end
 #
 #
