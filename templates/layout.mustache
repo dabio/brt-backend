@@ -8,6 +8,21 @@
 </head>
 <body>
 
+  {{#current_person}}
+  <div id="current_person">
+    <div class="container">
+        <div class="c1-1">
+          <a href="{{permalink}}" title="{{name}}">
+              <img class="avatar" src="{{avatar_url}}" width="45" height="45"/>
+          </a>
+        </div>
+        <div class="c2-9">
+          <p>Hallo <a href="{{permalink}}">{{first_name}}</a>, du bist angemeldet.<br/><a href="{{editlink}}">Profil bearbeiten</a> · <a href="/admin/logout">Abmelden</a></p>
+        </div>
+    </div>
+  </div>
+  {{/current_person}}
+
   <div id="header" class="container">
     <h1><a href="/"><span>Berlin Racing Team</span></a></h1>
     <div id="primary-nav">

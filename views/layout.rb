@@ -26,8 +26,12 @@ class App
         Event.all(:date.gte => Date.today, limit: 3)
       end
 
+      def today
+        Date.today
+      end
+
       def copyright_year
-        Date.today.year
+        today.year
       end
 
     end
