@@ -6,15 +6,15 @@
 
   <div class="c1-9">
     <ul class="news-listing">
-      {{#news}}
+      {{# news }}
       <li class="news-listing-item">
-        <h2><a href="{{permalink}}">{{title}}</a></h2>
+        <h2><a href="{{ permalink }}">{{ title }}</a></h2>
         <p class="meta">
-          <span class="date">{{full_date}}</span>
+          <span class="date">{{ date_formatted }}</span>
         </p>
-        <p>{{teaser}}</p>
+        <p>{{ teaser }}</p>
       </li>
-      {{/news}}
+      {{/ news }}
     </ul>
   </div>
 

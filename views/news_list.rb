@@ -18,10 +18,13 @@ class App
       end
 
       def news
-        @news.each do |news|
-          unless news.teaser.length > 0
-            news.teaser = StringHelpers::truncate_words(news.message, 40)
-          end
+        @news.map do |n|
+          {
+            title: n.title,
+            teaser: n.teaser.length > 0 ? n.teaser : truncate_words(n.message, 40),
+            date_formatted: l(n.date, :full),
+            permalink: n.permalink
+          }
         end
       end
 
