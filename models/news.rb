@@ -8,8 +8,6 @@
 class News
   include DataMapper::Resource
 
-  attr_accessor :index
-
   property :id,         Serial
   property :date,       Date
   property :title,      String, length: 250
@@ -21,8 +19,8 @@ class News
   }
   #is :slug, :source => :title
 
-  belongs_to :person, required: true
-  belongs_to :event
+  belongs_to :person
+  belongs_to :event, required: false
 
   has n, :comments
 
@@ -35,35 +33,25 @@ class News
   #  Mixing.first_or_create(:news => news).update(:date => news.date)
   #end
 
-  def full_date
-    R18n::l date, :full
-  end
-
-  def index_class_name
-    result = 'news-box'
-    result << '-last' if index % 3 == 2
-    result
-  end
-
-  def index_divider
-    index == 2
-  end
-
   def permalink
     "/news/#{date.strftime("%Y/%m/%d")}/#{slug}"
   end
 
-  def commentlink
-    "#{permalink}#comment"
+  def editlink
+    "/admin#{permalink}"
   end
 
   def deletelink
-    "#{permalink}#delete"
+    "/admin#{permalink}"
   end
 
-  def editlink
-    "#{permalink}#edit"
+  def createlink
+    '/admin/news/new'
   end
+
+  #def commentlink
+  #  "#{permalink}#comment"
+  #end
 
   def self.paginated(options={})
     page = options.delete(:page) || 1
