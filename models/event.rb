@@ -21,6 +21,7 @@ class Event
   timestamps :at
   property :slug,       String, length: 2000, default: lambda { |r, p| slugify r.title }
   belongs_to :person
+  has 1, :news
   has n, :reports
   has n, :comments
   has n, :participations
@@ -101,6 +102,13 @@ class Event
   def self.all_for_year(year)
     year ||= Date.today.year
     all(:date.gte => "#{year}-01-01", :date.lte => "#{year}-12-31")
+  end
+
+  def self.all_without_news
+    all(:date.lte => Date.today,
+      :news.not => News.all(:event.not => nil),
+      order: [:date.desc, :updated_at.desc], limit: 10
+    )
   end
 
 end
