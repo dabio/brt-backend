@@ -21,11 +21,14 @@ class App
         return nil unless @news
         {
           title: @news.title,
+          permalink: @news.permalink,
+          editlink: @news.editlink,
+          deletelink: @news.deletelink,
           teaser: @news.teaser,
           message: markdown(@news.message),
           author: person(@news.person),
           date: l(@news.date, :full),
-          event: event
+          event: event,
         }
       end
 
