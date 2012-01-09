@@ -14,8 +14,20 @@ class App
       end
 
       def news
-        @news.each_index { |i| @news[i].index = i }
-        @news
+        index = -1
+        class_name = 'news-box'
+        class_name_last = "#{class_name}-last"
+        @news.map do |n|
+          index += 1
+          {
+            title: n.title,
+            permalink: n.permalink,
+            teaser: n.teaser,
+            date_formatted: l(n.date, :full),
+            class_name: index % 3 == 2 ? class_name_last : class_name,
+            divider: index == 2
+          }
+        end
       end
 
     end

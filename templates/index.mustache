@@ -20,12 +20,12 @@
 
   <div class="c4-12">
   {{#news}}
-    <div class="{{index_class_name}}">
-      <h3><a href="{{permalink}}" title="{{title}}">{{title}} »</a></h3>
-      <p class="meta"><span class="date">{{full_date}}</span></p>
-      {{#teaser}}<p>{{teaser}}</p>{{/teaser}}
+    <div class="{{ class_name }}">
+      <h3><a href="{{ permalink }}" title="{{ title }}">{{ title }} »</a></h3>
+      <p class="meta"><span class="date">{{ date_formatted }}</span></p>
+      {{# teaser }}<p>{{ teaser }}</p>{{/ teaser }}
     </div>
-    {{#index_divider}}<hr/>{{/index_divider}}
+    {{# divider }}<hr style="display:block;border:0"/>{{/ divider }}
   {{/news}}
   </div>
 
