@@ -36,17 +36,6 @@ class Event
 #    Mixing.first_or_create(:event => event).update(:date => event.date)
 #  end
 
-  def full_date
-    R18n::l date, :full
-  end
-
-  def events_list_class_name
-    result = 'hentry'
-    result << ' first' if index % 4 == 0
-    result << ' last' if index % 4 == 3
-    result
-  end
-
   def permalink
     "/rennen/#{date.strftime("%Y/%m/%d")}/#{slug}"
   end
