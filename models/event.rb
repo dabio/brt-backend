@@ -47,18 +47,6 @@ class Event
     result
   end
 
-  def ical_timestamp
-    created_at.strftime('%Y%m%dT%H%M%SZ')
-  end
-
-  def ical_date_start
-    date.strftime('%Y%m%d')
-  end
-
-  def ical_date_end
-    date.+(1).strftime('%Y%m%d')
-  end
-
   def permalink
     "/rennen/#{date.strftime("%Y/%m/%d")}/#{slug}"
   end
