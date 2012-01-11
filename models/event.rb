@@ -37,15 +37,19 @@ class Event
 #  end
 
   def permalink
-    "/rennen/#{date.strftime("%Y/%m/%d")}/#{slug}"
+    if news
+      news.permalink
+    else
+      "/rennen/#{date.strftime("%Y/%m/%d")}/#{slug}"
+    end
   end
 
   def editlink
-    "#{permalink}/edit"
+    "/admin#{date.strftime("%Y/%m/%d")}/#{slug}"
   end
 
   def deletelink
-    permalink
+    editlink
   end
 
   def participation_editlink
