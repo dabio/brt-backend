@@ -14,7 +14,7 @@ class App
       end
 
       def nav_team
-        "active"
+        'active'
       end
 
       def person
