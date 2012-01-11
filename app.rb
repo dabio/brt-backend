@@ -42,9 +42,8 @@ class App
   # GET /news/[year]/[month]/[day]/[slug]
   # Shows the news based on the given year, month, day and slug parameters.
   #
-  get '/news/:y/:m/:d/:slug' do |year, month, day, slug|
-    date = Date.new(year.to_i, month.to_i, day.to_i)
-    not_found unless @news = News.first(date: date, slug: slug)
+  get '/news/:year/:month/:day/:slug' do
+    @news = news
     mustache :news_detail
   end
 
@@ -63,8 +62,8 @@ class App
   # GET /team/[slug]
   # Shows some detailed information about a cyclists.
   #
-  get '/team/:slug' do |slug|
-    not_found unless @person = Person.first(slug: slug)
+  get '/team/:slug' do
+    @person = person
     mustache :person_detail
   end
 
@@ -104,12 +103,13 @@ class App
 
   #
   # GET /rennen/[year]/[month]/[day]/[slug]
-  # Redirects to a news if an report for the event exists. Otherwise 404.
+  # Redirects to a news if an report for the event exists. Otherwise the detail
+  # site of the event is displayed.
   #
-  get '/rennen/:y/:m/:d/:slug' do |year, month, day, slug|
-    date = Date.new(year.to_i, month.to_i, day.to_i)
-    not_found unless event = Event.first(date: date, slug: slug)
-    redirect to(event.news.permalink), 301
+  get '/rennen/:year/:month/:day/:slug' do
+    @event = event
+    redirect(to(@event.news.permalink), 301) if @event.news
+    mustache :event_detail
   end
 
 
@@ -248,10 +248,9 @@ class App
   # GET /admin/news/[year]/[month]/[day]/[slug]/edit
   # Shows the edit form for an existing news item.
   #
-  get '/admin/news/:y/:m/:d/:slug' do |year, month, day, slug|
-    date = Date.new(year.to_i, month.to_i, day.to_i)
-    not_found unless @news = News.first(date: date, slug: slug)
+  get '/admin/news/:year/:month/:day/:slug' do
     @events = Event.all_without_news
+    @news = news
     mustache :news_form
   end
 
@@ -260,11 +259,9 @@ class App
   # PUT /admin/news/[year]/[month]/[day]/[slug]
   # Updates an already existing news item.
   #
-  post '/admin/news/:y/:m/:d/:slug' do |year, month, day, slug|
-    date = Date.new(year.to_i, month.to_i, day.to_i)
-    not_found unless @news = News.first(date: date, slug: slug)
+  post '/admin/news/:year/:month/:day/:slug' do |year, month, day, slug|
     params[:news][:event_id] = nil unless params[:news][:event_id].length > 0
-    redirect(to(@news.permalink)) if @news.update(params[:news])
+    redirect(to(news.permalink)) if news.update(params[:news])
     @events = Event.all_without_news
     mustache :news_form
   end

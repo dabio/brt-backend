@@ -88,12 +88,6 @@ class Sinatra::Base
       end
     end
 
-    def coat(file)
-      require 'digest/md5'
-      hash = Digest::MD5.file("#{settings.views}/#{file}").hexdigest[0..4]
-      "#{file.gsub(/\.scss$/, '.css')}?h=#{hash}"
-    end
-
     def comment_count(count, comment='Kommentar', comments='Kommentare')
       str = "#{count} #{comments}"
       if count == 0
@@ -121,24 +115,25 @@ class Sinatra::Base
       has_auth? && current_person.id == 1
     end
 
-    # the navigation
-    def navigation
-      @nav = [
-        {url: '/', name: 'Home'},
-        {url: '/dashboard', name: 'Dashboard', needs: 'has_auth?'},
-        {url: '/team', name: 'Team'},
-        {url: '/rennen', name: 'Rennen'},
-        {url: '/diskussionen', name: 'Diskussionen', needs: 'has_auth?'},
-        {url: '/sponsoren', name: 'Sponsoren'},
-        {url: '/kontakt', name: 'Kontakt'}
-      ]
-
-      slim :_navigation
-    end
-
     def today
       @today = Date.today unless @today
       @today
+    end
+
+    def params_date
+      Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+    end
+
+    def event
+      @event ||= Event.first(date: params_date, slug: params[:slug]) || not_found
+    end
+
+    def news
+      @news ||= News.first(date: params_date, slug: params[:slug]) || not_found
+    end
+
+    def person
+      @person ||= Person.first(slug: params[:slug]) || not_found
     end
 
   end
