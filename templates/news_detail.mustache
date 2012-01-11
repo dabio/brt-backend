@@ -23,9 +23,9 @@
   </div>
 
   <div class="c10-12 news-item-aside">
-  {{#event}}
+  {{#event }}
     <h3 class="widget">Renninfos</h3>
-    <p>{{date}}<br/>{{distance}} km</p>
+    <p>{{ date }}<br/>{{ distance }} km</p>
     {{#participations?}}
     <div class="participations">
       <table>
@@ -34,17 +34,17 @@
           <th><h3 class="widget">Ges.</h3></th>
           <th><h3 class="widget">AK</h3></th>
         </tr>
-        {{#participations}}
+        {{#participations }}
           <tr>
-            <td>{{#person}}<a href="{{permalink}}" title="{{name}}">{{name}}</a>{{/person}}</td>
-            <td>{{position_overall}}</td>
-            <td>{{position_age_class}}</td>
+            <td>{{#person }}<a href="{{ permalink }}" title="{{ name }}">{{ name }}</a>{{/person }}</td>
+            <td>{{ position_overall }}</td>
+            <td>{{ position_age_class }}</td>
           </tr>
-        {{/participations}}
+        {{/participations }}
       </table>
     </div>
     {{/participations?}}
-  {{/event}}
+  {{/event }}
   </div>
 
 </div>
