@@ -1,0 +1,36 @@
+{{#event }}
+<div class="c1-12">
+  <h1 class="page-title"><a href="{{ link_to_year }}">Rennkalender</a> › {{ title }}</h1>
+</div>
+
+<div class="c1-12 entry-content">
+
+  <div class="c1-9">
+&nbsp;
+  </div>
+
+  <div class="c10-12">
+    <h3 class="widget">Renninfos</h3>
+    <p>{{ date }}<br/>{{ distance }} km</p>
+    {{#participations?}}
+      <div class="participations">
+        <table>
+          <tr>
+            <th><h3 class="widget">Ergebnisse</h3></th>
+            <th><h3 class="widget">Ges.</h3></th>
+            <th><h3 class="widget">AK</h3></th>
+          </tr>
+          {{#participations }}
+            <tr>
+              <td>{{#person }}<a href="{{ permalink }}" title="{{ name }}">{{ name }}</a>{{/person }}</td>
+              <td>{{ position_overall }}</td>
+              <td>{{ position_age_class }}</td>
+            </tr>
+          {{/participations }}
+        </table>
+      </div>
+    {{/participations?}}
+  </div>
+
+</div>
+{{/event }}
