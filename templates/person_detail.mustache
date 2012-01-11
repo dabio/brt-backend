@@ -55,7 +55,7 @@
 
   <div class="c10-12">
     <h3 class="widget">Kontakt</h3>
-    <p><a class="email">{{encrypted_email}}</a></p>
+    <p><a id="email">{{encrypted_email}}</a></p>
     {{#participations?}}
       <h3 class="widget">Statistiken</h3>
       <p>Rennkilometer: {{events_distance}} km<br/>Rennen: {{participations_count}}{{#participations_top10?}}<br/>Top10: {{participations_top10_count}}{{/participations_top10?}}</p>
