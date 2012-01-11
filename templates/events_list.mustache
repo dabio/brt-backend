@@ -9,7 +9,10 @@
     <h2>{{ month }}</h2>
   {{/ new_month? }}
   <div class="hentry{{ first }}{{ last }}">
-    <h3>{{ title }}</h3>
+    <h3>
+        {{#permalink }}<a href="{{ permalink }}" title=" Rennbericht: {{ title }}">{{ title }} »</a>{{/permalink }}
+        {{^permalink }}{{ title }}{{/permalink }}
+    </h3>
     <div class="meta">
       <span class="date">{{ date }}</span>
       {{# distance }}<span class="distance"> · {{ distance }} km</span>{{/ distance }}
