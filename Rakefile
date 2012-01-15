@@ -53,12 +53,6 @@ end
 
 namespace "db" do
 
-  task :prepare do
-    require './app'
-    DataMapper::Logger.new($stdout, :debug) unless RACK_ENV == 'production'
-    DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db/local.db?encoding=utf8')
-  end
-
   desc 'Auto-migrate the database (destroys data)'
   task :bootstrap => :environment do
     require 'dm-migrations'
@@ -74,7 +68,7 @@ namespace "db" do
   end
 
   desc 'Upgrade the database tables.'
-  task :upgrade => :prepare do
+  task :upgrade => :environment do
     adapter = DataMapper.repository(:default).adapter
     adapter.execute('ALTER TABLE news ADD COLUMN `teaser` text NOT NULL DEFAULT \'\';')
     adapter.execute('ALTER TABLE news ADD COLUMN `event_id` integer;')
