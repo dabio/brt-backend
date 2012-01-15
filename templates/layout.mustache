@@ -68,19 +68,19 @@
       </div>
 
       <div class="c10-12 next_events">
-        {{#has_next_races}}
+        {{#has_next_races }}
         <h3 class="widget">
           <a href="/rennen">Nächste Rennen <span class="raquo">»</span></a>
         </h3>
         <ul>
-          {{#next_races}}
+          {{#next_races }}
           <li>
-          <span class="date">{{full_date}}</span>
-            <span class="title">{{title}}</span>
+            <div class="date">{{ date }}</div>
+            <div class="title">{{ title }}</div>
           </li>
-          {{/next_races}}
+          {{/next_races }}
         </ul>
-        {{/has_next_races}}
+        {{/has_next_races }}
       </div>
 
     </div>
