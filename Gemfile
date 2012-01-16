@@ -12,6 +12,7 @@ gem 'rack-force_domain'
 gem 'rack-timeout', require: 'rack/timeout'
 gem 'dm-core'
 gem 'dm-aggregates'
+gem 'dm-migrations', require: false
 gem 'dm-timestamps'
 gem 'dm-validations'
 gem 'bcrypt-ruby', require: 'bcrypt'
