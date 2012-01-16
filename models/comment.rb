@@ -13,10 +13,8 @@ class Comment
   timestamps :at
 
   belongs_to :person
-  belongs_to :debate, :required => false
-  belongs_to :news,   :required => false
-  belongs_to :event,  :required => false
-  
+  belongs_to :debate, required: false
+  belongs_to :news,   required: false
 
   validates_presence_of :text
 
