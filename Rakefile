@@ -53,18 +53,35 @@ end
 
 namespace "db" do
 
-  desc 'Auto-migrate the database (destroys data)'
-  task :bootstrap => :environment do
+  task :load_migrations => :environment do
     require 'dm-migrations'
-    puts "Bootstrapping database..."
-    DataMapper.auto_migrate!
+    require 'dm-migrations/migration_runner'
+    FileList['db/migrate/*.rb'].each do |migration|
+      load migration
+    end
   end
 
-  desc 'Auto-upgrade the database (preserves data)'
-  task :migrate => :environment do
-    require 'dm-migrations'
-    puts "Migrating database..."
-    DataMapper.auto_upgrade!
+  desc 'List migrations descending, showing which have been applied'
+  task :migrations => :load_migrations do
+    puts migrations.sort.reverse.map {|m| "#{m.position}  #{m.name}  #{m.needs_up? ? '' : 'APPLIED'}"}
+  end
+
+  desc "Run all pending migrations, or up to specified migration"
+  task :migrate, [:version] => :load_migrations do |t, args|
+    if vers = args[:version] || ENV['VERSION']
+      puts "=> Migrating up to version #{vers}"
+      migrate_up!(vers)
+    else
+      puts "=> Migrating up"
+      migrate_up!
+    end
+    puts "<= #{t.name} done"
+  end
+
+  desc 'Auto-migrate the database (destroys data)'
+  task :bootstrap => :load_migrations do
+    puts "Bootstrapping database..."
+    DataMapper.auto_migrate!
   end
 
   desc 'Upgrade the database tables.'
