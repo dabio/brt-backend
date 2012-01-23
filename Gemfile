@@ -3,11 +3,8 @@ source :rubygems
 gem 'sinatra', require: 'sinatra/base'
 gem 'sinatra-r18n', require: 'sinatra/r18n'
 gem 'sinatra-flash', require: 'sinatra/flash'
-#gem 'sinatra-synchrony', require: 'sinatra/synchrony'
-#gem 'slim'
 gem 'mustache', require: 'mustache/sinatra'
 gem 'sass'
-gem 'sprockets'
 gem 'rack-force_domain'
 gem 'rack-timeout', require: 'rack/timeout'
 gem 'dm-core'
@@ -24,6 +21,7 @@ group :development, :test do
   #gem 'sinatra-contrib', require: 'sinatra/reloader'
   gem 'shotgun', require: false
   gem 'heroku', require: false
+  gem 'foreman', require: false
   gem 'simplecov', require: false
   gem 'rack-test', require: false
   gem 'thin', require: false
