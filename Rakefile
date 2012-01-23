@@ -7,10 +7,19 @@
 
 
 #
+# Development
+#
+
+task :default => :development
+task :development do
+    system 'foreman', 'start'
+end
+
+
+#
 # Tests
 #
 
-task :default => :test
 task :test do
   require 'fileutils'
   require 'rake/testtask'

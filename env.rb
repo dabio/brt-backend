@@ -42,6 +42,8 @@ class App < Sinatra::Base; end
 
 class App
 
+  set :app_file, __FILE__
+  set :port, ENV['PORT']
   set :method_override, true
   set :root, root_path
   set :default_locale, 'de'
@@ -88,11 +90,12 @@ end
 # helpers
 require(root_path('helpers.rb'))
 
-require(root_path('app.rb'))
-
 # views
 require(root_path('views/layout.rb'))
 Dir[root_path('views/*.rb')].each do |file|
   require(file)
 end
+
+require(root_path('app.rb'))
+
 

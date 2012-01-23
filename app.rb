@@ -377,6 +377,7 @@ class App
   #  scss :"css/#{params[:stylesheet]}"
   #end
 
+  run! if app_file == $0
 
 end
 
