@@ -13,7 +13,7 @@ gem 'dm-timestamps'
 gem 'dm-validations'
 gem 'bcrypt-ruby', require: 'bcrypt'
 gem 'unidecode'
-gem 'rake', require: false
+gem 'rake'
 gem 'redcarpet'
 gem 'thin', require: false
 
