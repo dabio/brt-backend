@@ -19,13 +19,14 @@ gem 'thin', require: false
 
 group :development, :test do
   gem 'dm-sqlite-adapter'
-  #gem 'sinatra-contrib', require: 'sinatra/reloader'
-  gem 'shotgun', require: false
+  gem 'sinatra-contrib', require: 'sinatra/reloader'
+  #gem 'shotgun', require: false
   gem 'heroku', require: false
   gem 'foreman', require: false
   gem 'sass', require: false
   gem 'simplecov', require: false
   gem 'rack-test', require: false
+  gem 'taps', require: false, git: 'git@github.com:dabio/taps.git'
 end
 
 group :production do
