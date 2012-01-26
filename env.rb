@@ -73,6 +73,8 @@ class App
   configure :development do
     DataMapper::Logger.new($stdout, :debug) if development?
     DataMapper.setup(:default, 'sqlite3:db/local.db?encoding=utf8')
+
+    register Sinatra::Reloader
   end
 
   configure :test do
