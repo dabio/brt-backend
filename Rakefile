@@ -41,13 +41,15 @@ end
 #
 
 task :uninstall do
-  system "rvm", "--force", "gemset", "empty"
+  system "gem list | cut -d\" \" -f1 | xargs gem uninstall -aIx"
   File.unlink "Gemfile.lock"
+  system "rbenv", "rehash"
 end
 
 task :install do
   system "gem", "install", "bundler"
   system "bundle", "install", "--without", "production"
+  system "rbenv", "rehash"
 end
 
 
