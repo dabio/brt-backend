@@ -62,7 +62,15 @@ class Person
   end
 
   def editlink
-    "#{permalink}/edit"
+    "/admin#{permalink}"
+  end
+
+  def deletelink
+    editlink
+  end
+
+  def createlink
+    '/admin/team/new'
   end
 
   def events_distance(year=nil)

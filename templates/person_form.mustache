@@ -1,0 +1,81 @@
+{{# person }}
+
+<div class="c1-12">
+{{# new? }}
+  <h1 class="page-title"><a href="/team">Team</a> › Neuen Fahrer anlegen</h1>
+{{/ new? }}
+{{^ new? }}
+  <h1 class="page-title"><a href="/team">Team</a> › {{ name }}</h1>
+{{/ new? }}
+</div>
+
+<div class="c1-12 entry-content">
+
+  <div class="c1-9 person-form">
+    <form method="post" action="{{ save_link }}">
+      {{# errors? }}
+      <ul class="error">
+        {{# errors }}
+        <li>{{ message }}</li>
+        {{/ errors }}
+      </ul>
+      {{/ errors? }}
+      {{#new?}}
+        <p>
+          <label for="person_first_name">
+            <small>Vorname</small>
+          </label>
+          <input type="text" id="person_first_name" name="person[first_name]" required="required" value="{{ first_name }}"/>
+        </p>
+        <p>
+          <label for="person_last_name">
+            <small>Nachname</small>
+          </label>
+          <input type="text" id="person_last_name" name="person[last_name]" required="required" value="{{ last_name }}"/>
+        </p>
+      {{/new?}}
+      <p>
+        <label for="person_email">
+          <small>E-Mail</small>
+        </label>
+        <input type="email" id="person_email" name="person[email]" required="required" value="{{ email }}"/>
+      </p>
+      <p>
+        <label for="person_info">
+          <small>Info</small>
+          <small class="format"> wird mit <a href="http://daringfireball.net/projects/markdown/dingus">Markdown</a> formatiert</span>
+          <textarea id="person_info" name="person[info]" rows="10">{{ info }}</textarea>
+      </p>
+      <p class="password_change">
+        {{^new?}}
+          <h4>Passwort ändern. Nur ausfüllen, wenn Passwort geändert werden soll.</h4>
+        {{/new?}}
+        <p>
+          <label for="person_password">
+            <small>Passwort</small>
+          </label>
+          <input type="password" id="person_password" name="person[password]"/>
+        </p>
+        <p>
+          <label for="person_password_confirmation">
+            <small>Password wiederholen</small>
+          </label>
+          <input type="password" id="person_password_confirmation" name="person[password_confirmation]"/>
+        </p>
+      </p>
+      <p>
+        <button class="clean-gray" type="submit"><span>Speichern</span></button>
+      </p>
+    </form>
+  </div>
+
+  <div class="c10-12 person-form-aside">
+    <h3 class="widget">Tipps</h3>
+    <ul>
+      <li>Halte dich kurz</li>
+      <li>Achte die deutsche Sprache</li>
+    </ul>
+  </div>
+
+</div>
+{{/ person }}

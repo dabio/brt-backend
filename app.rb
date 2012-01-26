@@ -268,6 +268,66 @@ class App
 
 
   #
+  # GET /admin/team/new
+  # Shows a form that allows the creation of a new team member.
+  #
+  get '/admin/team/new' do
+    @person = Person.new()
+    mustache :person_form
+  end
+
+
+  #
+  # POST /admin/team/new
+  # Creates a new person instance.
+  #
+  post '/admin/team/new' do
+
+    if params[:person][:password].nil? or params[:person][:password].empty?
+      params[:person].delete "password"
+      params[:person].delete "password_confirmation"
+    end
+
+    @person = Person.create(params[:person])
+    redirect(to(@person.permalink)) if @person.saved?
+    mustache :person_form
+  end
+
+
+  #
+  # GET /admin/team/[slug]
+  # Shows th eedit form for an individual user.
+  #
+  get '/admin/team/:slug' do
+    @person = person
+    mustache :person_form
+  end
+
+
+  #
+  # POST /admin/team/[slug]
+  # Updates an already existing user.
+  #
+  post '/admin/team/:slug' do
+
+    if params[:person][:password].nil? or params[:person][:password].empty?
+      params[:person].delete "password"
+      params[:person].delete "password_confirmation"
+    end
+
+    redirect(to(person.permalink)) if person.update(params[:person])
+    mustache :person_form
+  end
+
+  #
+  # DELETE /admin/team/[slug]
+  # Deletes a user.
+  #
+  delete '/admin/team/:slug' do
+
+  end
+
+  #
   # PUT /visit
   # Everytime the user visits the site, it gets logged into the database.
   #
