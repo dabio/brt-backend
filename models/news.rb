@@ -42,7 +42,7 @@ class News
   end
 
   def deletelink
-    "/admin#{permalink}"
+    editlink
   end
 
   def createlink
