@@ -143,8 +143,8 @@ class App
 
     @email = Email.new(params[:contact])
     if @email.save
-      flash[:notice] = "#{@email.name}, vielen Dank für deine Nachricht!"
-      flash[:notice] << " Wir werden sie so schnell wie möglich beantworten."
+      flash.now[:notice] = "#{@email.name}, vielen Dank für deine Nachricht!"
+      flash.now[:notice] << " Wir werden sie so schnell wie möglich beantworten."
       redirect to('/kontakt')
     end
 
