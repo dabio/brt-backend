@@ -12,7 +12,7 @@
 
 task :default => :development
 task :development do
-    system 'foreman', 'start'
+    system 'bundle', 'exec', 'thin', 'start', '-e', 'development'
 end
 
 
