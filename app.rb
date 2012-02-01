@@ -43,7 +43,7 @@ class App
   # Shows the news based on the given year, month, day and slug parameters.
   #
   get '/news/:year/:month/:day/:slug' do
-    @news = news
+    news
     mustache :news_detail
   end
 
@@ -63,7 +63,7 @@ class App
   # Shows some detailed information about a cyclists.
   #
   get '/team/:slug' do
-    @person = person
+    person
     mustache :person_detail
   end
 
@@ -299,7 +299,7 @@ class App
   # Shows th eedit form for an individual user.
   #
   get '/admin/team/:slug' do
-    @person = person
+    person
     mustache :person_form
   end
 
@@ -326,6 +326,49 @@ class App
   delete '/admin/team/:slug' do
 
   end
+
+
+  #
+  # GET /admin/rennen/new
+  # Shows a form which allows the creation of new events.
+  #
+  get '/admin/rennen/new' do
+    @event = Event.new()
+    mustache :event_form
+  end
+
+
+  #
+  # POST /admin/rennen/new
+  # Creates a new event.
+  #
+  post '/admin/rennen/new' do
+    params[:event][:person] = current_person
+    @event = Event.create(params[:event])
+    redirect(to(@event.permalink)) if @event.saved?
+    mustache :event_form
+  end
+
+
+  #
+  # GET /admin/rennen/[year]/[month]/[day]/[slug]
+  # Shows a edit form for an event and allows the user to change some details.
+  #
+  get '/admin/rennen/:year/:month/:day/:slug' do
+    event
+    mustache :event_form
+  end
+
+
+  #
+  # POST /admin/rennen/[year]/[month]/[day]/[slug]
+  # Updates an already existing event entry.
+  #
+  post '/admin/rennen/:year/:month/:day/:slug' do
+    redirect(to(event.permalink)) if event.update(params[:event])
+    mustache :event_form
+  end
+
 
   #
   # PUT /visit

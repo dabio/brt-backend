@@ -1,5 +1,11 @@
 {{#event }}
 <div class="c1-12">
+{{# has_auth? }}
+  <ul class="admin">
+    <li><a href="{{ editlink }}" title="Bearbeiten">Bearbeiten</a></li>
+    <li><a href="{{ deletelink}}" title="Löschen">Löschen</a></li>
+  </ul>
+{{/ has_auth? }}
   <h1 class="page-title"><a href="{{ link_to_year }}">Rennkalender</a> › {{ title }}</h1>
 </div>
 

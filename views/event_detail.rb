@@ -25,7 +25,10 @@ class App
         {
           title: @event.title,
           date: l(@event.date, :full),
-          distance: @event.distance
+          distance: @event.distance,
+          permalink: @event.permalink,
+          editlink: @event.editlink,
+          deletelink: @event.deletelink,
         }
       end
 

@@ -17,7 +17,7 @@ class Event
   property :title,      String, required: true, length: 250
   property :url,        URI
   property :distance,   Integer,required: true
-  property :type,       Enum[:race, :training], default: :race
+  property :type,       Integer, default: 1 #Enum[:race, :training], default: :race
   timestamps :at
   property :slug,       String, length: 2000, default: lambda { |r, p| slugify r.title }
   belongs_to :person
@@ -36,6 +36,10 @@ class Event
 #    Mixing.first_or_create(:event => event).update(:date => event.date)
 #  end
 
+  def createlink
+    '/admin/rennen/new'
+  end
+
   def permalink
     if news
       news.permalink
@@ -45,7 +49,7 @@ class Event
   end
 
   def editlink
-    "/admin#{date.strftime("%Y/%m/%d")}/#{slug}"
+    "/admin/rennen/#{date.strftime("%Y/%m/%d")}/#{slug}"
   end
 
   def deletelink
