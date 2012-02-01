@@ -12,7 +12,7 @@
 
 task :default => :development
 task :development do
-    system 'bundle', 'exec', 'thin', 'start', '-e', 'development'
+    system 'bundle exec thin start -p 9393 -e development'
 end
 
 
@@ -41,15 +41,15 @@ end
 #
 
 task :uninstall do
-  system "gem list | cut -d\" \" -f1 | xargs gem uninstall -aIx"
-  File.unlink "Gemfile.lock"
-  system "rbenv", "rehash"
+  system 'gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
+  File.unlink 'Gemfile.lock'
+  system 'rbenv rehash'
 end
 
 task :install do
-  system "gem", "install", "bundler"
-  system "bundle", "install", "--without", "production"
-  system "rbenv", "rehash"
+  system 'gem install bundler'
+  system 'bundle install --without production'
+  system 'rbenv rehash'
 end
 
 
@@ -106,12 +106,12 @@ namespace "db" do
 
   desc 'Pull database from heroku'
   task :pull do
-    system "heroku", "db:pull", "sqlite://db/local.db?encoding=utf8"
+    system 'bundle exec heroku db:pull sqlite://db/local.db?encoding=utf8'
   end
 
   desc 'Push database to heroku'
   task :push do
-    system "heroku", "db:push", "sqlite://db/local.db?encoding=utf8"
+    system 'bundle exec heroku db:push sqlite://db/local.db?encoding=utf8'
   end
 
 end
