@@ -24,6 +24,7 @@ group :development, :test do
   gem 'heroku', require: false
   gem 'foreman', require: false
   gem 'sass', require: false
+  gem 'rb-fsevent', require: false
   gem 'simplecov', require: false
   gem 'rack-test', require: false
   gem 'taps', require: false, git: 'git@github.com:dabio/taps.git'
