@@ -10,9 +10,17 @@
 # Development
 #
 
-task :default => :development
-task :development do
-    system 'bundle exec thin start -p 9393 -e development'
+task :server do
+  sassPid = Process.spawn('bundle exec sass --watch public/css/scss:public/css --style compressed')
+  thinPid = Process.spawn('bundle exec thin start -p 9393 -e development')
+  coffPid = Process.spawn('coffee -wcj public/js/app.js public/js/coffee/*.coffee')
+
+  trap('INT') do
+    [sassPid, thinPid, coffPid].each { |pid| Process.kill(9, pid) rescue Errno::ESRCH }
+    exit 0
+  end
+
+  [sassPid, thinPid, coffPid].each { |pid| Process.wait(pid) }
 end
 
 
@@ -20,6 +28,7 @@ end
 # Tests
 #
 
+task :default => :test
 task :test do
   require 'fileutils'
   require 'rake/testtask'
