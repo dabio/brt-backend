@@ -388,7 +388,7 @@ class App
   #
   post '/admin/rennen/:year/:month/:day/:slug/participation', :provides => :json do
     Participation.create(person: current_person, event: event)
-    { person: current_person.name, id: event.id }.to_json
+    { id: "event-#{event.id}" }.to_json
   end
 
 
@@ -398,7 +398,7 @@ class App
   #
   delete '/admin/rennen/:year/:month/:day/:slug/participation', :provides => :json do
     Participation.all(person: current_person, event: event).destroy
-    { person: current_person.name, id: event.id }.to_json
+    { id: "event-#{event.id}" }.to_json
   end
 
 
