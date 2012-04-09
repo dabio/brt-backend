@@ -209,6 +209,18 @@ class App
 
 
   #
+  # GET /admin
+  # Dashboard for authenticated users. Show the listing of the next races and
+  # the participants.
+  #
+  get '/admin' do
+    @previous_events = Event.all(:date.lt => today, limit: 3)
+    @next_events = Event.all(:date.gte => today, limit: 10)
+    mustache :admin
+  end
+
+
+  #
   # GET /admin/logout
   # Checks if the user is authenticated, deletes the session and redirects to
   # the homepage.
@@ -367,6 +379,26 @@ class App
   post '/admin/rennen/:year/:month/:day/:slug' do
     redirect(to(event.permalink)) if event.update(params[:event])
     mustache :event_form
+  end
+
+
+  #
+  # POST /admin/rennen/[year]/[month]/[day]/[slug]/[participation]
+  # Allows a user to participate on this event.
+  #
+  post '/admin/rennen/:year/:month/:day/:slug/participation', :provides => :json do
+    Participation.create(person: current_person, event: event)
+    { person: current_person.name, id: event.id }.to_json
+  end
+
+
+  #
+  # DELETE /admin/rennen/[year]/[month]/[day]/[slug]/[participation]
+  # Unsubscribe the current user from the event.
+  #
+  delete '/admin/rennen/:year/:month/:day/:slug/participation', :provides => :json do
+    Participation.delete(person: current_person, event: event)
+    { person: current_person.name, id: event.id }.to_json
   end
 
 

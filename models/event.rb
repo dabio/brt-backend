@@ -56,8 +56,8 @@ class Event
     editlink
   end
 
-  def participation_editlink
-    "#{permalink}/participation"
+  def participationlink
+    "#{editlink}/participation"
   end
 
   def participations_summary

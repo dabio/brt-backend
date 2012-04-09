@@ -12,6 +12,7 @@ gem 'dm-migrations', require: false
 gem 'dm-timestamps'
 gem 'dm-validations'
 gem 'bcrypt-ruby', require: 'bcrypt'
+gem 'json'
 gem 'unidecode'
 gem 'rake'
 gem 'redcarpet'
