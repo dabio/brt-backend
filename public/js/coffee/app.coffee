@@ -8,9 +8,10 @@ add_current_person = (resp) ->
     count = $("##{resp.id} ul.participants li").length
     if count == 0
         tmpl = $('#participants-li-first').html()
+        $("##{resp.id} ul.participants").first().prepend(tmpl)
     else
         tmpl = $('#participants-li-more').html()
-    $("##{resp.id} ul.participants li").first().prepend(tmpl)
+        $("##{resp.id} ul.participants li").first().prepend(tmpl)
 
 remove_current_person = (resp) ->
     $("##{resp.id} ul.participants li.me").remove()

@@ -14,10 +14,11 @@
     count = $("#" + resp.id + " ul.participants li").length;
     if (count === 0) {
       tmpl = $('#participants-li-first').html();
+      return $("#" + resp.id + " ul.participants").first().prepend(tmpl);
     } else {
       tmpl = $('#participants-li-more').html();
+      return $("#" + resp.id + " ul.participants li").first().prepend(tmpl);
     }
-    return $("#" + resp.id + " ul.participants li").first().prepend(tmpl);
   };
 
   remove_current_person = function(resp) {
