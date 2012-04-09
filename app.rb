@@ -397,7 +397,7 @@ class App
   # Unsubscribe the current user from the event.
   #
   delete '/admin/rennen/:year/:month/:day/:slug/participation', :provides => :json do
-    Participation.delete(person: current_person, event: event)
+    Participation.all(person: current_person, event: event).destroy
     { person: current_person.name, id: event.id }.to_json
   end
 
