@@ -215,7 +215,7 @@ class App
   #
   get '/admin' do
     @previous_events = Event.all(:date.lt => today, limit: 3)
-    @next_events = Event.all(:date.gte => today, limit: 20)
+    @next_events = Event.all_next_for_year(today)
     mustache :admin
   end
 

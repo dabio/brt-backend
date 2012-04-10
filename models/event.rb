@@ -89,6 +89,11 @@ class Event
     all(:date.gte => "#{year}-01-01", :date.lte => "#{year}-12-31")
   end
 
+  def self.all_next_for_year(today)
+    today ||= Date.today
+    all(:date.gte => today, :date.lte => "#{today.year}-12-31")
+  end
+
   def self.all_without_news
     all(:date.lte => Date.today,
       :news.not => News.all(:event.not => nil),
