@@ -85,7 +85,7 @@ class Person
 
   def participations_count(year=nil)
     if year
-      participations.inject(0) { |s,v| v.date.year == year ? s+=1 : s+=0 }
+      participations.inject(0) { |s,v| (v.date.year == year and v.date <= Date.today) ? s+=1 : s+=0 }
     else
       participations.length
     end

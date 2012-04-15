@@ -37,6 +37,7 @@ class App
         year = participation_latest_year
         person.participations.map do |p|
           result = {
+            future?: p.event.date > Date.today,
             title: "#{p.event.title}, #{p.event.distance} km",
             date: "#{p.event.date.day}. #{month_short(p.event.date)}",
             distance: p.event.distance,

@@ -20,6 +20,7 @@
           </tr>
 
           {{#person_participations}}
+          {{^future?}}
           {{#summary}}
           <tr>
             <td></td>
@@ -38,6 +39,7 @@
             <td>{{position_overall}}</td>
             <td class="last">{{position_age_class}}</td>
           </tr>
+          {{/future?}}
           {{/person_participations}}
 
           {{#last_participation_summary}}
