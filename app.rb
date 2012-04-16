@@ -9,7 +9,10 @@
 # methods and routes and such.
 class App
 
-  # for wasitup
+  #
+  # HEAD /
+  # For wasitup
+  #
   head '/' do; end
 
 
@@ -205,6 +208,7 @@ class App
   #
   before '/admin*' do
     not_found unless has_auth?
+    @is_admin = true
   end
 
 

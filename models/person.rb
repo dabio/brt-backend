@@ -19,7 +19,9 @@ class Person
   property :password,   BCryptHash, required: true
   property :info,       Text, lazy: false
   timestamps :at
-  property :slug,       String, length: 50, default: lambda { |r, p| slugify(r.name) }
+  property :slug,       String, length: 2000, default: lambda { |r, p|
+    r.name.to_url
+  }
 
   has 1, :visit
   has n, :news

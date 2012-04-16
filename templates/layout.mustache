@@ -12,17 +12,16 @@
   <div id="current_person">
     <div class="container">
         <div class="c1-1">
-          <a href="{{permalink}}" title="{{name}}">
-              <img class="avatar" src="{{avatar_url}}" width="45" height="45"/>
-          </a>
+          <img class="avatar" src="{{ avatar_url }}" alt="{{ name }}" width="45" height="45"/>
         </div>
         <div class="c2-9">
-          <p>Hallo <a href="{{permalink}}">{{first_name}}</a>, du bist angemeldet.<br/><a href="{{editlink}}">Profil bearbeiten</a> · <a href="/admin/logout">Abmelden</a></p>
+          <p>Hallo {{ first_name }}, du bist angemeldet.<br/><a href="{{editlink}}">Profil bearbeiten</a> · <a href="/admin/logout">Abmelden</a></p>
         </div>
     </div>
   </div>
   {{/current_person}}
 
+  {{#header?}}
   <div id="header" class="container">
     <h1><a href="/"><span>Berlin Racing Team</span></a></h1>
     <div id="primary-nav">
@@ -38,11 +37,13 @@
   </div>
 
   <hr/>
+  {{/header?}}
 
   <div id="content" class="container">
     {{{yield}}}
   </div>
 
+  {{#footer?}}
   <div id="footer">
 
     <div class="container">
@@ -93,6 +94,7 @@
     </div>
 
   </div>
+  {{/footer?}}
 
   <script src="/js/ender.min.js"></script>
   <script src="/js/app.js"></script>

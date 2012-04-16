@@ -39,6 +39,14 @@ class App
         today.year
       end
 
+      def header?
+        return !@is_admin
+      end
+
+      def footer?
+        return !@is_admin
+      end
+
     end
   end
 end

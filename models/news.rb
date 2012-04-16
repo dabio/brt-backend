@@ -15,7 +15,7 @@ class News
   property :message,    Text
   timestamps :at
   property :slug,       String, length: 2000, default: lambda { |r, p|
-    slugify(r.title)
+    r.title.to_url
   }
   #is :slug, :source => :title
 
