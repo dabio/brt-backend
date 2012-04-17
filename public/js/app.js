@@ -5,7 +5,7 @@
   prepare_emails = function() {
     var email, email_el;
     email_el = $('#email');
-    email = email_el.text().replace(' . ', '.').replace(' [at] ', '@');
+    email = email_el.text().replace(/\s\.\s/g, '.').replace(/\s\[at\]\s/, '@');
     email_el.attr('href', "mailto:" + email);
     return email_el.text(email);
   };
