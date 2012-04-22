@@ -11,6 +11,7 @@
     <p>Hast du Fragen an uns? Möchtest du gerne bei uns mitfahren? Als Sponsor auftreten? Oder einfach nur einen Kommentar abgeben? Dann schreib uns!</p>
 
     <form method="post" action="/kontakt">
+      {{> _errors}}
       <p>
         <label for="contact_name"><small>Name</small></label>
         <input type="text" id="contact_name" name="contact[name]" value="{{#email}}{{name}}{{/email}}"/>

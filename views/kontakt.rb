@@ -21,7 +21,18 @@ class App
         @email
       end
 
+      def errors?
+        email.errors.length > 0
+      end
+
+      def errors
+        email.errors.map do |e|
+          {
+            error: e[0]
+          }
+        end
+      end
+
     end
   end
 end
-
