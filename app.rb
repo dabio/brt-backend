@@ -10,6 +10,14 @@
 class App
 
   #
+  # before
+  #
+  before do
+    @flash = session.delete('flash')
+  end
+
+
+  #
   # HEAD /
   # For wasitup
   #
@@ -146,8 +154,7 @@ class App
 
     @email = Email.new(params[:contact])
     if @email.save
-      flash.now[:notice] = "#{@email.name}, vielen Dank für deine Nachricht!"
-      flash.now[:notice] << " Wir werden sie so schnell wie möglich beantworten."
+      flash[:notice] = "#{@email.name}, vielen Dank für deine Nachricht! Wir werden sie so schnell wie möglich beantworten."
       redirect to('/kontakt')
     end
 

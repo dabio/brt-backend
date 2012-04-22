@@ -31,6 +31,10 @@ class App
         end
       end
 
+      def flash
+        @flash
+      end
+
       def today
         Date.today
       end
