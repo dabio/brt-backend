@@ -46,7 +46,7 @@ class News
   end
 
   def createlink
-    '/admin/news/new'
+    '/admin/news'
   end
 
   #def commentlink

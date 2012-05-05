@@ -257,7 +257,7 @@ class App
   # POST /admin/news/new
   # Creates a new news instance.
   #
-  post '/admin/news/new' do
+  post '/admin/news' do
     params[:news][:person] = current_person
     @news = News.create(params[:news])
     @events = Event.all_without_news
