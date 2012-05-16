@@ -18,7 +18,7 @@ gem 'sinatra', require: 'sinatra/base'
 gem 'sinatra-r18n', require: 'sinatra/r18n'
 gem 'sinatra-flash', require: 'sinatra/flash'
 gem 'stringex'
-gem 'unicorn', require: false
+gem 'thin', require: false
 
 group :development do
   gem 'heroku', require: false
@@ -28,7 +28,6 @@ group :development do
   gem 'simplecov', require: false
   gem 'taps', require: false, git: 'git@github.com:dabio/taps.git'
   gem 'shotgun', require: false
-  gem 'thin', require: false
 end
 
 group :test do
