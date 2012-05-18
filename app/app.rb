@@ -7,7 +7,7 @@ module Brt
     # before
     #
     before do
-      #@flash = session.delete('flash')
+      @flash = session.delete('flash')
     end
 
 
