@@ -26,7 +26,6 @@ group :development do
   gem 'sass', require: false
   gem 'rb-fsevent', require: false
   gem 'simplecov', require: false
-  gem 'taps', require: false, git: 'git@github.com:dabio/taps.git'
   gem 'shotgun', require: false
 end
 

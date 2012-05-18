@@ -1,14 +1,3 @@
-GIT
-  remote: git@github.com:dabio/taps.git
-  revision: a56d8e8494d6bcb529628ee602b9198086a20b9c
-  specs:
-    taps (0.3.23)
-      rack
-      rest-client
-      sequel
-      sinatra
-      sqlite3-ruby
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -65,7 +54,6 @@ GEM
       mime-types (>= 1.16)
     rubyzip (0.9.8)
     sass (3.1.18)
-    sequel (3.35.0)
     shotgun (0.9)
       rack (>= 1.0)
     simplecov (0.6.4)
@@ -81,9 +69,6 @@ GEM
     sinatra-r18n (0.4.14)
       r18n-core (= 0.4.14)
       sinatra (>= 1.3)
-    sqlite3 (1.3.6)
-    sqlite3-ruby (1.3.3)
-      sqlite3 (>= 1.3.3)
     stringex (1.4.0)
     thin (1.3.1)
       daemons (>= 1.0.9)
@@ -120,5 +105,4 @@ DEPENDENCIES
   sinatra-flash
   sinatra-r18n
   stringex
-  taps!
   thin
