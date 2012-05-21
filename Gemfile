@@ -1,6 +1,4 @@
-source 'http://rubygems.org'
-
-ruby '1.9.3'
+source :rubygems
 
 gem 'bcrypt-ruby', require: 'bcrypt'
 gem 'dm-core'
