@@ -7,7 +7,7 @@ Bundler.require(:default, RACK_ENV)
 
 DataMapper::Logger.new($stdout, :debug) if RACK_ENV == 'development'
 DataMapper.setup(
-  :default, ENV['HEROKU_POSTGRESQL_GRAY_URL'] || 'postgres://dan@localhost/brt')
+  :default, ENV['HEROKU_POSTGRESQL_CYAN_URL'] || 'postgres://dan@localhost/brt')
 
 R18n.set('de')
 
