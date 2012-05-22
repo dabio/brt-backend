@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 $LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__))
 
 RACK_ENV = ENV['RACK_ENV'] ||= 'development' unless defined? RACK_ENV
