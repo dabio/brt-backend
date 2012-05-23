@@ -46,6 +46,8 @@ module Brt
     use Rack::ForceDomain, ENV['DOMAIN']
     use Rack::Session::Cookie
     use Rack::Protection
+
+    set :session_secret, ENV['CONTACT_EMAIL'] || 'super secret'
   end
 
   class App < Main
