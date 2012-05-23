@@ -186,7 +186,7 @@ module Brt
         session[:person_id] = person.id
         redirect to('/admin')
       else
-        flash.now[:error] = 'Unbekannte E-Mail oder falsches Password eingegeben.'
+        flash[:error] = 'Unbekannte E-Mail oder falsches Password eingegeben.'
         mustache :login, locals: {email: params[:email]}
       end
     end
