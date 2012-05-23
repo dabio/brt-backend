@@ -44,9 +44,9 @@ module Brt
 
   class Main < Sinatra::Base
     use Rack::ForceDomain, ENV['DOMAIN']
-    use Rack::Session::Cookie
     use Rack::Protection
 
+    set :sessions, domain: ENV['DOMAIN'] || 'localhost'
     set :session_secret, ENV['CONTACT_EMAIL'] || 'super secret'
   end
 
