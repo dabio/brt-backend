@@ -43,9 +43,10 @@ require_relative 'views/layout'
 module Brt
 
   class Main < Sinatra::Base
+    disable :protection
+
     use Rack::ForceDomain, ENV['DOMAIN']
     use Rack::Session::Pool
-    use Rack::Protection
   end
 
   class App < Main
