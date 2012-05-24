@@ -44,10 +44,8 @@ module Brt
 
   class Main < Sinatra::Base
     use Rack::ForceDomain, ENV['DOMAIN']
+    use Rack::Session::Pool
     use Rack::Protection
-
-    set :sessions, domain: ENV['DOMAIN'] || 'localhost'
-    set :session_secret, ENV['CONTACT_EMAIL'] || 'super secret'
   end
 
   class App < Main
