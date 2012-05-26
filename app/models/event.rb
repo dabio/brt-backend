@@ -17,7 +17,9 @@ class Event
   property :distance,   Integer,required: true
   property :type,       Integer, default: 1 #Enum[:race, :training], default: :race
   timestamps :at
-  property :slug,       String, length: 2000, default: lambda { |r, p| slugify r.title }
+  property :slug,       String, length: 2000, default: lambda { |r, p|
+    r.title.to_url
+  }
   belongs_to :person
   has 1, :news
   has n, :reports
