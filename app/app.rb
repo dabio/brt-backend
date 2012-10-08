@@ -1,30 +1,13 @@
-# encoding: utf-8
+# encoding: UTF-8
 
 module Brt
   class App
 
     #
-    # before
-    #
-    before do
-      @flash = session.delete('flash')
-    end
-
-
-    #
-    # HEAD /
-    # For wasitup
-    #
-    head '/' do; end
-
-
-    #
     # GET /
-    # Shows the team image and the last 6 news items.
     #
     get '/' do
-      @news = News.all(:date.lte => today, limit: 6)
-      mustache :index
+      '/'
     end
 
 
@@ -34,22 +17,16 @@ module Brt
     # shown.
     #
     get '/news' do
-      @count, @news = News.paginated(
-        page: current_page, per_page: 10, :date.lte => today
-      )
-      not_found unless @news.length > 1
-      @page = current_page
-      mustache :news_list
+      '/news'
     end
 
 
     #
-    # GET /news/[year]/[month]/[day]/[slug]
+    # GET /news/:year/:month/:day/:slug
     # Shows the news based on the given year, month, day and slug parameters.
     #
     get '/news/:year/:month/:day/:slug' do
-      news
-      mustache :news_detail
+      '/news_detail'
     end
 
 
@@ -58,18 +35,16 @@ module Brt
     # Shows a list of all team members.
     #
     get '/team' do
-      @people = Person.all
-      mustache :people_list
+      '/team'
     end
 
 
     #
-    # GET /team/[slug]
+    # GET /team/:slug
     # Shows some detailed information about a cyclists.
     #
     get '/team/:slug' do
-      person
-      mustache :person_detail
+      '/person_detail'
     end
 
 
@@ -78,20 +53,15 @@ module Brt
     # Shows an overview of all races in the current year.
     #
     get '/rennen' do
-      @events = Event.all_for_year(Date.today.year)
-      not_found unless @events.length > 0
-      mustache :events_list
+      '/rennen'
     end
-
 
     #
     # GET /rennen/[year]
     # Shows all events from a given year.
     #
     get '/rennen/:year' do |year|
-      @events = Event.all_for_year(year)
-      not_found unless @events.length > 0
-      mustache :events_list
+      "/rennen/#{year}"
     end
 
 
@@ -100,21 +70,19 @@ module Brt
     # Returns all events of all time in an vcalendar formated format.
     #
     get '/rennen.ics' do
-      @events = Event.all
-      content_type 'text/calendar'
-      mustache :events_ics, layout: false
+      #content_type 'text/calendar'
+      'rennen_ics'
     end
 
 
     #
-    # GET /rennen/[year]/[month]/[day]/[slug]
+    # GET /rennen/:year/:month/:day/:slug
     # Redirects to a news if an report for the event exists. Otherwise the detail
     # site of the event is displayed.
     #
     get '/rennen/:year/:month/:day/:slug' do
-      @event = event
-      redirect(to(@event.news.permalink), 301) if @event.news
-      mustache :event_detail
+      #redirect(to(@event.news.permalink), 301) if @event.news
+      'rennen_detail'
     end
 
 
@@ -123,17 +91,15 @@ module Brt
     # Shows a list of sponsors.
     #
     get '/sponsoren' do
-      mustache :sponsoren
+      '/sponsoren'
     end
-
 
     #
     # GET /kontakt
     # Shows the contact form
     #
     get '/kontakt' do
-      @email = Email.new()
-      mustache :kontakt
+      '/kontakt'
     end
 
 
@@ -152,7 +118,7 @@ module Brt
         redirect to('/kontakt')
       end
 
-      mustache :kontakt
+      'kontakt'
     end
 
 
@@ -166,16 +132,14 @@ module Brt
 
     #
     # GET /login
-    # Shows the login form.
     #
     get '/login' do
-      mustache :login
+      '/login'
     end
 
 
     #
     # POST /login
-    # Checks the submitted data, sets a cookie and redirects to the admin area.
     #
     post '/login' do
       email = params[:email].clone
@@ -190,222 +154,6 @@ module Brt
         mustache :login, locals: {email: params[:email]}
       end
     end
-
-    #
-    # GET /everythingelse
-    # 404 Site with search and link to homepage
-    #
-    not_found do
-      halt mustache :not_found
-    end
-
-
-    # FROM HERE ON EVERYTHING SHOULD BE IN A SEPERATE FILE CONTAINING ALL ADMIN
-    # FUNCTIONS.
-
-    #
-    # Before filter to make sure the admin area is only accessible for
-    # authenticated users.
-    #
-    before '/admin*' do
-      not_found unless has_auth?
-      @is_admin = true
-    end
-
-
-    #
-    # GET /admin
-    # Dashboard for authenticated users. Show the listing of the next races and
-    # the participants.
-    #
-    get '/admin' do
-      @previous_events = Event.all(:date.lt => today, limit: 3)
-      @next_events = Event.all_next_for_year(today)
-      mustache :admin
-    end
-
-
-    #
-    # GET /admin/logout
-    # Checks if the user is authenticated, deletes the session and redirects to
-    # the homepage.
-    #
-    get '/admin/logout' do
-      session[:person_id] = nil
-      redirect to('/')
-    end
-
-
-    #
-    # GET /admin/news/new
-    # Creates a new news instance.
-    #
-    get '/admin/news/new' do
-      @news = News.new()
-      @events = Event.all_without_news
-      mustache :news_form
-    end
-
-
-    #
-    # POST /admin/news/new
-    # Creates a new news instance.
-    #
-    post '/admin/news' do
-      params[:news][:person] = current_person
-      @news = News.create(params[:news])
-      @events = Event.all_without_news
-      params[:news][:event_id] = nil unless params[:news][:event_id].length > 0
-      redirect(to(@news.permalink)) if @news.saved?
-      mustache :news_form
-    end
-
-
-    #
-    # GET /admin/news/[year]/[month]/[day]/[slug]/edit
-    # Shows the edit form for an existing news item.
-    #
-    get '/admin/news/:year/:month/:day/:slug' do
-      @events = Event.all_without_news
-      @news = news
-      mustache :news_form
-    end
-
-
-    #
-    # PUT /admin/news/[year]/[month]/[day]/[slug]
-    # Updates an already existing news item.
-    #
-    post '/admin/news/:year/:month/:day/:slug' do |year, month, day, slug|
-      params[:news][:event_id] = nil unless params[:news][:event_id].length > 0
-      redirect(to(news.permalink)) if news.update(params[:news])
-      @events = Event.all_without_news
-      mustache :news_form
-    end
-
-
-    #
-    # GET /admin/team/new
-    # Shows a form that allows the creation of a new team member.
-    #
-    get '/admin/team/new' do
-      @person = Person.new()
-      mustache :person_form
-    end
-
-
-    #
-    # POST /admin/team/new
-    # Creates a new person instance.
-    #
-    post '/admin/team/new' do
-
-      if params[:person][:password].nil? or params[:person][:password].empty?
-        params[:person].delete "password"
-        params[:person].delete "password_confirmation"
-      end
-
-      @person = Person.create(params[:person])
-      redirect(to(@person.permalink)) if @person.saved?
-      mustache :person_form
-    end
-
-
-    #
-    # GET /admin/team/[slug]
-    # Shows th eedit form for an individual user.
-    #
-    get '/admin/team/:slug' do
-      person
-      mustache :person_form
-    end
-
-
-    #
-    # POST /admin/team/[slug]
-    # Updates an already existing user.
-    #
-    post '/admin/team/:slug' do
-
-      if params[:person][:password].nil? or params[:person][:password].empty?
-        params[:person].delete "password"
-        params[:person].delete "password_confirmation"
-      end
-
-      redirect(to(person.permalink)) if person.update(params[:person])
-      mustache :person_form
-    end
-
-    #
-    # DELETE /admin/team/[slug]
-    # Deletes a user.
-    #
-    delete '/admin/team/:slug' do
-
-    end
-
-
-    #
-    # GET /admin/rennen/new
-    # Shows a form which allows the creation of new events.
-    #
-    get '/admin/rennen/new' do
-      @event = Event.new()
-      mustache :event_form
-    end
-
-
-    #
-    # POST /admin/rennen/new
-    # Creates a new event.
-    #
-    post '/admin/rennen/new' do
-      params[:event][:person] = current_person
-      @event = Event.create(params[:event])
-      redirect(to(@event.permalink)) if @event.saved?
-      mustache :event_form
-    end
-
-
-    #
-    # GET /admin/rennen/[year]/[month]/[day]/[slug]
-    # Shows a edit form for an event and allows the user to change some details.
-    #
-    get '/admin/rennen/:year/:month/:day/:slug' do
-      event
-      mustache :event_form
-    end
-
-
-    #
-    # POST /admin/rennen/[year]/[month]/[day]/[slug]
-    # Updates an already existing event entry.
-    #
-    post '/admin/rennen/:year/:month/:day/:slug' do
-      redirect(to(event.permalink)) if event.update(params[:event])
-      mustache :event_form
-    end
-
-
-    #
-    # POST /admin/rennen/[year]/[month]/[day]/[slug]/[participation]
-    # Allows a user to participate on this event.
-    #
-    post '/admin/rennen/:year/:month/:day/:slug/participation', :provides => :json do
-      Participation.create(person: current_person, event: event)
-      { id: "event-#{event.id}" }.to_json
-    end
-
-
-    #
-    # DELETE /admin/rennen/[year]/[month]/[day]/[slug]/[participation]
-    # Unsubscribe the current user from the event.
-    #
-    delete '/admin/rennen/:year/:month/:day/:slug/participation', :provides => :json do
-      Participation.all(person: current_person, event: event).destroy
-      { id: "event-#{event.id}" }.to_json
-    end
-
 
     #
     # PUT /visit

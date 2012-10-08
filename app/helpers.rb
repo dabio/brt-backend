@@ -7,8 +7,21 @@ module Brt
     # setting a session variable with their is. If it doesn't exist, we want to
     # return nil.
     def current_person
-      @cp = Person.first(id: @request.session[:person_id]) if @request.session[:person_id] unless @cp
-      @cp
+      unless @cu
+        @cu = Person.get(@request.session[:person_id]) if @request.session[:person_id]
+      end
+      @cu
+    end
+
+    # Checks if this is a logged in person
+    def has_auth?
+      true
+      #!current_person.nil?
+    end
+
+    # Check if current person is logged in and is admin
+    def has_admin?
+      has_auth? && current_person.id == 1
     end
 
     # Encrypts given email-strings to format address [at] domain . tld.
@@ -16,11 +29,6 @@ module Brt
       email = '' if email.nil?
       email.gsub! /@/, ' [at] '
       email.gsub! /\./, ' . '
-    end
-
-    # Checks if this is a logged in person
-    def has_auth?
-      !current_person.nil?
     end
 
     def l(string, options)
@@ -85,11 +93,6 @@ module Brt
     # Returns the current page given by the url request parameter. Defaults to 1.
     def current_page
       @page = params[:page] && params[:page].match(/\d+/) ? params[:page].to_i : 1
-    end
-
-    # Check if current person is logged in and is admin
-    def has_admin?
-      has_auth? && current_person.id == 1
     end
 
     def today

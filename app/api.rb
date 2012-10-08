@@ -50,37 +50,85 @@ module Brt
     # EVENT
 
     #
-    # GET /api/event
+    # GET /api/events
     # Shows a list of all events.
     #
-    get '/event', :provides => 'json' do
+    get '/events', :provides => 'json' do
       puts 'get'
     end
 
 
     #
-    # POST /api/event
+    # POST /api/events
     # Creates a new event.
     #
-    post '/event', :provides => 'json' do
+    post '/events', :provides => 'json' do
       puts 'post'
     end
 
 
     #
-    # PUT /api/event/:id
+    # PUT /api/events/:id
     # Updates a given event.
     #
-    put '/event/:id', :provides => 'json' do |id|
+    put '/events/:id', :provides => 'json' do |id|
       puts 'put'
     end
 
 
     #
-    # DELETE /api/event/:id
+    # DELETE /api/events/:id
     # Deletes a event.
     #
-    delete '/event/:id', :provides => 'json' do |id|
+    delete '/events/:id', :provides => 'json' do |id|
+      puts 'delete'
+    end
+
+
+    # VISITS
+
+    #
+    # GET /api/visits
+    # Shows a list of all visits.
+    #
+    get '/visits', :provides => 'json' do
+      puts 'get'
+    end
+
+
+    #
+    # PUT /api/visits/:id
+    # Updates a given visit.
+    #
+    put '/visits/:id', :provides => 'json' do |id|
+      puts 'put'
+    end
+
+
+    # EMAILS
+
+    #
+    # Disallow the email api for non admin users.
+    #
+    before '/emails*' do
+      not_found unless has_admin?
+    end
+
+
+    #
+    # GET /api/emails
+    # Shows a list of all emails.
+    #
+    get '/emails', :provides => 'json' do
+      puts 'get'
+    end
+
+
+    #
+    # DELETE /api/emails/:id
+    # Deletes an email.
+    #
+    delete '/emails/:id', :provides => 'json' do |id|
       puts 'delete'
     end
 
@@ -90,43 +138,43 @@ module Brt
     #
     # Disallow the person api for non admin users.
     #
-    before '/person*' do
+    before '/persons*' do
       not_found unless has_admin?
     end
 
 
     #
-    # GET /api/person
+    # GET /api/persons
     # Shows a list of all persons.
     #
-    get '/person', :provides => 'json' do
+    get '/persons', :provides => 'json' do
       puts 'get'
     end
 
 
     #
-    # POST /api/person
+    # POST /api/persons
     # Creates a new person.
     #
-    post '/person', :provides => 'json' do
+    post '/persons', :provides => 'json' do
       puts 'post'
     end
 
 
     #
-    # PUT /api/person/:id
+    # PUT /api/persons/:id
     # Updates a given person.
     #
-    put '/person/:id', :provides => 'json' do |id|
+    put '/persons/:id', :provides => 'json' do |id|
       puts 'put'
     end
 
 
     #
-    # DELETE /api/person/:id
+    # DELETE /api/persons/:id
     # Deletes a person.
     #
-    delete '/person/:id', :provides => 'json' do |id|
+    delete '/persons/:id', :provides => 'json' do |id|
       puts 'delete'
     end
 

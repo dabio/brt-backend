@@ -14,7 +14,7 @@ class Person
   property :first_name, String, required: true
   property :last_name,  String, required: true
   property :email,      String, required: true, format: :email_address, unique: true
-  property :password,   BCryptHash, required: true
+  property :password,   SCryptHash, required: true
   property :info,       Text, lazy: false
   timestamps :at
   property :slug,       String, length: 2000, default: lambda { |r, p|

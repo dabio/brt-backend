@@ -9,8 +9,6 @@ Bundler.require(:default, RACK_ENV)
 DataMapper::Logger.new($stdout, :debug) if RACK_ENV == 'development'
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://dan@localhost/brt')
 
-R18n.set('de')
-
 # Library
 require_relative '../lib/dm_scrypt'
 require_relative '../lib/dm_uri'
@@ -42,16 +40,27 @@ module Brt
     use Rack::Protection
 
     helpers Brt::Helpers
+
+    # redirect all requests ending with a slash to their corresponding requests
+    # without the slash
+    get %r{(.+)/$} do |r|
+      redirect to(r)
+    end
+
   end
 
   class Api < Main; end
 
+  class Admin < Main; end
+
   class App < Main
     register Sinatra::Flash
+    register Sinatra::R18n
     register Mustache::Sinatra
 
     dir = File.dirname(File.expand_path(__FILE__))
 
+    set :root, dir
     set :default_locale, 'de'
     set :public_folder, "#{dir}/frontend/public"
     set :method_override, true
@@ -64,6 +73,8 @@ module Brt
 
 end
 
+# Admin
+require 'admin'
 # Api
 require 'api'
 # App
