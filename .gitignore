@@ -1,6 +1,5 @@
-db/
+# Vim
 coverage/
-node_modules/
 
 # Bundler
 /.bundle

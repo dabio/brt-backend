@@ -1,10 +1,3 @@
-# encoding: utf-8
-
-if defined? Encoding
-  Encoding.default_external = Encoding::UTF_8
-  Encoding.default_internal = Encoding::UTF_8
-end
-
 $LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__))
 
 RACK_ENV = ENV['RACK_ENV'] ||= 'development' unless defined? RACK_ENV
@@ -12,13 +5,14 @@ RACK_ENV = ENV['RACK_ENV'] ||= 'development' unless defined? RACK_ENV
 require 'bundler/setup'
 Bundler.require(:default, RACK_ENV)
 
+# PostgreSQL
 DataMapper::Logger.new($stdout, :debug) if RACK_ENV == 'development'
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://dan@localhost/brt')
 
 R18n.set('de')
 
 # Library
-require_relative '../lib/dm_bcrypt'
+require_relative '../lib/dm_scrypt'
 require_relative '../lib/dm_uri'
 require_relative '../lib/hash'
 
@@ -43,16 +37,18 @@ require_relative 'views/layout'
 module Brt
 
   class Main < Sinatra::Base
-    disable :protection
-
     use Rack::ForceDomain, ENV['DOMAIN']
-    use Rack::Session::Pool
+    use Rack::Session::Cookie
+    use Rack::Protection
+
+    helpers Brt::Helpers
   end
+
+  class Api < Main; end
 
   class App < Main
     register Sinatra::Flash
     register Mustache::Sinatra
-    helpers Brt::Helpers
 
     dir = File.dirname(File.expand_path(__FILE__))
 
@@ -68,5 +64,7 @@ module Brt
 
 end
 
+# Api
+require 'api'
 # App
 require 'app'

@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 $LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/app')
 
 require 'boot'
@@ -16,6 +14,11 @@ end
 desc 'Open an irb session preloaded with this library'
 task :console do
   `irb -rubygems -r ./app/boot`
+end
+
+desc 'Removes all installed gems'
+task :cleanup do
+  `rm -fr bin/ vendor/ .bundle/ Gemfile.lock`
 end
 
 task :load_migrations do
