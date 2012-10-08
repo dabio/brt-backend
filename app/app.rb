@@ -126,7 +126,7 @@ module Brt
     # Before filter to redirect all authenticated users to the main admin page.
     #
     before '/login' do
-      redirect(to('/admin')) if has_auth?
+      #redirect(to('/admin')) if has_auth?
     end
 
 
@@ -142,17 +142,18 @@ module Brt
     # POST /login
     #
     post '/login' do
-      email = params[:email].clone
-      email << '@berlinracingteam.de' unless email['@']
-      person = Person.authenticate(email, params[:password])
+      'login'
+      #email = params[:email].clone
+      #email << '@berlinracingteam.de' unless email['@']
+      #person = Person.authenticate(email, params[:password])
 
-      if person
-        session[:person_id] = person.id
-        redirect to('/admin')
-      else
-        flash[:error] = 'Unbekannte E-Mail oder falsches Password eingegeben.'
-        mustache :login, locals: {email: params[:email]}
-      end
+      #if person
+      #  session[:person_id] = person.id
+      #  redirect to('/admin')
+      #else
+      #  flash[:error] = 'Unbekannte E-Mail oder falsches Password eingegeben.'
+      #  mustache :login, locals: {email: params[:email]}
+      #end
     end
 
     #
