@@ -134,7 +134,7 @@ module Brt
     # GET /login
     #
     get '/login' do
-      '/login'
+      mustache :login
     end
 
 

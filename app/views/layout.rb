@@ -3,7 +3,6 @@
 module Brt
   module Views
     class Layout < Mustache
-      include Brt::Helpers
 
       def title
         @title || 'Berlin Racing Team'
