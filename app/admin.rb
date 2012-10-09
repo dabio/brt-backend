@@ -13,7 +13,7 @@ module Brt
     # GET /admin
     #
     get '/' do
-      '/admin'
+      mustache :index
     end
 
 
@@ -21,7 +21,7 @@ module Brt
     # GET /admin/news
     #
     get '/news' do
-      '/admin/news'
+      mustache :news
     end
 
 
@@ -29,7 +29,7 @@ module Brt
     # GET /admin/events
     #
     get '/events' do
-      '/admin/events'
+      mustache :events
     end
 
 
@@ -38,7 +38,7 @@ module Brt
     #
     get '/people' do
       not_found unless has_admin?
-      '/admin/people'
+      mustache :people
     end
 
 
@@ -47,7 +47,7 @@ module Brt
     #
     get '/emails' do
       not_found unless has_admin?
-      '/admin/emails'
+      mustache :emails
     end
 
   end

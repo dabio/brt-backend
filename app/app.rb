@@ -168,6 +168,13 @@ module Brt
 
 
     #
+    # GET /every/thing/else
+    #
+    not_found do
+      halt mustache :not_found
+    end
+
+    #
     # PUT /visit
     # Everytime the user visits the site, it gets logged into the database.
     #

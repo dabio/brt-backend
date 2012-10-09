@@ -31,6 +31,7 @@ require_relative 'helpers'
 
 # Non-autoloaded views
 require_relative 'views/layout'
+require_relative 'views/admin/layout'
 
 module Brt
 
@@ -51,7 +52,23 @@ module Brt
 
   class Api < Main; end
 
-  class Admin < Main; end
+  class Admin < Main
+    register Sinatra::Flash
+    register Sinatra::R18n
+    register Mustache::Sinatra
+
+    dir = File.dirname(File.expand_path(__FILE__))
+
+    set :root, dir
+    set :default_locale, 'de'
+    set :public_folder, "#{dir}/frontend/admin"
+    set :method_override, true
+    set :mustache, {
+      namespace: Brt,
+      templates: "#{dir}/templates/admin",
+      views: "#{dir}/views/admin"
+    }
+  end
 
   class App < Main
     register Sinatra::Flash
