@@ -15,8 +15,7 @@ module Brt
 
     # Checks if this is a logged in person
     def has_auth?
-      true
-      #!current_person.nil?
+      !current_person.nil?
     end
 
     # Check if current person is logged in and is admin

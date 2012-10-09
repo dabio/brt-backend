@@ -133,51 +133,50 @@ module Brt
     end
 
 
-    # PERSON
+    # PEOPLE
 
     #
-    # Disallow the person api for non admin users.
+    # Disallow the people api for non admin users.
     #
-    before '/persons*' do
+    before '/people*' do
       not_found unless has_admin?
     end
 
 
     #
-    # GET /api/persons
-    # Shows a list of all persons.
+    # GET /api/people
+    # Shows a list of all people.
     #
-    get '/persons', :provides => 'json' do
+    get '/people', :provides => 'json' do
       puts 'get'
     end
 
 
     #
-    # POST /api/persons
-    # Creates a new person.
+    # POST /api/people
+    # Creates a new people.
     #
-    post '/persons', :provides => 'json' do
+    post '/people', :provides => 'json' do
       puts 'post'
     end
 
 
     #
-    # PUT /api/persons/:id
-    # Updates a given person.
+    # PUT /api/people/:id
+    # Updates a given people.
     #
-    put '/persons/:id', :provides => 'json' do |id|
+    put '/people/:id', :provides => 'json' do |id|
       puts 'put'
     end
 
 
     #
-    # DELETE /api/persons/:id
-    # Deletes a person.
+    # DELETE /api/people/:id
+    # Deletes a people.
     #
-    delete '/persons/:id', :provides => 'json' do |id|
+    delete '/people/:id', :provides => 'json' do |id|
       puts 'delete'
     end
-
 
   end
 end

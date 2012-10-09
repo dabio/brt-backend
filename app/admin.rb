@@ -13,7 +13,7 @@ module Brt
     # GET /admin
     #
     get '/' do
-      '/'
+      '/admin'
     end
 
 
@@ -21,7 +21,7 @@ module Brt
     # GET /admin/news
     #
     get '/news' do
-      '/news'
+      '/admin/news'
     end
 
 
@@ -29,16 +29,16 @@ module Brt
     # GET /admin/events
     #
     get '/events' do
-      '/events'
+      '/admin/events'
     end
 
 
     #
-    # GET /admin/persons
+    # GET /admin/people
     #
-    get '/persons' do
+    get '/people' do
       not_found unless has_admin?
-      '/persons'
+      '/admin/people'
     end
 
 
@@ -47,7 +47,7 @@ module Brt
     #
     get '/emails' do
       not_found unless has_admin?
-      '/emails'
+      '/admin/emails'
     end
 
   end
