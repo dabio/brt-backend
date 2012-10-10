@@ -142,6 +142,8 @@ module Brt
     # POST /login
     #
     post '/login' do
+      halt mustache :login unless params[:email] and params[:password]
+
       email = params[:email].clone
       email << '@berlinracingteam.de' unless email['@']
       person = Person.authenticate(email, params[:password])
