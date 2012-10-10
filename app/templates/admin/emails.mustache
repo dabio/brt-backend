@@ -1,10 +1,14 @@
 <section id=emails>
 
-  <ul>
-  </ul>
+  <table>
+    <tbody>
+    </tbody>
+  </table>
 
 </section>
 
 <script type=text/template id=email-template>
-  <%= name %> (<a href="mailto:<%= email %>"><%= email %></a>)
+  <td><%= id %></td>
+  <td><%= date %></td>
+  <td><%= name %> (<%= email %>)</td>
 </script>

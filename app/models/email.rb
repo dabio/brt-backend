@@ -25,10 +25,17 @@ class Email
   property :send_at,    DateTime
   timestamps :at
 
+
   before :save do |e|
     e.send_at = Time.now
     e.send_email
   end
+
+
+  def date
+    send_at
+  end
+
 
   def send_email(opts={})
     require 'net/smtp'
@@ -50,7 +57,6 @@ END_OF_MESSAGE
     Net::SMTP.start(opts[:server], opts[:port], opts[:from], opts[:user], opts[:password], :plain) do |smtp|
       smtp.send_message msg, opts[:from], opts[:to]
     end
-    
   end
-end
 
+end

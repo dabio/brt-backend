@@ -120,7 +120,7 @@ module Brt
     # Shows a list of all emails.
     #
     get '/emails', :provides => 'json' do
-      Email.all.to_json
+      Email.all.to_json(methods: [:date])
     end
 
 

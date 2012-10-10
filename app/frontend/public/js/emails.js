@@ -10,7 +10,7 @@ $(function () {
   var Emails = new EmailList();
 
   var EmailView = Backbone.View.extend({
-    tagName: 'li',
+    tagName: 'tr',
 
     template: _.template($('#email-template').html()),
 
@@ -46,7 +46,7 @@ $(function () {
 
     addOne: function (email) {
       var view = new EmailView({model: email});
-      this.$('ul').prepend(view.render().el);
+      this.$('table tbody').prepend(view.render().el);
     },
 
     addAll: function () {
