@@ -1,9 +1,9 @@
 module Brt
   module Views
-    class Emails < Layout
+    class People < Layout
 
       def title
-        'E-Mails'
+        'Fahrer'
       end
 
       def javascripts

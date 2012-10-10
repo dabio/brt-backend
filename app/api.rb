@@ -16,7 +16,7 @@ module Brt
     # Shows a list of all news.
     #
     get '/news', :provides => 'json' do
-      puts 'get'
+      News.all(order: [:date.asc]).to_json
     end
 
 
@@ -43,7 +43,7 @@ module Brt
     # Deletes a news.
     #
     delete '/news/:id', :provides => 'json' do |id|
-      puts 'delete'
+      News.get(id).destroy
     end
 
 
@@ -148,7 +148,7 @@ module Brt
     # Shows a list of all people.
     #
     get '/people', :provides => 'json' do
-      puts 'get'
+      Person.all(order: [:last_name.desc, :first_name.desc]).to_json
     end
 
 
@@ -175,7 +175,7 @@ module Brt
     # Deletes a people.
     #
     delete '/people/:id', :provides => 'json' do |id|
-      puts 'delete'
+      Person.get(id).detroy
     end
 
   end

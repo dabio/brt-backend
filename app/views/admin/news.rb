@@ -1,9 +1,9 @@
 module Brt
   module Views
-    class Emails < Layout
+    class News < Layout
 
       def title
-        'E-Mails'
+        'Nachrichten und Rennberichte'
       end
 
       def javascripts
