@@ -22,12 +22,12 @@ gem 'thin', require: false
 group :development do
   gem 'heroku', require: false
   #gem 'foreman', require: false
-  gem 'simplecov', require: false
   gem 'shotgun', require: false
 end
 
 group :test do
   gem 'rack-test', require: 'rack/test'
+  gem 'simplecov'
 end
 
 group :production do

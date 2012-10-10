@@ -16,7 +16,9 @@ module Brt
     # Shows a list of all news.
     #
     get '/news', :provides => 'json' do
-      News.all(order: [:date.asc]).to_json
+      News
+        .all(order: [:date.asc])
+        .to_json
     end
 
 
@@ -54,7 +56,9 @@ module Brt
     # Shows a list of all events.
     #
     get '/events', :provides => 'json' do
-      Event.all(order: [:date.asc]).to_json
+      Event
+        .all(order: [:date.asc])
+        .to_json(only: [:id, :date, :title])
     end
 
 
@@ -120,7 +124,9 @@ module Brt
     # Shows a list of all emails.
     #
     get '/emails', :provides => 'json' do
-      Email.all.to_json(methods: [:date])
+      Email
+        .all(order: [:send_at.asc])
+        .to_json(only: [:id, :name, :email], methods: [:date])
     end
 
 
@@ -129,7 +135,7 @@ module Brt
     # Deletes an email.
     #
     delete '/emails/:id', :provides => 'json' do |id|
-      puts 'delete'
+      Email.get(id).destroy
     end
 
 
@@ -148,7 +154,9 @@ module Brt
     # Shows a list of all people.
     #
     get '/people', :provides => 'json' do
-      Person.all(order: [:last_name.desc, :first_name.desc]).to_json
+      Person
+        .all(order: [:last_name.desc, :first_name.desc])
+        .to_json(only: [:id, :email], methods: [:name])
     end
 
 
