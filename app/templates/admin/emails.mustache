@@ -1,4 +1,4 @@
-<section id=emails>
+<section id=emails class=items>
 
   <table>
     <tbody>
@@ -7,8 +7,9 @@
 
 </section>
 
-<script type=text/template id=email-template>
+<script>var url = '/api/emails';</script>
+<script type=text/template id=template>
   <td><%= id %></td>
-  <td><%= date %></td>
+  <td><%= send_at %></td>
   <td><%= name %> (<%= email %>)</td>
 </script>

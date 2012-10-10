@@ -54,7 +54,7 @@ module Brt
     # Shows a list of all events.
     #
     get '/events', :provides => 'json' do
-      puts 'get'
+      Event.all(order: [:date.asc]).to_json
     end
 
 
@@ -81,7 +81,7 @@ module Brt
     # Deletes a event.
     #
     delete '/events/:id', :provides => 'json' do |id|
-      puts 'delete'
+      Event.get(id).destroy
     end
 
 
