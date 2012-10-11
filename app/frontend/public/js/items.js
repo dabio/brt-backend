@@ -14,7 +14,9 @@ $(function () {
     template: _.template($('#template').html()),
 
     events: {
-      'click .remove': 'clear'
+      'click .remove':  'clear',
+      'mouseover':      'showRemove',
+      'mouseout':       'hideRemove'
     },
 
     initialize: function (model) {
@@ -28,8 +30,21 @@ $(function () {
       return this;
     },
 
+    showRemove: function () {
+      this.$('.remove').show();
+    },
+
+    hideRemove: function () {
+      this.$('.remove').hide();
+    },
+
     clear: function () {
-      this.model.destroy();
+      var item = this;
+
+      if (confirm('Wirklich löschen?')) {
+        this.model.destroy();
+      }
+
     }
   });
 

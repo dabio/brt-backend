@@ -21,7 +21,7 @@ module Brt
     # GET /admin/news
     #
     get '/news' do
-      mustache :news
+      mustache :tidings
     end
 
 
