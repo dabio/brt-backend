@@ -37,7 +37,7 @@ $(function () {
     },
 
     showDetail: function (e) {
-      app.navigate('/'+this.model.get('id'), { trigger: true });
+      router.navigate('/'+this.model.get('id'), { trigger: true });
     },
 
     showRemove: function () {
@@ -58,7 +58,7 @@ $(function () {
     }
   });
 
-  var ItemsAppView = Backbone.View.extend({
+  var ItemsView = Backbone.View.extend({
     el: $('.items'),
 
     initialize: function () {
@@ -89,7 +89,7 @@ $(function () {
     },
 
     list: function () {
-      var itemsApp = new ItemsAppView();
+      var itemsApp = new ItemsView();
     },
 
     detail: function (id) {
@@ -97,7 +97,7 @@ $(function () {
     }
   });
 
-  var app = new Router();
+  var router = new Router();
 
   Backbone.history.start({
     pushState: true,
