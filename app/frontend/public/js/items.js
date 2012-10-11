@@ -1,11 +1,16 @@
 $(function () {
 
+  var type      = $('.items').attr('id'),
+      api_url   = '/api/' + type,
+      admin_url = '/admin/' + type;
+
   var Item = Backbone.Model.extend({});
 
   var ItemList = Backbone.Collection.extend({
     model: Item,
-    url: url
+    url: api_url
   });
+
   var Items = new ItemList();
 
   var ItemView = Backbone.View.extend({
@@ -14,6 +19,7 @@ $(function () {
     template: _.template($('#template').html()),
 
     events: {
+      'click':          'showDetail',
       'click .remove':  'clear',
       'mouseover':      'showRemove',
       'mouseout':       'hideRemove'
@@ -28,6 +34,10 @@ $(function () {
     render: function () {
       $(this.el).html(this.template(this.model.toJSON()));
       return this;
+    },
+
+    showDetail: function (e) {
+      app.navigate('/'+this.model.get('id'), { trigger: true });
     },
 
     showRemove: function () {
@@ -68,9 +78,30 @@ $(function () {
 
     addAll: function () {
       Items.each(this.addOne);
-    },
+    }
 
   });
 
-  var ItemsApp = new ItemsAppView();
+  var Router = Backbone.Router.extend({
+    routes: {
+      '':     'list',
+      ':id':  'detail'
+    },
+
+    list: function () {
+      var itemsApp = new ItemsAppView();
+    },
+
+    detail: function (id) {
+      console.log(id)
+    }
+  });
+
+  var app = new Router();
+
+  Backbone.history.start({
+    pushState: true,
+    root: admin_url + '/'
+  });
+
 });

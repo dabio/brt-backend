@@ -50,5 +50,13 @@ module Brt
       mustache :emails
     end
 
+    #
+    # GET /admin/emails/:id
+    #
+    get '/emails/:id' do
+      not_found unless has_admin?
+      '12'
+    end
+
   end
 end
