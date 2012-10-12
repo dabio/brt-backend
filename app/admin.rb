@@ -19,24 +19,27 @@ module Brt
 
     #
     # GET /admin/news
+    # GET /admin/news/:id
     #
-    get '/news' do
+    get '/news/?:id?' do
       mustache :tidings
     end
 
 
     #
     # GET /admin/events
+    # GET /admin/events/:id
     #
-    get '/events' do
+    get '/events/?:id?' do
       mustache :events
     end
 
 
     #
     # GET /admin/people
+    # GET /admin/people/:id
     #
-    get '/people' do
+    get '/people/?:id?' do
       not_found unless has_admin?
       mustache :people
     end
@@ -44,18 +47,11 @@ module Brt
 
     #
     # GET /admin/emails
-    #
-    get '/emails' do
-      not_found unless has_admin?
-      mustache :emails
-    end
-
-    #
     # GET /admin/emails/:id
     #
-    get '/emails/:id' do
+    get '/emails/?:id?' do
       not_found unless has_admin?
-      '12'
+      mustache :emails
     end
 
   end
