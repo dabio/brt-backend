@@ -2,7 +2,8 @@ $(function () {
 
   var type      = $('.items').attr('id'),
       api_url   = '/api/' + type,
-      admin_url = '/admin/' + type;
+      admin_url = '/admin/' + type,
+      state     = {};
 
   var Item = Backbone.Model.extend({});
 
@@ -16,7 +17,7 @@ $(function () {
   var ItemView = Backbone.View.extend({
     tagName: 'tr',
 
-    template: _.template($('#template').html()),
+    template: _.template($('#item_template').html()),
 
     events: {
       'click':          'showDetail',
@@ -62,9 +63,9 @@ $(function () {
     el: $('.items'),
 
     initialize: function () {
-      _.bindAll(this, 'addAll', 'render');
-      Items.bind('reset', this.addAll);
-      Items.bind('all', this.render);
+      _.bindAll(this, 'render');
+      Items.on('reset', this.addAll, this);
+      Items.on('all', this.render, this);
 
       Items.fetch();
     },
@@ -82,18 +83,46 @@ $(function () {
 
   });
 
+  var EditView = Backbone.View.extend({
+    el: $('.edit'),
+
+    template: _.template($('#edit_template').html()),
+
+    initialize: function (model) {
+      _.bindAll(this, 'render');
+
+      Items.on('all', this.render, this);
+    },
+
+    render: function () {
+      $(this.el).html(this.template(this.model.toJSON()));
+      return this;
+    }
+  });
+
   var Router = Backbone.Router.extend({
     routes: {
-      '':     'list',
-      ':id':  'detail'
+      ':id':  'detail',
+      '':     'list'
     },
 
     list: function () {
-      var itemsApp = new ItemsView();
+      this.replaceMainView('list', new ItemsView());
     },
 
     detail: function (id) {
-      console.log(id)
+      state.id = id;
+      this.replaceMainView('detail', new EditView());
+    },
+
+    replaceMainView: function (name, view) {
+      if (this.mainView) {
+        this.mainView.remove();
+      } else {
+        $('#main').empty();
+      }
+      this.mainView = view;
+      $(view.el).appendTo($('#main'));
     }
   });
 

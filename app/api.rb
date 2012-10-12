@@ -131,6 +131,17 @@ module Brt
 
 
     #
+    # GET /api/emails/:id
+    # Returns a single email.
+    #
+    get '/emails/:id', :provides => 'json' do |id|
+      Email
+        .get(id)
+        .to_json(only: [:id, :name, :email, :message, :send_at])
+    end
+
+
+    #
     # DELETE /api/emails/:id
     # Deletes an email.
     #

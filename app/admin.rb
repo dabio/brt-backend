@@ -51,7 +51,12 @@ module Brt
     #
     get '/emails/?:id?' do
       not_found unless has_admin?
-      mustache :emails
+
+      emails = Email
+        .all(order: [:send_at.asc])
+        .to_json(only: [:id, :name, :email], methods: [:date])
+
+      mustache :emails, locals: { emails: emails }
     end
 
   end
