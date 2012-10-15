@@ -7,9 +7,19 @@
 
 </section>
 
-<script type=text/template id=template>
+<script type=text/template id=item_template>
   <td><%= id %></td>
   <td><%= date %></td>
   <td><%= title %></td>
   <td><a class=remove title=Entfernen>x</a></td>
+</script>
+
+
+<section id=event class=edit>
+</section>
+
+<script type=text/template id=edit_template>
+  <p><%= id %></p>
+  <p><%= date %></p>
+  <p><%= title %></p>
 </script>

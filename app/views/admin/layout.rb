@@ -24,6 +24,14 @@ module Brt
 
       def javascripts; end
 
+      def production?
+        RACK_ENV == 'production'
+      end
+
+      def development?
+        RACK_ENV == 'development'
+      end
+
     end
   end
 end

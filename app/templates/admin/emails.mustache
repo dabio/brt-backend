@@ -7,9 +7,6 @@
 
 </section>
 
-<script>
-  window.items = {{{ emails }}};
-</script>
 <script type=text/template id=item_template>
   <td><%= id %></td>
   <td><%= date %></td>
@@ -22,8 +19,9 @@
 </section>
 
 <script type=text/template id=edit_template>
-  <td><%= id %></td>
-  <td><%= date %></td>
-  <td><%= name %> (<%= email %>)</td>
-  <td><a class=remove title=Entfernen>x</a></td>
+  <p><%= id %></p>
+  <p><%= name %></p>
+  <p><%= email %></p>
+  <p><%= message %></p>
+  <p><%= send_at %></p>
 </script>

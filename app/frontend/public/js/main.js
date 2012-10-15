@@ -1,133 +1,209 @@
+Backbone.View.prototype.close = function() {
+  $(this.el).empty().detach();
+  this.remove();
+  this.unbind();
+  this.onClose && this.onClose();
+  app.log('View: close');
+};
+
+
+window.app = {
+
+  debug: true,
+  type: $('.items').attr('id'),
+  adminUrl: function () {
+    return '/admin/' + this.type;
+  },
+
+  apiUrl: function () {
+    return '/api/' + this.type;
+  },
+
+  collections:  {},
+  models:       {},
+  views:        {},
+
+  initialize: function() {
+
+    app.router = new app.Router();
+
+    Backbone.history.start({
+      pushState: true,
+      root: this.adminUrl() + '/'
+    });
+
+  },
+
+  log: function(str) {
+    this.debug && console.log(str);
+  }
+
+};
+
+
 $(function () {
-
-  window.App = {
-
-  };
-
-  var type      = $('.items').attr('id'),
-      admin_url = '/admin/' + type,
-      api_url   = '/api/' + type;
+  app.initialize();
+});
 
 
-  App.Model.Item = Backbone.Model.extend({
-    urlRoot: api_url
-  });
+app.Router = Backbone.Router.extend({
 
+  el: $('#main'),
 
-  .App.Collection.Item = Backbone.Collection.extend({
-    model: App.Model.Item,
-    url: api_url
-  });
-  var itemCollection = new ItemCollection();
+  routes: {
+    ''    : 'list',
+    ':id' : 'edit'
+  },
 
+  list: function () {
+    this.renderView(
+      new app.views.Items()
+    );
+  },
 
-  var ListView = Backbone.View.extend({
+  edit: function (id) {
+    this.renderView(
+      new app.views.Edit({ id: id })
+    );
+  },
 
-    el: $('.items'),
-
-    initialize: function () {
-      _.bindAll(this, 'render');
-      itemCollection.on('reset', this.addAll, this);
-      itemCollection.on('all', this.render, this);
-
-      itemCollection.reset(window.items);
-    },
-
-    render: function () {
-      return this;
-    },
-
-    addOne: function (item) {
-      var view = new ListItemView({model: item});
-      this.$('table tbody').prepend(view.render().el);
-    },
-
-    addAll: function () {
-      itemCollection.each(this.addOne);
+  renderView: function (view) {
+    app.log('Router: renderView');
+    if (this.currentView) {
+      app.log('Router: closeView');
+      this.currentView.close();
     }
 
-  });
+    this.currentView = view;
+    this.currentView.render();
+
+    this.el.html(this.currentView.el);
+  }
+
+});
 
 
-  var ListItemView = Backbone.View.extend({
+app.models.Item = Backbone.Model.extend({
+  urlRoot: app.apiUrl()
+});
 
-    tagName: 'tr',
 
-    template: _.template($('#item_template').html()),
+app.collections.Items = Backbone.Collection.extend({
+  model: app.models.Item,
+  url: app.apiUrl(),
+});
+app.collections.items = new app.collections.Items();
 
-    events: {
-      'click':          'showDetail',
-      'click .remove':  'clear',
-      'mouseover':      'showRemove',
-      'mouseout':       'hideRemove'
-    },
 
-    initialize: function (model) {
-      _.bindAll(this, 'render', 'clear');
+app.views.Items = Backbone.View.extend({
 
-      this.model.bind('change', this.render, this);
-      this.model.bind('destroy', this.remove, this);
-    },
+  tagName: 'table',
 
-    render: function () {
-      $(this.el).html(this.template(this.model.toJSON()));
-      return this;
-    },
+  initialize: function () {
+    app.log('View: init items');
+    _.bindAll(this, 'render', 'addOne', 'addAll');
 
-    showDetail: function (e) {
-      router.navigate('/'+this.model.get('id'), { trigger: true });
-    },
+    app.collections.items.on('add', this.addOne, this);
+    app.collections.items.on('reset', this.addAll, this);
+    app.collections.items.fetch();
+    //app.collections.items.on('all', this.render, this);
+  },
 
-    showRemove: function () {
-      this.$('.remove').show();
-    },
+  addOne: function (item) {
+    var view = new app.views.Item({model: item});
+    this.$el.append(view.render().el);
+  },
 
-    hideRemove: function () {
-      this.$('.remove').hide();
-    },
+  addAll: function () {
+    app.collections.items.each(this.addOne);
+  },
 
-    clear: function () {
-      var item = this;
+  onClose: function() {
+    app.collections.items.off();
+  }
 
-      if (confirm('Wirklich löschen?')) {
-        this.model.destroy();
-      }
+});
 
+
+app.views.Item = Backbone.View.extend({
+
+  tagName: 'tr',
+
+  template: _.template($('#item_template').html()),
+
+  events: {
+    'click':          'showDetail',
+    'click .remove':  'clear',
+    'mouseover':      'showRemove',
+    'mouseout':       'hideRemove'
+  },
+
+  initialize: function (model) {
+    _.bindAll(this, 'render', 'clear');
+
+    this.model.bind('change', this.render, this);
+    this.model.bind('destroy', this.remove, this);
+  },
+
+  render: function () {
+    this.$el.html(this.template(this.model.toJSON()));
+    return this;
+  },
+
+  showDetail: function (e) {
+    app.router.navigate('/' + this.model.get('id'), { trigger: true });
+  },
+
+  showRemove: function () {
+    this.$('.remove').show();
+  },
+
+  hideRemove: function () {
+    this.$('.remove').hide();
+  },
+
+  clear: function (e) {
+    e && e.preventDefault();
+
+    if (confirm('Wirklich löschen?')) {
+      this.model.destroy();
+      this.remove();
     }
-  });
+  },
+
+  onClose: function () {
+    this.model.off();
+  }
+
+});
 
 
-  var Router = Backbone.Router.extend({
+app.views.Edit = Backbone.View.extend({
 
-    routes: {
-      ''    : 'list',
-      ':id' : 'edit'
-    },
+  el: $('.edit'),
 
-    list: function () {
-      if (!this.listView) {
-        this.listView = new ListView();
-      }
-      $('#main').html(this.listView.el);
-    },
+  template: _.template($('#edit_template').html()),
 
-    edit: function (id) {
-      var item = new Item({id: id});
+  initialize: function (options) {
+    app.log('View: init edit');
+    _.bindAll(this, 'render');
 
-      item.fetch({success: function () {
-        $('#main').html(new ItemView({model: item}).el);
-      }});
-    }
+    this.model = new app.models.Item({ id: options.id })
+    this.model.on('all', this.addOne, this);
+    this.model.fetch();
+  },
 
-  });
+  addOne: function () {
+    $(this.el).html(this.template(this.model.toJSON()));
+  },
 
+  render: function () {
+    app.log('View: render edit');
+    return this;
+  },
 
-  var router = new Router();
-
-
-  Backbone.history.start({
-    pushState: true,
-    root: admin_url + '/'
-  });
+  onClose: function () {
+    this.model.off();
+  }
 
 });

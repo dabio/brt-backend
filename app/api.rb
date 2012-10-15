@@ -17,8 +17,19 @@ module Brt
     #
     get '/news', :provides => 'json' do
       News
-        .all(order: [:date.asc])
-        .to_json
+        .all(order: [:date.desc])
+        .to_json(only: [:id, :date, :title, :teaser])
+    end
+
+
+    #
+    # GET /api/news/:id
+    # Returns a single news entry.
+    #
+    get '/news/:id', :provides => 'json' do |id|
+      Event
+        .get(id)
+        .to_json(only: [:id, :date, :title, :teaser, :message, :slug])
     end
 
 
@@ -57,7 +68,18 @@ module Brt
     #
     get '/events', :provides => 'json' do
       Event
-        .all(order: [:date.asc])
+        .all(order: [:date.desc])
+        .to_json(only: [:id, :date, :title])
+    end
+
+
+    #
+    # GET /api/events/:id
+    # Returns a single event.
+    #
+    get '/events/:id', :provides => 'json' do |id|
+      Event
+        .get(id)
         .to_json(only: [:id, :date, :title])
     end
 
@@ -125,7 +147,7 @@ module Brt
     #
     get '/emails', :provides => 'json' do
       Email
-        .all(order: [:send_at.asc])
+        .all(order: [:send_at.desc])
         .to_json(only: [:id, :name, :email], methods: [:date])
     end
 
@@ -170,6 +192,16 @@ module Brt
         .to_json(only: [:id, :email], methods: [:name])
     end
 
+
+    #
+    # GET /api/people/:id
+    # Gets a single person.
+    #
+    get '/people/:id', :provides => 'json' do |id|
+      Person
+        .get(id)
+        .to_json(only: [:first_name, :last_name, :email])
+    end
 
     #
     # POST /api/people

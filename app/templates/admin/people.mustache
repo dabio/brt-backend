@@ -7,9 +7,20 @@
 
 </section>
 
-<script type=text/template id=template>
+<script type=text/template id=item_template>
   <td><%= id %></td>
   <td><%= name %></td>
   <td><%= email %></td>
   <td><a class=remove title=Entfernen>x</a></td>
+</script>
+
+
+<section id=person class=edit>
+</section>
+
+<script type=text/template id=edit_template>
+  <p><%= id %></p>
+  <p><%= first_name %></p>
+  <p><%= last_name %></p>
+  <p><%= email %></p>
 </script>
