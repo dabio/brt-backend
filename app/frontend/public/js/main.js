@@ -98,6 +98,7 @@ app.collections.items = new app.collections.Items();
 app.views.Items = Backbone.View.extend({
 
   tagName: 'table',
+  className: 'width-100 striped',
 
   initialize: function () {
     app.log('View: init items');
