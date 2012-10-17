@@ -7,7 +7,7 @@ module Brt
       end
 
       def javascripts
-        js :jquery, :underscore, :backbone, :main
+        js :zepto, :underscore, :backbone, :main
       end
 
     end

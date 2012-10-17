@@ -1,5 +1,5 @@
 Backbone.View.prototype.close = function() {
-  $(this.el).empty().detach();
+  $(this.el).empty();//.detach();
   this.remove();
   this.unbind();
   this.onClose && this.onClose();
