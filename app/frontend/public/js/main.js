@@ -156,11 +156,11 @@ app.views.Item = Backbone.View.extend({
   },
 
   showRemove: function () {
-    this.$('.remove').show();
+    this.$('.remove').css('visibility', 'visible');
   },
 
   hideRemove: function () {
-    this.$('.remove').hide();
+    this.$('.remove').css('visibility', 'hidden');
   },
 
   clear: function (e) {
