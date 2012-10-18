@@ -10,8 +10,8 @@
 <script type=text/template id=item_template>
   <td><%= id %></td>
   <td><%= date %></td>
-  <td><%= name %> (<%= email %>)</td>
-  <td><a class=remove title=Entfernen>x</a></td>
+  <td><%= name %></td>
+  <td><%= email %></td>
 </script>
 
 
@@ -19,9 +19,27 @@
 </section>
 
 <script type=text/template id=edit_template>
-  <p><%= id %></p>
-  <p><%= name %></p>
-  <p><%= email %></p>
-  <p><%= message %></p>
-  <p><%= send_at %></p>
+
+  <form class="forms columnar">
+    <fieldset>
+      <ul>
+        <li>
+          <label class="bold" for="name">Name</label>
+          <input type="text" name="name" size="40" value="<%= name %>">
+        </li>
+        <li>
+          <label class="bold" for="email">E-Mail</label>
+          <input type="email" name="email" size="40" value="<%= email %>">
+        </li>
+        <li>
+          <fieldset>
+            <section>
+              <label class="bold" for="text">Text</label>
+            </section>
+            <textarea class="width-100" style="height: 300px"><%= message %></textarea>
+          </fieldset>
+        </li>
+      </ul>
+    </fieldset>
+  </form>
 </script>

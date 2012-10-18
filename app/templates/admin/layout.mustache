@@ -1,15 +1,30 @@
 <!DOCTYPE html>
-<meta charset=utf8>
-<title>{{ title }}</title>
-<link rel=stylesheet href=/css/kube.min.css>
-<link rel=stylesheet href=/css/master.css>
+<html>
+<head>
+  <meta charset=utf8>
+  <title>{{ title }}</title>
+  <link rel=stylesheet href=/css/kube.min.css>
+  <link rel=stylesheet href=/css/master.css>
+</head>
 
-<section id=main>
-{{! This is where the content goes }}
-</section>
+<body>
 
-{{{yield}}}
+  <header>
+    <ul>
+    {{#navigation}}
+      <li><a href="{{href}}" title="{{title}}">{{title}}</a></li>
+    {{/navigation}}
+    </ul>
+  </header>
 
-{{{javascripts}}}
+  <section id=main>
+  {{! This is where the content goes }}
+  </section>
 
-{{> _tracking }}
+  {{{yield}}}
+
+  {{{javascripts}}}
+
+  {{> _tracking }}
+</body>
+</html>

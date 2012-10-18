@@ -33,6 +33,32 @@ module Brt
         RACK_ENV == 'development'
       end
 
+      def navigation
+        navigation = [
+          {
+            'href'  => '/admin',
+            'title' => 'Dashboard'
+          },
+          {
+            'href'  => '/admin/news',
+            'title' => 'News & Rennberichte'
+          },
+          {
+            'href'  => '/admin/events',
+            'title' => 'Rennen'
+          },
+          {
+            'href'  => '/admin/emails',
+            'title' => 'E-Mails'
+          },
+          {
+            'href'  => '/admin/people',
+            'title' => 'Fahrer'
+          },
+        ]
+        navigation
+      end
+
     end
   end
 end
