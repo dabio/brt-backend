@@ -80,7 +80,7 @@ module Brt
     get '/events/:id', :provides => 'json' do |id|
       Event
         .get(id)
-        .to_json(only: [:id, :date, :title])
+        .to_json(only: [:id, :date, :url, :title, :distance])
     end
 
 
