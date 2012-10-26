@@ -1,4 +1,6 @@
-Backbone.View.prototype.close = function() {
+var BB = Backbone;
+
+BB.View.prototype.close = function() {
   $(this.el).empty();//.detach();
   this.remove();
   this.unbind();
@@ -27,7 +29,7 @@ window.app = {
 
     app.router = new app.Router();
 
-    Backbone.history.start({
+    BB.history.start({
       pushState: true,
       root: this.adminUrl() + '/'
     });
@@ -46,7 +48,7 @@ $(function () {
 });
 
 
-app.Router = Backbone.Router.extend({
+app.Router = BB.Router.extend({
 
   el: $('#main'),
 
@@ -83,19 +85,19 @@ app.Router = Backbone.Router.extend({
 });
 
 
-app.models.Item = Backbone.Model.extend({
+app.models.Item = BB.Model.extend({
   urlRoot: app.apiUrl()
 });
 
 
-app.collections.Items = Backbone.Collection.extend({
+app.collections.Items = BB.Collection.extend({
   model: app.models.Item,
   url: app.apiUrl(),
 });
 app.collections.items = new app.collections.Items();
 
 
-app.views.Items = Backbone.View.extend({
+app.views.Items = BB.View.extend({
 
   tagName: 'table',
   className: 'width-100 striped',
@@ -126,7 +128,7 @@ app.views.Items = Backbone.View.extend({
 });
 
 
-app.views.Item = Backbone.View.extend({
+app.views.Item = BB.View.extend({
 
   tagName: 'tr',
 
@@ -179,7 +181,7 @@ app.views.Item = Backbone.View.extend({
 });
 
 
-app.views.Edit = Backbone.View.extend({
+app.views.Edit = BB.View.extend({
 
   el: $('.edit'),
 
