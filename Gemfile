@@ -20,7 +20,7 @@ gem 'stringex'
 gem 'thin', require: false
 
 group :development do
-  gem 'heroku', require: false
+  #gem 'heroku', require: false
   #gem 'foreman', require: false
   gem 'shotgun', require: false
 end
