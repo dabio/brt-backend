@@ -134,36 +134,6 @@ module Brt
     # EMAILS
 
     #
-    # Disallow the email api for non admin users.
-    #
-    before '/emails*' do
-      not_found unless has_admin?
-    end
-
-
-    #
-    # GET /api/emails
-    # Shows a list of all emails.
-    #
-    get '/emails', :provides => 'json' do
-      Email
-        .all(order: [:send_at.desc])
-        .to_json(only: [:id, :name, :email], methods: [:date])
-    end
-
-
-    #
-    # GET /api/emails/:id
-    # Returns a single email.
-    #
-    get '/emails/:id', :provides => 'json' do |id|
-      Email
-        .get(id)
-        .to_json(only: [:id, :name, :email, :message, :send_at])
-    end
-
-
-    #
     # DELETE /api/emails/:id
     # Deletes an email.
     #

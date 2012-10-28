@@ -19,39 +19,61 @@ module Brt
 
     #
     # GET /admin/news
-    # GET /admin/news/:id
     #
-    get '/news/?:id?' do
-      mustache :tidings
+    get '/news' do
+      news = News.all(order: [:date.desc])
+      mustache :tidings, locals: { news: news }
     end
 
 
     #
     # GET /admin/events
-    # GET /admin/events/:id
     #
-    get '/events/?:id?' do
-      mustache :events
+    get '/events' do
+      events = Event.all(order: [:date.desc])
+      mustache :events, locals: { events: events }
     end
 
+
+    #
+    # Drivers are for admins only.
+    #
+    before '/people*' do
+      not_found unless has_admin?
+    end
 
     #
     # GET /admin/people
-    # GET /admin/people/:id
     #
-    get '/people/?:id?' do
-      not_found unless has_admin?
-      mustache :people
+    get '/people' do
+      people = Person.all(order: [:last_name.asc, :first_name.asc])
+      mustache :people, locals: { people: people }
     end
 
 
     #
-    # GET /admin/emails
-    # GET /admin/emails/:id
+    # Emails are for admins only.
     #
-    get '/emails/?:id?' do
+    before '/emails*' do
       not_found unless has_admin?
-      mustache :emails
+    end
+
+    #
+    # GET /admin/emails
+    # Return a list of all emails.
+    #
+    get '/emails' do
+      emails = Email.all(order: [:send_at.desc])
+      mustache :emails, locals: { emails: emails }
+    end
+
+    #
+    # GET /api/emails/:id
+    # Returns a single email.
+    #
+    get '/emails/:id' do |id|
+      email = Email.get(id)
+      mustache :email_form, locals: { email: email }
     end
 
   end

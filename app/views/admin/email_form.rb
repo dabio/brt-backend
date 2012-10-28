@@ -1,9 +1,9 @@
 module Brt
   module Views
-    class Tidings < Layout
+    class EmailForm < Layout
 
       def title
-        'Nachrichten und Rennberichte'
+        'E-Mail'
       end
 
     end

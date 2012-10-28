@@ -6,10 +6,6 @@ module Brt
         'Rennen'
       end
 
-      def javascripts
-        js :zepto, :underscore, :backbone, :main
-      end
-
     end
   end
 end

@@ -33,20 +33,20 @@ class News
   #  Mixing.first_or_create(:news => news).update(:date => news.date)
   #end
 
+  def date_formatted
+    R18n::l(date, :human)
+  end
+
   def permalink
     "/news/#{date.strftime("%Y/%m/%d")}/#{slug}"
   end
 
   def editlink
-    "/admin#{permalink}"
+    "/admin/news/#{id}"
   end
 
   def deletelink
     editlink
-  end
-
-  def createlink
-    '/admin/news'
   end
 
   #def commentlink

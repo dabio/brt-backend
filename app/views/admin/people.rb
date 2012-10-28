@@ -6,10 +6,6 @@ module Brt
         'Fahrer'
       end
 
-      def javascripts
-        js :zepto, :underscore, :backbone, :main
-      end
-
     end
   end
 end

@@ -34,7 +34,7 @@ module Brt
       end
 
       def navigation
-        navigation = [
+        [
           {
             'href'  => '/admin',
             'title' => 'Dashboard'
@@ -56,7 +56,6 @@ module Brt
             'title' => 'Fahrer'
           },
         ]
-        navigation
       end
 
     end

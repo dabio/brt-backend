@@ -9,19 +9,18 @@
 
 <body>
 
-  <header>
-    <ul>
-    {{#navigation}}
-      <li><a href="{{href}}" title="{{title}}">{{title}}</a></li>
-    {{/navigation}}
-    </ul>
-  </header>
+  <header></header>
 
-  <section id=main>
-  {{! This is where the content goes }}
+  <nav class=container>
+    {{#navigation}}
+      <a href="{{href}}" title="{{title}}">{{title}}</a>
+    {{/navigation}}
+  </nav>
+
+  <section class=container>
+    {{{yield}}}
   </section>
 
-  {{{yield}}}
 
   {{{javascripts}}}
 

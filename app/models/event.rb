@@ -36,69 +36,12 @@ class Event
 #    Mixing.first_or_create(:event => event).update(:date => event.date)
 #  end
 
-  def createlink
-    '/admin/rennen/new'
-  end
-
-  def permalink
-    if news
-      news.permalink
-    else
-      "/rennen/#{date.strftime("%Y/%m/%d")}/#{slug}"
-    end
+  def date_formatted
+    R18n::l(date, :human)
   end
 
   def editlink
-    "/admin/rennen/#{date.strftime("%Y/%m/%d")}/#{slug}"
-  end
-
-  def deletelink
-    editlink
-  end
-
-  def participationlink
-    "#{editlink}/participation"
-  end
-
-  def participations_summary
-    return if participations.length < 1
-    s = ''
-    # participations
-    if participations.length == 1
-      s+= 'Mit einem Teilnehmer'
-    else
-      s+= "Mit #{participations.length} Teilnehmern"
-    end
-
-    # top10
-    top10 = participations.inject(0) do |s,v|
-      (!v.position_overall.nil? and v.position_overall.to_i < 11) ? s+=1 : s+=0
-    end
-
-    if top10 == 1
-      s+= ' und einer Top10 Platzierung'
-    elsif top10 > 1
-      s+= " und #{top10} Top10 Platzierungen"
-    end
-
-    s
-  end
-
-  def self.all_for_year(year)
-    year ||= Date.today.year
-    all(:date.gte => "#{year}-01-01", :date.lte => "#{year}-12-31")
-  end
-
-  def self.all_next_for_year(today)
-    today ||= Date.today
-    all(:date.gte => today, :date.lte => "#{today.year}-12-31")
-  end
-
-  def self.all_without_news
-    all(:date.lte => Date.today,
-      :news.not => News.all(:event.not => nil),
-      order: [:date.desc, :updated_at.desc], limit: 10
-    )
+    "/admin/events/#{id}"
   end
 
 end

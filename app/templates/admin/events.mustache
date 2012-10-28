@@ -1,18 +1,34 @@
-<section id=events class=items>
+<section id=events>
 
-  <table>
+  <header class=row>
+    <h2 class=threequarter>Rennen</h2>
+    <nav class="quarter second">
+      <a href="" class=icon-plus>Neues Rennen</a>
+    </nav>
+  </header>
+
+  <table class="width-100 striped">
+    <thead>
+      <tr>
+        <th>Datum</th>
+        <th>Bezeichnung</th>
+        <th></th>
+      </tr>
+    </thead>
     <tbody>
+      {{#events}}
+      <tr>
+        <td>{{date_formatted}}</td>
+        <td>{{title}}</td>
+        <td>
+          <a class="icons" href="{{editlink}}">&#x21;</a>
+        </td>
+      </tr>
+      {{/events}}
     </tbody>
   </table>
 
 </section>
-
-<script type=text/template id=item_template>
-  <td><%= id %></td>
-  <td><%= date %></td>
-  <td><%= title %></td>
-</script>
-
 
 <section id=event class=edit>
 </section>

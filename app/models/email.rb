@@ -27,8 +27,13 @@ class Email
   end
 
 
-  def date
-    send_at
+  def date_formatted
+    R18n::l(send_at, :human)
+  end
+
+
+  def editlink
+    "/admin/emails/#{id}"
   end
 
 
