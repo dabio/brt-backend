@@ -1,7 +1,10 @@
 # encoding: utf-8
 
+require 'helpers'
+
 class Email
   include DataMapper::Resource
+  include Brt::Helpers
 
   property :id,         Serial
   property :name,       String, required: true,
@@ -28,7 +31,12 @@ class Email
 
 
   def date_formatted
-    R18n::l(send_at, :human)
+    R18n::l(send_at, :full)
+  end
+
+
+  def message_formatted
+    simple_format(message)
   end
 
 

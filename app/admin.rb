@@ -34,6 +34,15 @@ module Brt
       mustache :events, locals: { events: events }
     end
 
+    #
+    # GET /admin/events/:id
+    # Returns a single event.
+    #
+    get '/events/:id' do |id|
+      event = Event.get(id)
+      mustache :event_form, locals: { event: event }
+    end
+
 
     #
     # Drivers are for admins only.
@@ -68,7 +77,7 @@ module Brt
     end
 
     #
-    # GET /api/emails/:id
+    # GET /admin/emails/:id
     # Returns a single email.
     #
     get '/emails/:id' do |id|

@@ -68,7 +68,7 @@ table a { text-decoration: none }
 /* =Layout
 -----------------------------------------------------------------------------*/
 .container {
-  width: 940px;
+  width: 740px;
   padding: 0 10px;
   margin: 24px auto;
 }
@@ -90,11 +90,18 @@ header a { text-decoration: none }
 /* =Nav
 -----------------------------------------------------------------------------*/
 
+nav.primary a {
+  display: inline;
+}
+
 nav.second { text-align: right }
 nav.second a:before { margin-right: 7px }
 
 /* =Misc
 -----------------------------------------------------------------------------*/
+
+#email .date { text-align: right }
+
 
 /* =Footer
 -----------------------------------------------------------------------------*/

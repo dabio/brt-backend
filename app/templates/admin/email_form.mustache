@@ -1,26 +1,18 @@
-<section id="email">
+<section id=email>
   {{#email}}
-  <form class="forms columnar">
-    <fieldset>
-      <ul>
-        <li>
-          <label class="bold" for="name">Name</label>
-          <input type="text" name="name" size="40" value="{{name}}">
-        </li>
-        <li>
-          <label class="bold" for="email">E-Mail</label>
-          <input type="email" name="email" size="40" value="{{email}}">
-        </li>
-        <li>
-          <fieldset>
-            <section>
-              <label class="bold" for="text">Text</label>
-            </section>
-            <textarea class="width-100" style="height: 300px">{{message}}</textarea>
-          </fieldset>
-        </li>
-      </ul>
-    </fieldset>
-  </form>
+
+  <header class=row>
+    <section class="twothird">
+      <a class="gray-dark" href="mailto:{{email}}" title="{{name}}">{{name}} &lt;{{email}}&gt;</a>
+    </section>
+    <section class="third date">
+      {{date_formatted}}
+    </section>
+  </header>
+
+  <article class=row>
+    {{{message_formatted}}}
+  </article>
+
   {{/email}}
 </section>

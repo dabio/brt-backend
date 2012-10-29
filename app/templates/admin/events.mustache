@@ -29,37 +29,3 @@
   </table>
 
 </section>
-
-<section id=event class=edit>
-</section>
-
-<script type=text/template id=edit_template>
-
-  <form class="forms columnar">
-    <fieldset>
-      <ul>
-        <li>
-          <label class="bold" for="date">Datum</label>
-          <input type="date" name="date" value="<%= date %>">
-        </li>
-        <li>
-          <label class="bold" for="title">Bezeichnung</label>
-          <input type="text" name="title" size="80" value="<%= title %>">
-        </li>
-        <li>
-          <label class="bold" for="url">URL</label>
-          <input type="url" name="url" size="80" value="<%= url %>" placeholder="http://">
-        </li>
-        <li>
-          <label class="bold" for="distance">Distanz</label>
-          <input type="number" name="distance" size="10" value="<%= distance %>" placeholder="80">
-          <span class="input-append">km</span>
-        </li>
-        <li class="push">
-          <input class="btn" type="submit" value="Speichern">
-        </li>
-      </ul>
-    </fieldset>
-  </form>
-
-</script>

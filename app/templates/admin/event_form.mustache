@@ -1,0 +1,71 @@
+<section id=event>
+
+  <form class="forms columnar" method="post">
+    <fieldset>
+      <ul>
+
+        {{#event}}
+
+        <li>
+          <label class="bold" for="date">Datum <span class="req">*</span></label>
+          <input type="date" name="date" value="{{date}}">
+        </li>
+        <li>
+          <label class="bold" for="title">Bezeichnung <span class="req">*</span></label>
+          <input type="text" name="title" size="60" value="{{title}}">
+        </li>
+        <li>
+          <label class="bold" for="distance">Distanz</label>
+          <input type="number" name="distance" size="3" value="{{distance}}" placeholder="80">
+          <span class="descr">in km</span>
+        </li>
+        <li>
+          <label class="bold" for="url">URL</label>
+          <input type="url" name="url" size="60" value="{{url}}" placeholder="http://">
+        </li>
+
+        <li class="form-section">Teilnehmer</li>
+
+        <li>
+          <fieldset>
+            <table class="width-100 simple stroked">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th>Gesamt</th>
+                  <th>AK</th>
+                </tr>
+              </thead>
+              <tbody>
+              {{#participations}}
+                <tr>
+                  <td>
+                    <input type="checkbox" checked>
+                  </td>
+                  <td>
+                    {{person.name}}
+                  </td>
+                  <td>
+                    <input type="text" value="{{position_overall}}" size="4">
+                  </td>
+                  <td>
+                    <input type="text" value="{{position_age_class}}" size="4">
+                  </td>
+                </tr>
+              {{/participations}}
+              </tbody>
+            </table>
+          </fieldset>
+        </li>
+
+        {{/event}}
+
+        <li class="push">
+          <input class="btn" type="submit" value="Speichern">
+        </li>
+      </ul>
+    </fieldset>
+  </form>
+
+</section>
