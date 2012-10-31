@@ -1,27 +1,26 @@
 <section id=event>
 
-  <form class="forms columnar" method="post">
+  <form class="forms columnar" action="{{editlink}}" method="post">
+    <input type="hidden" name="_method" value="put">
     <fieldset>
+    {{#event}}
       <ul>
-
-        {{#event}}
-
         <li>
           <label class="bold" for="date">Datum <span class="req">*</span></label>
-          <input type="date" name="date" value="{{date}}">
+          <input type="date" name="event[date]" value="{{date}}" required>
         </li>
         <li>
           <label class="bold" for="title">Bezeichnung <span class="req">*</span></label>
-          <input type="text" name="title" size="60" value="{{title}}">
+          <input type="text" name="event[title]" size="60" value="{{title}}" required>
         </li>
         <li>
           <label class="bold" for="distance">Distanz</label>
-          <input type="number" name="distance" size="3" value="{{distance}}" placeholder="80">
-          <span class="descr">in km</span>
+          <input type="text" name="event[distance]" size="3" value="{{distance}}" placeholder="80">
+          <span class="descr">km</span>
         </li>
         <li>
           <label class="bold" for="url">URL</label>
-          <input type="url" name="url" size="60" value="{{url}}" placeholder="http://">
+          <input type="url" name="event[url]" size="60" value="{{url}}" placeholder="http://">
         </li>
 
         <li class="form-section">Teilnehmer</li>
@@ -40,31 +39,33 @@
               <tbody>
               {{#participations}}
                 <tr>
-                  <td>
-                    <input type="checkbox" checked>
-                  </td>
-                  <td>
-                    {{person.name}}
-                  </td>
-                  <td>
-                    <input type="text" value="{{position_overall}}" size="4">
-                  </td>
-                  <td>
-                    <input type="text" value="{{position_age_class}}" size="4">
-                  </td>
+                  <td><input type="checkbox" name="p[{{person.id}}][person_id]" value="{{person.id}}" id="person_{{person.id}}" checked></td>
+                  <td><label for="person_{{person.id}}">{{person.name}}</label></td>
+                  <td><input type="text" name="p[{{person.id}}][position_overall]" value="{{position_overall}}" size="4"></td>
+                  <td><input type="text" name="p[{{person.id}}][position_age_class]" value="{{position_age_class}}" size="4"></td>
                 </tr>
               {{/participations}}
+              
+              {{#non_participations}}
+                <tr>
+                  <td><input type="checkbox" name="p[{{id}}][person_id]" value="{{id}}" id="person_{{id}}"></td>
+                  <td><label for="person_{{id}}">{{name}}</label></td>
+                  <td><input type="text" name="p[{{id}}][position_overall]" size="4"></td>
+                  <td><input type="text" name="p[{{id}}][position_age_class]" size="4"></td>
+                </tr>
+              {{/non_participations}}
               </tbody>
             </table>
           </fieldset>
         </li>
 
-        {{/event}}
+        <li class="form-section"></li>
 
         <li class="push">
           <input class="btn" type="submit" value="Speichern">
         </li>
       </ul>
+    {{/event}}
     </fieldset>
   </form>
 

@@ -39,22 +39,22 @@ module Brt
             'href'  => '/admin',
             'title' => 'Dashboard'
           },
-          {
-            'href'  => '/admin/news',
-            'title' => 'News & Rennberichte'
-          },
+#          {
+#            'href'  => '/admin/news',
+#            'title' => 'News & Rennberichte'
+#          },
           {
             'href'  => '/admin/events',
             'title' => 'Rennen'
           },
-          {
-            'href'  => '/admin/emails',
-            'title' => 'E-Mails'
-          },
-          {
-            'href'  => '/admin/people',
-            'title' => 'Fahrer'
-          },
+#          {
+#            'href'  => '/admin/emails',
+#            'title' => 'E-Mails'
+#          },
+#          {
+#            'href'  => '/admin/people',
+#            'title' => 'Fahrer'
+#          },
         ]
       end
 

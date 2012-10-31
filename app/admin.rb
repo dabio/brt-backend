@@ -30,8 +30,7 @@ module Brt
     # GET /admin/events
     #
     get '/events' do
-      events = Event.all(order: [:date.desc])
-      mustache :events, locals: { events: events }
+      mustache :events, locals: { events: Event.all(order: [:date.desc]) }
     end
 
     #
@@ -39,10 +38,29 @@ module Brt
     # Returns a single event.
     #
     get '/events/:id' do |id|
-      event = Event.get(id)
-      mustache :event_form, locals: { event: event }
+      @event = Event.get(id)
+      mustache :event_form
     end
 
+    #
+    # PUT /admin/events/:id
+    # Updates the event
+    #
+    put '/events/:id' do |id|
+      # Update the event.
+      event = Event.get(id)
+      event.update(params[:event])
+      # Destroy all previous participations.
+      Participation.all(event: event).destroy
+      # Create a new entry for each participation.
+      params[:p].each_value do |p|
+        next unless p.include?('person_id')
+        p = p.reject { |key, value| value.empty? }.merge({ event_id: id })
+        participations = Participation.create(p)
+      end
+
+      redirect to(event.editlink, true, false)
+    end
 
     #
     # Drivers are for admins only.
