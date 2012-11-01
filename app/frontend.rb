@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 module Brt
-  class App
+  class Frontend
 
     #
     # GET /

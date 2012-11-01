@@ -4,10 +4,10 @@ map '/admin' do
   run Brt::Admin
 end
 
-map '/api' do
-  run Brt::Api
-end
+#map '/api' do
+#  run Brt::Api
+#end
 
 map '/' do
-  run Brt::App
+  run Brt::Frontend
 end

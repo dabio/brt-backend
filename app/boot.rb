@@ -15,23 +15,26 @@ require_relative '../lib/dm_uri'
 require_relative '../lib/hash'
 
 # Models
-require_relative 'models/comment'
-require_relative 'models/debate'
-require_relative 'models/email'
-require_relative 'models/event'
-require_relative 'models/news'
-require_relative 'models/participation'
-require_relative 'models/person'
-require_relative 'models/report'
-require_relative 'models/visit'
+require 'models/comment'
+require 'models/debate'
+require 'models/email'
+require 'models/event'
+require 'models/news'
+require 'models/participation'
+require 'models/person'
+require 'models/report'
+require 'models/visit'
 DataMapper.finalize
 
 # Helper
-require_relative 'helpers'
+require 'helpers'
 
 # Non-autoloaded views
-require_relative 'views/layout'
-require_relative 'views/admin/layout'
+require 'frontend/views/layout'
+require 'admin/views/layout'
+
+
+DIR = File.dirname(File.expand_path(__FILE__))
 
 module Brt
 
@@ -40,7 +43,17 @@ module Brt
     use Rack::Session::Cookie
     use Rack::Protection
 
+    register Sinatra::Flash
+    register Sinatra::R18n
+    register Mustache::Sinatra
+
     helpers Brt::Helpers
+
+    set :root, DIR
+    set :public_folder, "#{DIR}/public"
+
+    set :default_locale, 'de'
+    set :method_override, true
 
     # redirect all requests ending with a slash to their corresponding requests
     # without the slash
@@ -50,41 +63,19 @@ module Brt
 
   end
 
-  class Api < Main; end
-
   class Admin < Main
-    register Sinatra::Flash
-    register Sinatra::R18n
-    register Mustache::Sinatra
-
-    dir = File.dirname(File.expand_path(__FILE__))
-
-    set :root, dir
-    set :default_locale, 'de'
-    set :public_folder, "#{dir}/frontend/admin"
-    set :method_override, true
     set :mustache, {
       namespace: Brt,
-      templates: "#{dir}/templates/admin",
-      views: "#{dir}/views/admin"
+      templates: "#{DIR}/admin/templates",
+      views: "#{DIR}/admin/views"
     }
   end
 
-  class App < Main
-    register Sinatra::Flash
-    register Sinatra::R18n
-    register Mustache::Sinatra
-
-    dir = File.dirname(File.expand_path(__FILE__))
-
-    set :root, dir
-    set :default_locale, 'de'
-    set :public_folder, "#{dir}/frontend/public"
-    set :method_override, true
+  class Frontend < Main
     set :mustache, {
       namespace: Brt,
-      templates: "#{dir}/templates",
-      views: "#{dir}/views"
+      templates: "#{DIR}/frontend/templates",
+      views: "#{DIR}/frontend/views"
     }
   end
 
@@ -93,6 +84,6 @@ end
 # Admin
 require 'admin'
 # Api
-require 'api'
-# App
-require 'app'
+#require 'api'
+# Frontend
+require 'frontend'
