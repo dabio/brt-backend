@@ -1,10 +1,7 @@
 <h1>Anmelden</h1>
 
-{{!> _flash}}
-
 <form method="post" action="/login">
   <fieldset>
-    <!--<input type="hidden" name="next" value="{{next}}"/>-->
     <p>
       <label for="email"><small>Benutzername/E-Mail</small></label>
       <input type="text" id="email" name="email" required="required" value="{{email}}"{{^email}} autofocus="autofocus"{{/email}}/>
