@@ -1,7 +1,7 @@
 source :rubygems
 
 gem 'dm-core'
-#gem 'dm-aggregates'
+gem 'dm-aggregates'
 gem 'dm-migrations', require: false
 gem 'dm-postgres-adapter'
 gem 'dm-timestamps'

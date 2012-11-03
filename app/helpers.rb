@@ -19,6 +19,11 @@ module Brt
       text << "</#{t}>"
     end
 
+    # Returns the current page given by the url request parameter. Defaults to
+    # 1.
+    def current_page
+      params[:page] && params[:page].match(/\d+/) ? params[:page].to_i : 1
+    end
 
     # This gives us the currently logged in user. We keep track of that by just
     # setting a session variable with their is. If it doesn't exist, we want to

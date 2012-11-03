@@ -30,7 +30,27 @@ module Brt
     # GET /admin/events
     #
     get '/events' do
-      mustache :events, locals: { events: Event.all(order: [:date.desc]) }
+      @page = current_page
+      @count, events = Event.paginated(
+        page: @page, per_page: 20, order: :date.desc
+      )
+      mustache :events, locals: { events: events }
+    end
+
+    #
+    # GET /admin/events
+    # Shows the event create form and saves the event in the database.
+    #
+    post '/events' do
+      @event = Event.new(params[:event])
+
+      if params[:event]
+        params[:event][:person] = current_person
+        @event = Event.create(params[:event])
+        redirect(to('/events')) if @event.saved?
+      end
+
+      mustache :event_form
     end
 
     #

@@ -9,8 +9,3 @@ module Brt
     end
   end
 end
-
-
-
-
-

@@ -10,6 +10,10 @@ module Brt
         @event
       end
 
+      def participations?
+        !event.new?
+      end
+
       def non_participations
         Person.all - event.participations.person
       end

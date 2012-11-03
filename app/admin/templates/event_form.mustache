@@ -1,9 +1,11 @@
 <section id=event>
 
   <form class="forms columnar" action="{{editlink}}" method="post">
-    <input type="hidden" name="_method" value="put">
     <fieldset>
     {{#event}}
+      {{^new?}}
+      <input type="hidden" name="_method" value="put">
+      {{/new?}}
       <ul>
         <li>
           <label class="bold" for="date">Datum <span class="req">*</span></label>
@@ -22,7 +24,7 @@
           <label class="bold" for="url">URL</label>
           <input type="url" name="event[url]" size="60" value="{{url}}" placeholder="http://">
         </li>
-
+        {{#participations?}}
         <li class="form-section">Teilnehmer</li>
 
         <li>
@@ -60,6 +62,8 @@
         </li>
 
         <li class="form-section"></li>
+
+        {{/participations?}}
 
         <li class="push">
           <input class="btn" type="submit" value="Speichern">

@@ -1,6 +1,7 @@
 $LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__))
 
 RACK_ENV = ENV['RACK_ENV'] ||= 'development' unless defined? RACK_ENV
+ROOT_DIR = File.dirname(File.expand_path(__FILE__))
 
 require 'bundler/setup'
 Bundler.require(:default, RACK_ENV)
@@ -29,13 +30,6 @@ DataMapper.finalize
 # Helper
 require 'helpers'
 
-# Non-autoloaded views
-require 'frontend/views/layout'
-require 'admin/views/layout'
-
-
-DIR = File.dirname(File.expand_path(__FILE__))
-
 module Brt
 
   class Main < Sinatra::Base
@@ -49,8 +43,8 @@ module Brt
 
     helpers Brt::Helpers
 
-    set :root, DIR
-    set :public_folder, "#{DIR}/public"
+    set :root, ROOT_DIR
+    set :public_folder, "#{ROOT_DIR}/public"
 
     set :default_locale, 'de'
     set :method_override, true
@@ -64,18 +58,20 @@ module Brt
   end
 
   class Admin < Main
+    require 'admin/views/layout'
     set :mustache, {
       namespace: Brt,
-      templates: "#{DIR}/admin/templates",
-      views: "#{DIR}/admin/views"
+      templates: "#{ROOT_DIR}/admin/templates",
+      views: "#{ROOT_DIR}/admin/views"
     }
   end
 
   class Frontend < Main
+    require 'frontend/views/layout'
     set :mustache, {
       namespace: Brt,
-      templates: "#{DIR}/frontend/templates",
-      views: "#{DIR}/frontend/views"
+      templates: "#{ROOT_DIR}/frontend/templates",
+      views: "#{ROOT_DIR}/frontend/views"
     }
   end
 
