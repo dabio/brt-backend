@@ -1,6 +1,6 @@
 module Brt
   module Views
-    class Tidings < Layout
+    class Tidings < AdminLayout
 
       def title
         'Nachrichten und Rennberichte'

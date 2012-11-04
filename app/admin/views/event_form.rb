@@ -1,6 +1,6 @@
 module Brt
   module Views
-    class EventForm < Layout
+    class EventForm < AdminLayout
 
       def title
         'Rennen'

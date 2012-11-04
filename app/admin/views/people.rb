@@ -1,6 +1,6 @@
 module Brt
   module Views
-    class People < Layout
+    class People < AdminLayout
 
       def title
         'Fahrer'

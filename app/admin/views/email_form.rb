@@ -1,6 +1,6 @@
 module Brt
   module Views
-    class EmailForm < Layout
+    class EmailForm < AdminLayout
 
       def title
         'E-Mail'

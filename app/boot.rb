@@ -30,6 +30,10 @@ DataMapper.finalize
 # Helper
 require 'helpers'
 
+# Non autoloading templates
+require 'admin/views/admin_layout'
+require 'frontend/views/layout'
+
 module Brt
 
   class Main < Sinatra::Base
@@ -58,16 +62,15 @@ module Brt
   end
 
   class Admin < Main
-    require 'admin/views/layout'
     set :mustache, {
       namespace: Brt,
+      layout: Brt::Views::AdminLayout,
       templates: "#{ROOT_DIR}/admin/templates",
       views: "#{ROOT_DIR}/admin/views"
     }
   end
 
   class Frontend < Main
-    require 'frontend/views/layout'
     set :mustache, {
       namespace: Brt,
       templates: "#{ROOT_DIR}/frontend/templates",

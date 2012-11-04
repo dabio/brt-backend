@@ -2,7 +2,7 @@
 
 module Brt
   module Views
-    class Events < Layout
+    class Events < AdminLayout
 
       def title
         'Rennen'

@@ -1,6 +1,6 @@
 module Brt
   module Views
-    class Layout < Mustache
+    class AdminLayout < Mustache
 
       def title
         'Berlin Racing Team'
