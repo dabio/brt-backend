@@ -37,7 +37,7 @@ module Brt
       end
 
       def navigation
-        [
+        nav = [
           {
             'href'  => '/admin',
             'title' => 'Dashboard'
@@ -49,16 +49,21 @@ module Brt
           {
             'href'  => '/admin/events',
             'title' => 'Rennen'
-          },
-#          {
-#            'href'  => '/admin/emails',
-#            'title' => 'E-Mails'
-#          },
+          }
+        ]
+
+        if has_admin?
+          nav << {
+            'href'  => '/admin/emails',
+            'title' => 'E-Mails'
+          }
+        end
+
+        nav
 #          {
 #            'href'  => '/admin/people',
 #            'title' => 'Fahrer'
 #          },
-        ]
       end
 
       def url; end

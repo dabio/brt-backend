@@ -156,7 +156,10 @@ module Brt
     # Return a list of all emails.
     #
     get '/emails' do
-      emails = Email.all(order: [:send_at.desc])
+      @page = current_page
+      @count, emails = Email.paginated(
+        page: @page, per_page: 20, order: :send_at.desc
+      )
       mustache :emails, locals: { emails: emails }
     end
 

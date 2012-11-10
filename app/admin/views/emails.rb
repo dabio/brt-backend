@@ -6,6 +6,10 @@ module Brt
         'E-Mails'
       end
 
+      def url
+        '/admin/emails'
+      end
+
     end
   end
 end

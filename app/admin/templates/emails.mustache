@@ -7,18 +7,16 @@
   <table class="width-100 striped">
     <thead>
       <tr>
-        <th>Datum</th>
-        <th>Name</th>
-        <th>E-Mail</th>
-        <th></th>
+        <th class="date">Datum</th>
+        <th colspan="2">Kontakt</th>
       </tr>
     </thead>
+    {{> _pagination }}
     <tbody>
       {{#emails}}
       <tr>
-        <td>{{date_formatted}}</td>
-        <td>{{name}}</td>
-        <td><a class="gray-dark" href="mailto:{{email}}">{{email}}</a></td>
+        <td class="date">{{date_formatted}}</td>
+        <td><a class="gray-dark" href="mailto:{{email}}" title="{{name}}">{{name}} &lt;{{email}}&gt;</a></td>
         <td><a class="icons" href="{{editlink}}">&#x22;</a></td>
       </tr>
       {{/emails}}
