@@ -114,5 +114,10 @@ nav.second button:before { margin-right: 7px }
 }
 #pagination .pages-navigation { font-size: 120% }
 
+th.date,
+td.date {
+  text-align: right;
+}
+
 /* =Footer
 -----------------------------------------------------------------------------*/

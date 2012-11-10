@@ -41,7 +41,7 @@
           <select name="news[event_id]" id="event_id" size="1">
             <option value="">(leer)</option>
             {{#events}}
-            <option value="{{id}}"{{#selected}} selected{{/selected}}>{{date}} - {{title}}, {{distance}} km</option>
+            <option value="{{id}}"{{#selected}} selected{{/selected}}>{{date_formatted}} - {{title}}, {{distance}} km</option>
             {{/events}}
           </select>
           <span class="descr">Nur für Rennberichte.</span>

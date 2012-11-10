@@ -12,16 +12,15 @@
   <table class="width-100 striped">
     <thead>
       <tr>
-        <th>Datum</th>
-        <th>Titel</th>
-        <th></th>
+        <th class="date">Datum</th>
+        <th colspan="2">Titel</th>
       </tr>
     </thead>
     {{> _pagination }}
     <tbody>
       {{#news}}
       <tr>
-        <td>{{date_formatted}}</td>
+        <td class="date">{{date_formatted}}</td>
         <td>{{title}}</td>
         <td>
           <a class="icons" href="{{editlink}}">&#x21;</a>

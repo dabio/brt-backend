@@ -12,38 +12,15 @@
   <table class="width-100 striped">
     <thead>
       <tr>
-        <th>Datum</th>
-        <th>Bezeichnung</th>
-        <th></th>
+        <th class="date">Datum</th>
+        <th colspan="2">Bezeichnung</th>
       </tr>
     </thead>
-    {{#pagination?}}
-    <tfoot id=pagination>
-      <tr>
-        <td colspan=2>
-          <span class=pages>Seite {{page}} von {{page_count}}</span>
-          <span class=page-items>
-            {{#pagination}}
-            {{#href}}<a href="{{href}}">{{title}}</a>{{/href}}
-            {{^href}}<span>{{title}}</span>{{/href}}
-            {{/pagination}}
-          </span>
-        </td>
-        <td>
-          <span class=pages-navigation>
-            {{#pagination_left_right}}
-            {{#href}}<a href="{{href}}">{{title}}</a>{{/href}}
-            {{^href}}<span>{{title}}</span>{{/href}}
-            {{/pagination_left_right}}
-          </span>
-        </td>
-      </tr>
-    </tfoot>
-    {{/pagination?}}
+    {{> _pagination }}
     <tbody>
       {{#events}}
       <tr>
-        <td>{{date_formatted}}</td>
+        <td class="date">{{date_formatted}}</td>
         <td>{{title}}</td>
         <td>
           <a class="icons" href="{{editlink}}">&#x21;</a>

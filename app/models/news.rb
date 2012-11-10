@@ -34,7 +34,8 @@ class News
   #end
 
   def date_formatted
-    R18n::l(date)
+    date.strftime '%-d. %b. %y'
+    #R18n::l(date)
   end
 
   def permalink

@@ -37,7 +37,8 @@ class Event
 #  end
 
   def date_formatted
-    R18n::l(date, :human)
+    date.strftime '%-d. %b. %y'
+    #R18n::l(date)
   end
 
   def editlink
