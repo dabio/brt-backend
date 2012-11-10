@@ -3,7 +3,9 @@
   <header class=row>
     <h2 class=threequarter>News & Rennberichte</h2>
     <nav class="quarter second">
-      <a href="" class=icon-plus>Anlegen</a>
+      <form action="/admin/news" method=post>
+        <button class="btn btn-square icon-plus">Anlegen</button>
+      </form>
     </nav>
   </header>
 
@@ -15,6 +17,7 @@
         <th></th>
       </tr>
     </thead>
+    {{> _pagination }}
     <tbody>
       {{#news}}
       <tr>

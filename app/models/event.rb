@@ -8,7 +8,7 @@
 class Event
   include DataMapper::Resource
 
-  attr_accessor :index, :new_month
+  attr_accessor :selected
 
   property :id,         Serial
   property :date,       Date,   required: true
@@ -61,5 +61,14 @@ class Event
 
     [ page_count, all(options) ]
   end
+
+  def self.all_without_news
+    all(:date.lte => Date.today,
+      :news.not => News.all(:event.not => nil),
+      order: [:date.desc, :updated_at.desc],
+      limit: 10
+     )
+  end
+
 end
 

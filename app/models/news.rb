@@ -34,7 +34,7 @@ class News
   #end
 
   def date_formatted
-    R18n::l(date, :human)
+    R18n::l(date)
   end
 
   def permalink

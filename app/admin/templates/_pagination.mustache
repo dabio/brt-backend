@@ -1,0 +1,23 @@
+{{#pagination?}}
+<tfoot id=pagination>
+  <tr>
+    <td colspan=2>
+      <span class=pages>Seite {{page}} von {{page_count}}</span>
+      <span class=page-items>
+        {{#pagination}}
+        {{#href}}<a href="{{href}}">{{title}}</a>{{/href}}
+        {{^href}}<span>{{title}}</span>{{/href}}
+        {{/pagination}}
+      </span>
+    </td>
+    <td>
+      <span class=pages-navigation>
+        {{#pagination_left_right}}
+        {{#href}}<a href="{{href}}">{{title}}</a>{{/href}}
+        {{^href}}<span>{{title}}</span>{{/href}}
+        {{/pagination_left_right}}
+      </span>
+    </td>
+  </tr>
+</tfoot>
+{{/pagination?}}

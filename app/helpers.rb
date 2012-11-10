@@ -45,5 +45,9 @@ module Brt
       has_auth? && current_person.id == 1
     end
 
+    def today
+      Date.today
+    end
+
   end
 end

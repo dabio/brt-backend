@@ -1,6 +1,9 @@
+# encoding: utf-8
+
 module Brt
   module Views
     class AdminLayout < Mustache
+      include Brt::Helpers
 
       def title
         'Berlin Racing Team'
@@ -39,10 +42,10 @@ module Brt
             'href'  => '/admin',
             'title' => 'Dashboard'
           },
-#          {
-#            'href'  => '/admin/news',
-#            'title' => 'News & Rennberichte'
-#          },
+          {
+            'href'  => '/admin/news',
+            'title' => 'News & Rennberichte'
+          },
           {
             'href'  => '/admin/events',
             'title' => 'Rennen'
@@ -56,6 +59,51 @@ module Brt
 #            'title' => 'Fahrer'
 #          },
         ]
+      end
+
+      def url; end
+
+      def page
+        @page
+      end
+
+      def page_count
+        @count
+      end
+
+      def pagination?
+        page_count > 1
+      end
+
+      def pagination
+        Array.new(page_count) do |i|
+          if i+1 == page
+            { title: i+1 }
+          elsif i == 0
+            { title: i+1, href:  url }
+          else
+            { title: i+1, href: "#{url}?page=#{i+1}" }
+          end
+        end
+      end
+
+      def pagination_left_right
+        result = []
+        # back
+        if page == 1
+          result << { title: '«' }
+        elsif page == 2
+          result << { title: '«', href: url }
+        else
+          result << { title: '«', href: "#{url}?page=#{page-1}" }
+        end
+        # forward
+        if page == page_count
+          result << { title: '»' }
+        else
+          result << { title: '»', href: "#{url}?page=#{page+1}" }
+        end
+        result
       end
 
     end

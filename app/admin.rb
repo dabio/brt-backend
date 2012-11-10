@@ -21,8 +21,54 @@ module Brt
     # GET /admin/news
     #
     get '/news' do
-      news = News.all(order: [:date.desc])
+      @page = current_page
+      @count, news = News.paginated(
+        page: @page, per_page: 20, order: :date.desc
+      )
       mustache :tidings, locals: { news: news }
+    end
+
+    #
+    # POST /admin/news
+    # Shows the news create form and saves the news into the database.
+    #
+    post '/news' do
+      @news = News.new(params[:news])
+
+      if params[:news]
+        params[:news][:person] = current_person
+        @news = News.create(params[:news])
+        redirect(to('/news')) if @news.saved?
+      end
+
+      @events = Event.all_without_news
+
+      mustache :tidings_form
+    end
+
+    #
+    # GET /admin/news/:id
+    # Returns a single news.
+    #
+    get '/news/:id' do |id|
+      @news = News.get(id)
+      @events = Event.all_without_news
+
+      mustache :tidings_form
+    end
+
+    #
+    # PUT /admin/news/:id
+    # Updates the news.
+    #
+    put '/news/:id' do |id|
+      @news = News.get(id)
+      params[:news][:event_id] = nil unless params[:news][:event_id].length > 0
+
+      redirect to(@news.editlink, true, false) if @news.update(params[:news])
+
+      @events = Event.all_without_news
+      mustache :tidings_form
     end
 
 
@@ -38,7 +84,7 @@ module Brt
     end
 
     #
-    # GET /admin/events
+    # POST /admin/events
     # Shows the event create form and saves the event in the database.
     #
     post '/events' do
