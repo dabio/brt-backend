@@ -1,9 +1,11 @@
+# encoding: utf-8
+
 module Brt
   module Views
     class TidingsForm < AdminLayout
 
       def title
-        'Nachricht & Rennbericht'
+        'Nachricht oder Rennbericht'
       end
 
       def news
