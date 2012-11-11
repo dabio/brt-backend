@@ -52,12 +52,12 @@ module Brt
           }
         ]
 
-#        if has_admin?
-#          nav << {
-#            'href'  => '/admin/emails',
-#            'title' => 'E-Mails'
-#          }
-#        end
+        if has_admin?
+          nav << {
+            'href'  => '/admin/emails',
+            'title' => 'E-Mails'
+          }
+        end
 
         nav
 #          {
