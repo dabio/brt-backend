@@ -57,13 +57,13 @@ module Brt
             'href'  => '/admin/emails',
             'title' => 'E-Mails'
           }
+          nav << {
+            'href'  => '/admin/people',
+            'title' => 'Fahrer'
+          }
         end
 
         nav
-#          {
-#            'href'  => '/admin/people',
-#            'title' => 'Fahrer'
-#          },
       end
 
       def url; end
@@ -77,7 +77,7 @@ module Brt
       end
 
       def pagination?
-        page_count > 1
+        page_count
       end
 
       def pagination

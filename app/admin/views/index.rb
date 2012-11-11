@@ -3,7 +3,7 @@ module Brt
     class Index < AdminLayout
 
       def title
-        'Deashboard'
+        'Dashboard'
       end
 
     end
