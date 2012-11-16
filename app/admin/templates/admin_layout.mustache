@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset=utf8>
+  <meta charset="utf8">
   <title>{{ title }}</title>
-  <link rel=stylesheet href=/css/kube.min.css>
-  <link rel=stylesheet href=/css/master.css>
+  <link rel="stylesheet" href="/css/kube.min.css">
+  <link rel="stylesheet" href="/css/master.css">
 </head>
 
 <body>
 
   <header></header>
 
-  <nav class=container>
+  <nav class="container">
     {{#navigation}}
       <a href="{{href}}" title="{{title}}">{{title}}</a>
     {{/navigation}}
   </nav>
 
-  <section class=container>
+  <section class="container">
     {{{yield}}}
   </section>
 

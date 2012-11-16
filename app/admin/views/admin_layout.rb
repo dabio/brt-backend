@@ -36,6 +36,19 @@ module Brt
         RACK_ENV == 'development'
       end
 
+      def notice
+        flash[:notice]
+      end
+
+      def warning
+        flash[:warning]
+      end
+
+      def error
+        flash[:error]
+      end
+
+
       def navigation
         nav = [
           {
