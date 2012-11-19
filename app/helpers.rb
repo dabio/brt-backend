@@ -29,10 +29,10 @@ module Brt
     # setting a session variable with their is. If it doesn't exist, we want to
     # return nil.
     def current_person
-      unless @cu
-        @cu = Person.get(@request.session[:person_id]) if @request.session[:person_id]
+      unless @current_person and @request.session[:person_id]
+        @current_person = Person.get(@request.session[:person_id])
       end
-      @cu
+      @current_person
     end
 
     # Checks if this is a logged in person

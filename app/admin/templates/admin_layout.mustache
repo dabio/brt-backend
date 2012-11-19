@@ -11,11 +11,18 @@
 
   <header></header>
 
-  <nav class="container">
-    {{#navigation}}
-      <a href="{{href}}" title="{{title}}">{{title}}</a>
-    {{/navigation}}
-  </nav>
+  <section class="container row">
+    <nav class="threefifth">
+      {{#navigation}}
+        <a href="{{href}}" title="{{title}}">{{title}}</a>
+      {{/navigation}}
+    </nav>
+    <nav class="twofifth" style="text-align: right">
+      <a href="{{current_person.editlink}}" title="Einstellungen">Einstellungen</a>
+      <a href="/logout" title="Abmelden">Abmelden</a>
+    </nav>
+    </nav>
+  </section>
 
   <section class="container">
     {{{yield}}}

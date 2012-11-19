@@ -131,9 +131,9 @@ module Brt
     #
     # Drivers are for admins only.
     #
-    before '/people*' do
-      not_found unless has_admin?
-    end
+#    before '/people*' do
+#      not_found unless has_admin?
+#    end
 
     #
     # GET /admin/people
@@ -141,6 +141,48 @@ module Brt
     get '/people' do
       people = Person.all(order: [:last_name.asc, :first_name.asc])
       mustache :people, locals: { people: people }
+    end
+
+    #
+    # POST /admin/people
+    # Shows the person create form and saves the person into the database.
+    #
+    post '/people' do
+      @person = Person.new(params[:person])
+
+#      if params[:news]
+#        params[:news][:person] = current_person
+#        @news = News.create(params[:news])
+#        redirect(to('/news')) if @news.saved?
+#      end
+
+      mustache :person_form
+    end
+
+    #
+    # PUT /admin/people/:id
+    # Updates a person.
+    #
+    put '/people/:id' do |id|
+      person = Person.get(id)
+
+      if params[:person][:password].nil? or params[:person][:password].empty?
+        params[:person].delete 'password'
+        params[:person].delete 'password_confirmation'
+      end
+
+      person.update(params[:person])
+
+      redirect to(person.editlink, true, false)
+    end
+
+    #
+    # GET /admin/people/:id
+    # Returns a single person form.
+    #
+    get '/people/:id' do |id|
+      @person = Person.get(id)
+      mustache :person_form
     end
 
 

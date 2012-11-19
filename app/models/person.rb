@@ -39,6 +39,10 @@ class Person
     "#{first_name} #{last_name}"
   end
 
+  def editlink
+    "/admin/people/#{id}"
+  end
+
   def self.authenticate(email, password)
     return nil unless person = Person.first(email: email)
     person.password == password ? person : nil
