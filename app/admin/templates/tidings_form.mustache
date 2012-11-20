@@ -38,7 +38,7 @@
         </li>
         <li>
           <label class="bold" for="event_id">Rennen</label>
-          <select width="522px" name="news[event_id]" id="event_id" size="1">
+          <select style="width:522px" name="news[event_id]" id="event_id" size="1">
             <option value="">(leer)</option>
             {{#events}}
             <option value="{{id}}"{{#selected}} selected{{/selected}}>{{date_formatted}} - {{title}}, {{distance}} km</option>
