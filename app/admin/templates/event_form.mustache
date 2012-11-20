@@ -9,20 +9,20 @@
       <ul>
         <li>
           <label class="bold" for="date">Datum <span class="req">*</span></label>
-          <input type="date" name="event[date]" value="{{date}}" placeholder="{{today}}" required>
+          <input id="date" type="date" name="event[date]" value="{{date}}" placeholder="{{today}}" required>
         </li>
         <li>
           <label class="bold" for="title">Bezeichnung <span class="req">*</span></label>
-          <input type="text" name="event[title]" size="60" value="{{title}}" required>
+          <input id="title" type="text" name="event[title]" size="60" value="{{title}}" required>
         </li>
         <li>
           <label class="bold" for="distance">Distanz <span class="req">*</span></label>
-          <input type="text" name="event[distance]" size="3" value="{{distance}}" placeholder="80" required>
+          <input id="distance" type="text" name="event[distance]" size="3" value="{{distance}}" placeholder="80" required>
           <span class="descr">km</span>
         </li>
         <li>
           <label class="bold" for="url">URL</label>
-          <input type="url" name="event[url]" size="60" value="{{url}}" placeholder="http://">
+          <input id="url" type="url" name="event[url]" size="60" value="{{url}}" placeholder="http://">
         </li>
         {{#participations?}}
         <li class="form-section">Teilnehmer</li>
