@@ -9,10 +9,6 @@ module Brt
         'Berlin Racing Team'
       end
 
-      def current_person
-        @current_person
-      end
-
       def path_to(script)
         case script
         when :jquery then '//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js'
