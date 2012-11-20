@@ -128,17 +128,12 @@ module Brt
       redirect to(event.editlink, true, false)
     end
 
-    #
-    # Drivers are for admins only.
-    #
-#    before '/people*' do
-#      not_found unless has_admin?
-#    end
 
     #
     # GET /admin/people
     #
     get '/people' do
+      not_found unless has_admin?
       people = Person.all(order: [:last_name.asc, :first_name.asc])
       mustache :people, locals: { people: people }
     end
@@ -148,14 +143,22 @@ module Brt
     # Shows the person create form and saves the person into the database.
     #
     post '/people' do
-      @person = Person.new(params[:person])
+      not_found unless has_admin?
+      @person = Person.create(params[:person])
 
-#      if params[:news]
-#        params[:news][:person] = current_person
-#        @news = News.create(params[:news])
-#        redirect(to('/news')) if @news.saved?
-#      end
+      redirect(to('/people')) if @person.saved?
+      mustache :person_form
+    end
 
+    #
+    # GET /admin/people/:id
+    # Returns a single person form.
+    #
+    get '/people/:id' do |id|
+      allowed = has_admin? || current_person.id == id.to_i
+      not_found unless allowed
+
+      @person = Person.get(id)
       mustache :person_form
     end
 
@@ -164,6 +167,9 @@ module Brt
     # Updates a person.
     #
     put '/people/:id' do |id|
+      allowed = has_admin? || current_person.id == id.to_i
+      not_found unless allowed
+
       person = Person.get(id)
 
       if params[:person][:password].nil? or params[:person][:password].empty?
@@ -174,15 +180,6 @@ module Brt
       person.update(params[:person])
 
       redirect to(person.editlink, true, false)
-    end
-
-    #
-    # GET /admin/people/:id
-    # Returns a single person form.
-    #
-    get '/people/:id' do |id|
-      @person = Person.get(id)
-      mustache :person_form
     end
 
 
