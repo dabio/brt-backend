@@ -59,6 +59,11 @@ module Brt
       redirect to(r)
     end
 
+    # store the flash-session into the global flash variable
+    before do
+      @flash = session.delete 'flash'
+    end
+
   end
 
   class Admin < Main

@@ -119,5 +119,15 @@ td.date {
   text-align: right;
 }
 
+.flash .success {
+  background-color: #dff0d8;
+  border: 1px solid #d6e9c6;
+  color: #468847;
+  margin-left: 0;
+  padding: 8px 14px;
+  text-shadow: 0 1px 0 #fff;
+}
+
+
 /* =Footer
 -----------------------------------------------------------------------------*/

@@ -24,6 +24,8 @@
     </nav>
   </section>
 
+  {{>_flash}}
+
   <section class="container">
     {{{yield}}}
   </section>
@@ -31,6 +33,6 @@
 
   {{{javascripts}}}
 
-  {{> _tracking }}
+  {{>_tracking }}
 </body>
 </html>

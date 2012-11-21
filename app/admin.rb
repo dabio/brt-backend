@@ -36,9 +36,19 @@ module Brt
       @news = News.new(params[:news])
 
       if params[:news]
+        params[:news][:event_id] = nil unless params[:news][:event_id].length > 0
         params[:news][:person] = current_person
         @news = News.create(params[:news])
-        redirect(to('/news')) if @news.saved?
+
+        if @news.saved?
+          if params[:news][:event_id]
+            flash[:success] = 'Rennbericht erfolgreich angelegt'
+          else
+            flash[:success] = 'News erfolgreich angelegt'
+          end
+
+          redirect(to('/news'))
+        end
       end
 
       @events = Event.all_without_news
@@ -65,7 +75,15 @@ module Brt
       @news = News.get(id)
       params[:news][:event_id] = nil unless params[:news][:event_id].length > 0
 
-      redirect to(@news.editlink, true, false) if @news.update(params[:news])
+      if @news.update(params[:news])
+        if params[:news][:event_id]
+          flash[:success] = 'Rennbericht erfolgreich gespeichert'
+        else
+          flash[:success] = 'News erfolgreich gespeichert'
+        end
+
+        redirect to(@news.editlink, true, false)
+      end
 
       @events = Event.all_without_news
       mustache :tidings_form
@@ -93,7 +111,11 @@ module Brt
       if params[:event]
         params[:event][:person] = current_person
         @event = Event.create(params[:event])
-        redirect(to('/events')) if @event.saved?
+
+        if @event.saved?
+          flash[:success] = 'Rennen erfolgreich erstellt'
+          redirect(to('/events'))
+        end
       end
 
       mustache :event_form
@@ -125,6 +147,7 @@ module Brt
         participations = Participation.create(p)
       end
 
+      flash[:success] = 'Rennen gesichert'
       redirect to(event.editlink, true, false)
     end
 
@@ -148,7 +171,11 @@ module Brt
 
       if params[:person]
         @person = Person.create(params[:person])
-        redirect(to('/people')) if @person.saved?
+
+        if @person.saved?
+          flash[:success] = 'Neuen Fahrer erfolgreich angelegt'
+          redirect(to('/people'))
+        end
       end
 
       mustache :person_form
@@ -181,6 +208,7 @@ module Brt
         params[:person].delete 'password_confirmation'
       end
 
+      flash[:success] = 'Einstellungen gespeichert'
       person.update(params[:person])
 
       redirect to(person.editlink, true, false)
