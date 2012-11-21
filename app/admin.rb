@@ -144,9 +144,13 @@ module Brt
     #
     post '/people' do
       not_found unless has_admin?
-      @person = Person.create(params[:person])
+      @person = Person.new(params[:person])
 
-      redirect(to('/people')) if @person.saved?
+      if params[:person]
+        @person = Person.create(params[:person])
+        redirect(to('/people')) if @person.saved?
+      end
+
       mustache :person_form
     end
 
