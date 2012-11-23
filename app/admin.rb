@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Brt
   class Admin
 
@@ -94,7 +96,13 @@ module Brt
     # Deletes a news.
     #
     delete '/news/:id' do |id|
-      News.get(id).destroy
+      not_found unless news = News.get(id)
+      if news.destroy
+        flash[:success] = 'Erfolgreich gelöscht'
+        to('/news')
+      else
+        to(news.editlink)
+      end
     end
 
 
@@ -164,7 +172,13 @@ module Brt
     # Deletes an event.
     #
     delete '/events/:id' do |id|
-      Event.get(id).destroy
+      not_found unless event = Event.get(id)
+      if event.destroy
+        flash[:success] = 'Rennen erfolgreich gelöscht'
+        to('/events')
+      else
+        to(event.editlink)
+      end
     end
 
 
@@ -235,7 +249,13 @@ module Brt
     # Deletes a person.
     #
     delete '/people/:id' do |id|
-      Person.get(id).destroy
+      not_found unless has_admin? && person = Person.get(id)
+      if person.destroy
+        flash[:success] = 'Person erfolgreich gelöscht'
+        to('/people')
+      else
+        to(person.editlink)
+      end
     end
 
 

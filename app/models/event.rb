@@ -7,7 +7,6 @@
 
 class Event
   include DataMapper::Resource
-  include DataMapper::Paginator
 
   attr_accessor :selected
 
@@ -24,7 +23,7 @@ class Event
   belongs_to :person
   has 1, :news
   has n, :reports
-  has n, :comments
+  #has n, :comments
   has n, :participations
   has n, :people, :through => :participations
 
@@ -40,17 +39,16 @@ class Event
   # Remove all associations of the current event.
   before :destroy do |event|
     # comments
-    event.comments.each do |c|
-      c.destroy
-    end
+    #event.comments.each do |c|
+    #  c.destroy
+    #end
+
     # participations
     event.participations.each do |p|
       p.destroy
     end
     # news
-    event.news.each do |n|
-      n.update(event=nil)
-    end
+    event.news.update(event=nil) if event.news
   end
 
   def date_formatted

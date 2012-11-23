@@ -10,7 +10,7 @@
         url: e.target.href,
         timeout: 3000,
         success: function(data) {
-          console.log(data);
+          window.location = data;
         },
         error: function(xhr, type) {
           alert('Konnte nicht gelöscht werden, bitte erneut versuchen.');

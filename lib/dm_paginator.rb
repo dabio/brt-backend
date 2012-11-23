@@ -1,8 +1,8 @@
-module DataMapper
-  module Paginator
+module Pagination
+  module ClassMethods
 
     # Allows the model to paginate
-    def self.paginated(options={})
+    def paginated(options={})
       page = options.delete(:page) || 1
       per_page = options.delete(:per_page) || 5
 
@@ -19,6 +19,8 @@ module DataMapper
 
       [ page_count, all(options) ]
     end
-  end
 
+  end
 end
+
+DataMapper::Model.append_extensions(Pagination::ClassMethods)

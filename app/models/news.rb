@@ -7,7 +7,6 @@
 
 class News
   include DataMapper::Resource
-  include DataMapper::Paginator
 
   property :id,         Serial
   property :date,       Date
@@ -38,7 +37,7 @@ class News
   before :destroy do |news|
     news.comments.each do |comment|
       comment.destroy
-    end
+    end if news.comments
   end
 
   def date_formatted

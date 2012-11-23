@@ -4,7 +4,6 @@ require 'helpers'
 
 class Email
   include DataMapper::Resource
-  include DataMapper::Paginator
   include Brt::Helpers
 
   property :id,         Serial

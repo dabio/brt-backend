@@ -25,7 +25,6 @@ class Person
   has n, :news
   has n, :reports
   has n, :comments
-  has n, :comments
   has n, :participations
   has n, :events, through: :participations
 
@@ -36,9 +35,10 @@ class Person
   default_scope(:default).update(order: [:last_name, :first_name])
 
   before :destroy do |person|
-    person.participation.each do |p|
+    # participations
+    person.participations.each do |p|
       p.destroy
-    end
+    end if person.participations
   end
 
   def name

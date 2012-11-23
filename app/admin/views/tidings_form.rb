@@ -19,6 +19,10 @@ module Brt
         @events
       end
 
+      def javascripts
+        js :zepto, :admin
+      end
+
     end
   end
 end
