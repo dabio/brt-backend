@@ -7,6 +7,7 @@
 
 class News
   include DataMapper::Resource
+  include DataMapper::Paginator
 
   property :id,         Serial
   property :date,       Date
@@ -33,6 +34,13 @@ class News
   #  Mixing.first_or_create(:news => news).update(:date => news.date)
   #end
 
+  # Remove all associated data from this news.
+  before :destroy do |news|
+    news.comments.each do |comment|
+      comment.destroy
+    end
+  end
+
   def date_formatted
     date.strftime '%-d. %b. %y'
     #R18n::l(date)
@@ -54,23 +62,4 @@ class News
   #  "#{permalink}#comment"
   #end
 
-  def self.paginated(options={})
-    page = options.delete(:page) || 1
-    per_page = options.delete(:per_page) || 5
-
-    options.reverse_merge!({
-      :order => [:id.desc]
-    })
-
-    page_count = (count(options.except(:order)).to_f / per_page).ceil
-
-    options.merge!({
-      :limit => per_page,
-      :offset => (page - 1) * per_page
-    })
-
-    [ page_count, all(options) ]
-  end
 end
-
-

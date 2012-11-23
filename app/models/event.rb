@@ -7,6 +7,7 @@
 
 class Event
   include DataMapper::Resource
+  include DataMapper::Paginator
 
   attr_accessor :selected
 
@@ -36,6 +37,22 @@ class Event
 #    Mixing.first_or_create(:event => event).update(:date => event.date)
 #  end
 
+  # Remove all associations of the current event.
+  before :destroy do |event|
+    # comments
+    event.comments.each do |c|
+      c.destroy
+    end
+    # participations
+    event.participations.each do |p|
+      p.destroy
+    end
+    # news
+    event.news.each do |n|
+      n.update(event=nil)
+    end
+  end
+
   def date_formatted
     date.strftime '%-d. %b. %y'
     #R18n::l(date)
@@ -49,24 +66,6 @@ class Event
     "/admin/events/#{id}"
   end
 
-  def self.paginated(options={})
-    page = options.delete(:page) || 1
-    per_page = options.delete(:per_page) || 5
-
-    options.reverse_merge!({
-      :order => [:id.desc]
-    })
-
-    page_count = (count(options.except(:order)).to_f / per_page).ceil
-
-    options.merge!({
-      :limit => per_page,
-      :offset => (page - 1) * per_page
-    })
-
-    [ page_count, all(options) ]
-  end
-
   def self.all_without_news
     all(:date.lte => Date.today,
       :news.not => News.all(:event.not => nil),
@@ -76,4 +75,3 @@ class Event
   end
 
 end
-

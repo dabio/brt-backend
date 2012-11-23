@@ -89,6 +89,14 @@ module Brt
       mustache :tidings_form
     end
 
+    #
+    # DELETE /admin/news/:id
+    # Deletes a news.
+    #
+    delete '/news/:id' do |id|
+      News.get(id).destroy
+    end
+
 
     #
     # GET /admin/events
@@ -149,6 +157,14 @@ module Brt
 
       flash[:success] = 'Rennen gesichert'
       redirect to(event.editlink, true, false)
+    end
+
+    #
+    # DELETE /admin/events/:id
+    # Deletes an event.
+    #
+    delete '/events/:id' do |id|
+      Event.get(id).destroy
     end
 
 
@@ -212,6 +228,14 @@ module Brt
       person.update(params[:person])
 
       redirect to(person.editlink, true, false)
+    end
+
+    #
+    # DELETE /admin/people/:id
+    # Deletes a person.
+    #
+    delete '/people/:id' do |id|
+      Person.get(id).destroy
     end
 
 

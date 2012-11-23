@@ -35,6 +35,12 @@ class Person
 
   default_scope(:default).update(order: [:last_name, :first_name])
 
+  before :destroy do |person|
+    person.participation.each do |p|
+      p.destroy
+    end
+  end
+
   def name
     "#{first_name} #{last_name}"
   end
