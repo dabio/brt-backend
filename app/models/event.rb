@@ -48,7 +48,7 @@ class Event
     end
     # news
     event.news.each do |n|
-      n.event.update(event=nil)
+      n.update(event=nil)
     end
   end
 
