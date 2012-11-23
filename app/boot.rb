@@ -11,9 +11,10 @@ DataMapper::Logger.new($stdout, :debug) if RACK_ENV == 'development'
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://dan@localhost/brt')
 
 # Library
+require_relative '../lib/hash'
+require_relative '../lib/dm_paginator'
 require_relative '../lib/dm_scrypt'
 require_relative '../lib/dm_uri'
-require_relative '../lib/hash'
 
 # Models
 require 'models/comment'
