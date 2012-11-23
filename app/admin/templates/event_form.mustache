@@ -66,8 +66,12 @@
         {{/participations?}}
 
         <li class="push">
-          <input class="btn" type="submit" value="Speichern">
+          <button class="btn icon-floppy">Speichern</button>
+          {{^new?}}
+            <a class="red delete" href="{{deletelink}}" title="Rennen löschen?" data-redirect-url="/admin/events">Rennen löschen</a>
+          {{/new?}}
         </li>
+
       </ul>
     {{/event}}
     </fieldset>

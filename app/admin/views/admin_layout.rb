@@ -11,10 +11,7 @@ module Brt
 
       def path_to(script)
         case script
-        when :jquery then '//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js'
         when :zepto then '//cdnjs.cloudflare.com/ajax/libs/zepto/1.0rc1/zepto.min.js'
-        when :underscore then '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.1/underscore-min.js'
-        #when :backbone then '//cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js'
         else "/js/#{script}.js"
         end
       end

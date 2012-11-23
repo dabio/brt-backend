@@ -144,7 +144,7 @@ module Brt
       params[:p].each_value do |p|
         next unless p.include?('person_id')
         p = p.reject { |key, value| value.empty? }.merge({ event_id: id })
-        participations = Participation.create(p)
+        Participation.create(p)
       end
 
       flash[:success] = 'Rennen gesichert'

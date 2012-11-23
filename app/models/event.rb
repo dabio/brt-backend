@@ -41,6 +41,10 @@ class Event
     #R18n::l(date)
   end
 
+  def deletelink
+    editlink
+  end
+
   def editlink
     "/admin/events/#{id}"
   end

@@ -95,7 +95,6 @@ nav.primary a {
 }
 
 nav.second { text-align: right }
-nav.second button:before { margin-right: 7px }
 
 /* =Misc
 -----------------------------------------------------------------------------*/
@@ -126,6 +125,12 @@ td.date {
   margin-left: 0;
   padding: 8px 14px;
   text-shadow: 0 1px 0 #fff;
+}
+
+button:before { margin-right: 7px }
+
+form .delete {
+  margin-left: 10px;
 }
 
 

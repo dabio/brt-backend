@@ -18,6 +18,10 @@ module Brt
         Person.all - event.participations.person
       end
 
+      def javascripts
+        js :zepto, :admin
+      end
+
     end
   end
 end
