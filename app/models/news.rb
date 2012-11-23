@@ -33,6 +33,13 @@ class News
   #  Mixing.first_or_create(:news => news).update(:date => news.date)
   #end
 
+  # Remove all associated data from this news.
+  before :destroy do |news|
+    news.comments.each do |comment|
+      comment.destroy
+    end
+  end
+
   def date_formatted
     date.strftime '%-d. %b. %y'
     #R18n::l(date)

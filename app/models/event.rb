@@ -36,6 +36,22 @@ class Event
 #    Mixing.first_or_create(:event => event).update(:date => event.date)
 #  end
 
+  # Remove all associations of the current event.
+  before :destroy do |event|
+    # comments
+    event.comments.each do |c|
+      c.destroy
+    end
+    # participations
+    event.participations.each do |p|
+      p.destroy
+    end
+    # news
+    event.news.each do |n|
+      n.event.update(event=nil)
+    end
+  end
+
   def date_formatted
     date.strftime '%-d. %b. %y'
     #R18n::l(date)
