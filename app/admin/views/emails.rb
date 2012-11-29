@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Brt
   module Views
     class Emails < AdminLayout
