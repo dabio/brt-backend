@@ -1,5 +1,10 @@
 # encoding: utf-8
 
+if defined? Encoding
+  Encoding.default_external = Encoding::UTF_8
+  Encoding.default_internal = Encoding::UTF_8
+end
+
 $LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__))
 
 RACK_ENV = ENV['RACK_ENV'] ||= 'development' unless defined? RACK_ENV
