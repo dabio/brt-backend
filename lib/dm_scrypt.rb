@@ -5,7 +5,8 @@ module DataMapper
 
     class SCryptHash < String
 
-      length 100
+      length  100
+      lazy    true
 
       def primitive?(value)
         value.kind_of?(SCrypt::Password)
