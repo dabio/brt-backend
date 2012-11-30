@@ -17,7 +17,7 @@ module Brt
       end
 
       def delete?
-        !person.new? && has_auth?
+        !person.new? && has_admin? && person != current_person
       end
 
       def javascripts
