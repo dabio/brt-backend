@@ -23,6 +23,15 @@
             <input id="email" class="width-50" type="email" name="person[email]" size="30" value="{{email}}" required>
           </fieldset>
         </li>
+        {{#has_admin?}}
+        <li>
+          <fieldset>
+            <label>
+              <input id="is_admin" type="checkbox" name="person[is_admin]"{{#is_admin}} checked="checked"{{/is_admin}}> Administrator
+            </label>
+          </fieldset>
+        </li>
+        {{/has_admin?}}
 
         <li class="form-section">Kennwort</li>
 

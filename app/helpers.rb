@@ -42,7 +42,7 @@ module Brt
 
     # Check if current person is logged in and is admin
     def has_admin?
-      has_auth? && current_person.id == 1
+      has_auth? && current_person.is_admin
     end
 
     def today

@@ -11,6 +11,7 @@ class Person
   property :email,      String, required: true, format: :email_address, unique: true
   property :password,   SCryptHash, required: true
   property :info,       Text, lazy: true
+  property :is_admin,   Boolean, default: false
   timestamps :at
   property :slug,       String, length: 2000, default: lambda { |r, p|
     r.name.to_url

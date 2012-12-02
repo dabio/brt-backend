@@ -238,6 +238,8 @@ module Brt
         params[:person].delete 'password_confirmation'
       end
 
+      params[:person][:is_admin] = !params[:person][:is_admin].nil?
+
       flash[:success] = 'Einstellungen gespeichert'
       person.update(params[:person])
 
