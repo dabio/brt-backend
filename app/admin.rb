@@ -12,6 +12,14 @@ module Brt
 
 
     #
+    # Track every visit.
+    #
+    after do
+      Visit.first_or_create(person: current_person).update(created_at: Time.now)
+    end
+
+
+    #
     # GET /admin
     #
     get '/' do
