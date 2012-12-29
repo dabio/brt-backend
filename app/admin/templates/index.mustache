@@ -1,5 +1,40 @@
 <section id=dashboard>
+
   <header class=row>
-    <h2 class=threequarter>Dashboard</h2>
+    <h2>Dashboard</h2>
   </header>
+
+  <table class="width-100 striped">
+    <thead>
+      <tr>
+        <th class="date">Datum</th>
+        <th colspan="2">Titel</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#events}}
+      <tr id="event_{{id}}">
+        <td class="date">{{date_formatted}}</td>
+        <td>
+          <section>{{title}}</section>
+          <section class="gray small participations">
+            {{#participations}}
+              <span data-id="{{id}}">{{person.name}}</span>
+            {{/participations}}
+          </section>
+        </td>
+        <td>
+          {{#my_participation}}
+            <input type="checkbox" data-id="{{id}}" data-url="{{deletelink}}" title="Ich bin dabei" checked>
+          {{/my_participation}}
+          {{^my_participation}}
+            <input type="checkbox" data-event="{{id}}" data-person="{{current_person.id}}" data-url="{{participation_createlink}}" title="Ich bin dabei">
+          {{/my_participation}}
+        </td>
+      </tr>
+      {{/events}}
+    </tbody>
+  </table>
+
 </section>
+

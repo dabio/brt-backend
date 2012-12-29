@@ -48,7 +48,6 @@ class Event
 
   def date_formatted
     date.strftime '%-d. %b. %y'
-    #R18n::l(date)
   end
 
   def deletelink
@@ -57,6 +56,14 @@ class Event
 
   def editlink
     "/admin/events/#{id}"
+  end
+
+  def participation_createlink
+    Participation.createlink
+  end
+
+  def for_person(person)
+    participations.first(event: self, person: person)
   end
 
   def self.all_without_news

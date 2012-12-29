@@ -15,6 +15,7 @@ module Brt
     # GET /admin
     #
     get '/' do
+      @events = Event.all(:date.gte => today)
       mustache :index
     end
 
@@ -179,6 +180,39 @@ module Brt
       else
         to(event.editlink)
       end
+    end
+
+
+    #
+    # POST /admin/participations
+    # Creates a new participation. Needs an event id and a person id as post
+    # parameters.
+    #
+    post '/participations', :provides => :json do
+      Participation.first_or_create(params)
+        .to_json(
+          methods: [:deletelink],
+          only: [:id],
+          relationships: {
+            person: { methods: [:name], only: [:id] },
+            event: { only: [:id] }
+          }
+        )
+    end
+
+    #
+    # DELETE /admin/participations/:id
+    # Removes a participation.
+    #
+    delete '/participations/:id', :provides => :json do |id|
+      p = Participation.get(id)
+      event_id = p.event.id
+      p.destroy
+      {
+        url: Participation.createlink,
+        person: { id: current_person.id },
+        event: { id: event_id }
+      }.to_json
     end
 
 

@@ -133,6 +133,10 @@ form .delete {
   margin-left: 10px;
 }
 
+#dashboard td span:not(:last-of-type)::after {
+  content: ", ";
+}
+
 
 /* =Footer
 -----------------------------------------------------------------------------*/
