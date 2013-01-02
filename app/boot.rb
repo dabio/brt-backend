@@ -5,8 +5,6 @@ if defined? Encoding
   Encoding.default_internal = Encoding::UTF_8
 end
 
-$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__))
-
 RACK_ENV = ENV['RACK_ENV'] ||= 'development' unless defined? RACK_ENV
 ROOT_DIR = File.dirname(File.expand_path(__FILE__))
 
@@ -18,29 +16,13 @@ DataMapper::Logger.new($stdout, :debug) if RACK_ENV == 'development'
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://dan@localhost/brt')
 
 # Library
-require_relative '../lib/hash'
-require_relative '../lib/dm_paginator'
-require_relative '../lib/dm_scrypt'
-require_relative '../lib/dm_uri'
+Dir['./lib/*.rb'].each { |f| require f }
 
-# Models
-require 'models/comment'
-require 'models/debate'
-require 'models/email'
-require 'models/event'
-require 'models/news'
-require 'models/participation'
-require 'models/person'
-require 'models/report'
-require 'models/visit'
+# Helpers, Models, Routes, Views
+Dir['./app/**/*.rb'].each { |f| require f }
+
+## Finalize Datamapper Models
 DataMapper.finalize
-
-# Helper
-require 'helpers'
-
-# Non autoloading templates
-require 'admin/views/admin_layout'
-require 'frontend/views/layout'
 
 module Brt
 
@@ -92,10 +74,3 @@ module Brt
   end
 
 end
-
-# Admin
-require 'admin'
-# Api
-#require 'api'
-# Frontend
-require 'frontend'

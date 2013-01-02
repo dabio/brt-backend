@@ -1,40 +1,43 @@
 # encoding: utf-8
 
-class Participation
-  include DataMapper::Resource
+module Brt
 
-  property :id,         Serial
-  property :person_id,  Integer
-  property :event_id,   Integer
-  property :position_overall,   Integer
-  property :position_age_class, Integer
-  # this property is needed only for ordering the participation on the person
-  # detail view
-  property :date,       Date
-  timestamps :at
+  class Participation
+    include DataMapper::Resource
 
-  belongs_to :person
-  belongs_to :event
+    property :id,         Serial
+    property :person_id,  Integer
+    property :event_id,   Integer
+    property :position_overall,   Integer
+    property :position_age_class, Integer
+    # this property is needed only for ordering the participation on the person
+    # detail view
+    property :date,       Date
+    timestamps :at
 
-  before :save do |p|
-    # this hook adds the event date to this participation. this is needed to
-    # order the participations on a person detailed page.
-    p.date = p.event.date
-  end
+    belongs_to :person
+    belongs_to :event
 
-  default_scope(:default).update(order: [:date.desc, :position_overall])
+    before :save do |p|
+      # this hook adds the event date to this participation. this is needed to
+      # order the participations on a person detailed page.
+      p.date = p.event.date
+    end
 
-  def self.createlink
-    '/admin/participations'
-  end
+    default_scope(:default).update(order: [:date.desc, :position_overall])
 
-  def createlink
-    Participation.createlink
-  end
+    def self.createlink
+      '/admin/participations'
+    end
 
-  def deletelink
-    "#{createlink}/#{id}"
+    def createlink
+      Participation.createlink
+    end
+
+    def deletelink
+      "#{createlink}/#{id}"
+    end
+
   end
 
 end
-

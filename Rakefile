@@ -1,16 +1,16 @@
-# encoding: utf-8
+begin
+  desc 'Run all tests'
+  require 'rake/testtask'
+  Rake::TestTask.new do |t|
+    t.libs << 'test'
+    t.pattern = 'test/**/*_test.rb'
+    t.verbose = true
+  end
+rescue LoadError
+end
 
-$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/app')
-
-require 'boot'
-
-task :default => :test
-
-require 'rake/testtask'
-Rake::TestTask.new do |t|
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
+task :env do
+  require './app/boot'
 end
 
 desc 'Open an irb session preloaded with this library'
@@ -23,10 +23,10 @@ task :cleanup do
   `rm -fr bin/ vendor/ .bundle/ Gemfile.lock`
 end
 
-task :load_migrations do
+task :load_migrations => :env do
   require 'dm-migrations'
   require 'dm-migrations/migration_runner'
-  FileList['app/migrations/*.rb'].each do |migration|
+  FileList['db/migrate/*.rb'].each do |migration|
     load migration
   end
 end
@@ -44,3 +44,4 @@ namespace 'db' do
   end
 
 end
+
