@@ -1,23 +1,26 @@
 # encoding: utf-8
 
-class Debate
-  include DataMapper::Resource
+module Brt
 
-  property :id,     Serial
-  property :title,  String
-  timestamps :at
+  class Debate
+    include DataMapper::Resource
 
-  belongs_to :person
-  has n, :comments
+    property :id,     Serial
+    property :title,  String
+    timestamps :at
 
-  validates_presence_of :title
+    belongs_to :person
+    has n, :comments
 
-  def editlink
-    "#{permalink}/edit"
+    validates_presence_of :title
+
+    def editlink
+      "#{permalink}/edit"
+    end
+
+    def permalink
+      "/diskussionen/#{id}"
+    end
   end
 
-  def permalink
-    "/diskussionen/#{id}"
-  end
 end
-

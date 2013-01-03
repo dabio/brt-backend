@@ -5,8 +5,6 @@ if defined? Encoding
   Encoding.default_internal = Encoding::UTF_8
 end
 
-$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__))
-
 RACK_ENV = ENV['RACK_ENV'] ||= 'development' unless defined? RACK_ENV
 ROOT_DIR = File.dirname(File.expand_path(__FILE__))
 
@@ -16,31 +14,19 @@ Bundler.require(:default, RACK_ENV)
 # PostgreSQL
 DataMapper::Logger.new($stdout, :debug) if RACK_ENV == 'development'
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://dan@localhost/brt')
+DataMapper.repository(:default).adapter.resource_naming_convention = DataMapper::NamingConventions::Resource::UnderscoredAndPluralizedWithoutModule
 
 # Library
-require_relative '../lib/hash'
-require_relative '../lib/dm_paginator'
-require_relative '../lib/dm_scrypt'
-require_relative '../lib/dm_uri'
+Dir['./lib/*.rb'].each { |f| require f }
 
-# Models
-require 'models/comment'
-require 'models/debate'
-require 'models/email'
-require 'models/event'
-require 'models/news'
-require 'models/participation'
-require 'models/person'
-require 'models/report'
-require 'models/visit'
+# Helpers, Models, Views
+Dir['./app/helpers/*.rb'].each { |f| require f }
+Dir['./app/models/*.rb'].each { |f| require f }
+Dir['./app/views/**/layout.rb'].each { |f| require f }
+Dir['./app/views/**/*.rb'].each { |f| require f }
+
+# Finalize Datamapper Models
 DataMapper.finalize
-
-# Helper
-require 'helpers'
-
-# Non autoloading templates
-require 'admin/views/admin_layout'
-require 'frontend/views/layout'
 
 module Brt
 
@@ -55,11 +41,28 @@ module Brt
 
     helpers Brt::Helpers
 
-    set :root, ROOT_DIR
-    set :public_folder, "#{ROOT_DIR}/public"
+    configure do
+      enable :method_override
 
-    set :default_locale, 'de'
-    set :method_override, true
+      set :root, ROOT_DIR
+      set :public_folder, "#{ROOT_DIR}/public"
+      set :default_locale, 'de'
+    end
+
+    configure :production do
+      disable :logging
+    end
+
+    configure :development do
+      enable :logging
+      enable :show_exceptions
+    end
+
+    configure :test do
+      enable :raise_errors
+      disable :logging
+      disable :reload_templates
+    end
 
     # redirect all requests ending with a slash to their corresponding requests
     # without the slash
@@ -72,30 +75,12 @@ module Brt
       @flash = session.delete 'flash'
     end
 
-  end
+    error do
+      'Error'
+    end
 
-  class Admin < Main
-    set :mustache, {
-      namespace: Brt,
-      layout: Brt::Views::AdminLayout,
-      templates: "#{ROOT_DIR}/admin/templates",
-      views: "#{ROOT_DIR}/admin/views"
-    }
-  end
-
-  class Frontend < Main
-    set :mustache, {
-      namespace: Brt,
-      templates: "#{ROOT_DIR}/frontend/templates",
-      views: "#{ROOT_DIR}/frontend/views"
-    }
   end
 
 end
 
-# Admin
-require 'admin'
-# Api
-#require 'api'
-# Frontend
-require 'frontend'
+Dir['./app/routes/*.rb'].each { |f| require f }

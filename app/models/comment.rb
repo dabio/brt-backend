@@ -1,20 +1,23 @@
 # encoding: utf-8
 
-class Comment
-  include DataMapper::Resource
+module Brt
 
-  property :id,     Serial
-  property :text,   Text
-  timestamps :at
+  class Comment
+    include DataMapper::Resource
 
-  belongs_to :person
-  belongs_to :debate, required: false
-  belongs_to :news,   required: false
+    property :id,     Serial
+    property :text,   Text
+    timestamps :at
 
-  validates_presence_of :text
+    belongs_to :person
+    belongs_to :debate, required: false
+    belongs_to :news,   required: false
 
-  def permalink
-    "/diskussion/#{debate.id}/##{id}"
+    validates_presence_of :text
+
+    def permalink
+      "/diskussion/#{debate.id}/##{id}"
+    end
   end
-end
 
+end

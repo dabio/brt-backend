@@ -1,25 +1,28 @@
 # encoding: utf-8
 
-class Report
-  include DataMapper::Resource
+module Brt
 
-  property :id,     Serial
-  property :date,   Date
-  property :text,   Text
-  timestamps :at
+  class Report
+    include DataMapper::Resource
 
-  belongs_to :person
-  belongs_to :event
+    property :id,     Serial
+    property :date,   Date
+    property :text,   Text
+    timestamps :at
 
-  validates_presence_of :date, :text
+    belongs_to :person
+    belongs_to :event
 
-  def permalink
-    "/reports/#{id}"
-  end
+    validates_presence_of :date, :text
 
-  def editlink
-    "#{permalink}/edit"
+    def permalink
+      "/reports/#{id}"
+    end
+
+    def editlink
+      "#{permalink}/edit"
+    end
+
   end
 
 end
-

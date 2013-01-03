@@ -1,59 +1,63 @@
 # encoding: utf-8
 
-class News
-  include DataMapper::Resource
+module Brt
 
-  property :id,         Serial
-  property :date,       Date
-  property :title,      String, length: 250
-  property :teaser,     Text
-  property :message,    Text
-  timestamps :at
-  property :slug,       String, length: 2000, default: lambda { |r, p|
-    r.title.to_url
-  }
-  #is :slug, :source => :title
+  class News
+    include DataMapper::Resource
 
-  belongs_to :person
-  belongs_to :event, required: false
+    property :id,         Serial
+    property :date,       Date
+    property :title,      String, length: 250
+    property :teaser,     Text
+    property :message,    Text
+    timestamps :at
+    property :slug,       String, length: 2000, default: lambda { |r, p|
+      r.title.to_url
+    }
+    #is :slug, :source => :title
 
-  has n, :comments
+    belongs_to :person
+    belongs_to :event, required: false
 
-  validates_presence_of :title, :date, :teaser
+    has n, :comments
 
-  default_scope(:default).update(order: [:date.desc, :updated_at.desc])
+    validates_presence_of :title, :date, :teaser
 
-  #after :save do |news|
-  #  # save link in mixing table
-  #  Mixing.first_or_create(:news => news).update(:date => news.date)
-  #end
+    default_scope(:default).update(order: [:date.desc, :updated_at.desc])
 
-  # Remove all associated data from this news.
-  before :destroy do |news|
-    news.comments.each do |comment|
-      comment.destroy
-    end if news.comments
+    #after :save do |news|
+    #  # save link in mixing table
+    #  Mixing.first_or_create(:news => news).update(:date => news.date)
+    #end
+
+    # Remove all associated data from this news.
+    before :destroy do |news|
+      news.comments.each do |comment|
+        comment.destroy
+      end if news.comments
+    end
+
+    def date_formatted
+      date.strftime '%-d. %b. %y'
+      #R18n::l(date)
+    end
+
+    def permalink
+      "/news/#{date.strftime("%Y/%m/%d")}/#{slug}"
+    end
+
+    def editlink
+      "/admin/news/#{id}"
+    end
+
+    def deletelink
+      editlink
+    end
+
+    #def commentlink
+    #  "#{permalink}#comment"
+    #end
+
   end
-
-  def date_formatted
-    date.strftime '%-d. %b. %y'
-    #R18n::l(date)
-  end
-
-  def permalink
-    "/news/#{date.strftime("%Y/%m/%d")}/#{slug}"
-  end
-
-  def editlink
-    "/admin/news/#{id}"
-  end
-
-  def deletelink
-    editlink
-  end
-
-  #def commentlink
-  #  "#{permalink}#comment"
-  #end
 
 end
