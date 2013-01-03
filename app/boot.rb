@@ -45,7 +45,7 @@ module Brt
       enable :method_override
 
       set :root, ROOT_DIR
-      set :public_folder, "#{ROOT_DIR}/public"
+      set :public_folder, "#{ROOT_DIR}/../public"
       set :default_locale, 'de'
     end
 
