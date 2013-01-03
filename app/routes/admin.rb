@@ -311,6 +311,78 @@ module Brt
 
 
     #
+    # Sponsors are for admins only
+    #
+    before '/sponsors*' do
+      not_found unless has_admin?
+    end
+
+    #
+    # GET /admin/sponsors
+    # Show a list of all sponsors.
+    #
+    get '/sponsors' do
+      sponsors = Sponsor.all
+      mustache :sponsors, locals: { sponsors: sponsors }
+    end
+
+    #
+    # POST /admin/sponsors
+    # Shows the sponsors create form and saves the sponsor into the database.
+    #
+    post '/sponsors' do
+      @sponsor = Sponsor.new(params[:sponsor])
+
+      if params[:sponsor]
+        @sponsor = Sponsor.create(params[:sponsor])
+
+        if @sponsor.saved?
+          flash[:success] = 'Neuen Sponsor erfolgreich angelegt'
+          redirect(to('/sponsors'))
+        end
+      end
+
+      mustache :sponsor_form
+    end
+
+    #
+    # GET /admin/sponsors/:id
+    # Returns a single sponsor form.
+    #
+    get '/sponsors/:id' do |id|
+      @sponsor = Sponsor.get(id)
+      mustache :sponsor_form
+    end
+
+    #
+    # PUT /admin/sponsors/:id
+    # Updates a sponsor.
+    #
+    put '/sponsors/:id' do |id|
+      sponsor = Sponsor.get(id)
+
+      flash[:success] = 'Sponsor gespeichert'
+      sponsor.update(params[:sponsor])
+
+      redirect to(sponsor.editlink, true, false)
+    end
+
+    #
+    # DELETE /admin/sponsors/:id
+    # Deletes a sponsor.
+    #
+    delete '/sponsors/:id' do |id|
+      not_found unless sponsor = Sponsor.get(id)
+      if sponsor.destroy
+        flash[:success] = 'Sponsor erfolgreich gelöscht'
+        to('/sponsors')
+      else
+        to(sponsor.editlink)
+      end
+    end
+
+
+    #
     # Emails are for admins only.
     #
     before '/emails*' do

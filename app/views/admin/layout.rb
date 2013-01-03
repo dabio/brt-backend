@@ -55,6 +55,10 @@ module Brt
 
         if has_admin?
           nav << {
+            'href'  => '/admin/sponsors',
+            'title' => 'Sponsoren'
+          }
+          nav << {
             'href'  => '/admin/emails',
             'title' => 'E-Mails'
           }
