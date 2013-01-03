@@ -1,7 +1,14 @@
 # encoding: utf-8
 
 module Brt
-  class Admin
+  class Admin < Main
+
+    set :mustache, {
+      namespace: Brt,
+      layout: Brt::Views::AdminLayout,
+      templates: "#{ROOT_DIR}/templates/admin",
+      views: "#{ROOT_DIR}/views/admin"
+    }
 
     #
     # Disallow the admin area for non authorized users.
@@ -14,9 +21,9 @@ module Brt
     #
     # Track every visit.
     #
-    after do
-      Visit.first_or_create(person: current_person).update(created_at: Time.now)
-    end
+    #after do
+    #  Visit.first_or_create(person: current_person).update(created_at: Time.now)
+    #end
 
 
     #

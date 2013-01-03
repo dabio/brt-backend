@@ -4,6 +4,7 @@ module Brt
 
   class Email
     include DataMapper::Resource
+    include Brt::Helpers
 
     property :id,         Serial
     property :name,       String, required: true,

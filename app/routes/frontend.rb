@@ -1,7 +1,13 @@
 # encoding: UTF-8
 
 module Brt
-  class Frontend
+  class Frontend < Main
+
+    set :mustache, {
+      namespace: Brt,
+      templates: "#{ROOT_DIR}/templates/frontend",
+      views: "#{ROOT_DIR}/views/frontend"
+    }
 
     #
     # GET /
