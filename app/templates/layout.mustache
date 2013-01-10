@@ -101,6 +101,16 @@
 
   <script type="text/javascript">
 
+    var _gauges = _gauges || [];
+    (function() {
+       var t   = document.createElement('script'); t.async = true;
+       t.id    = 'gauges-tracker';
+       t.setAttribute('data-site-id', '50789ec5f5a1f5156f00006f');
+       t.src = '//secure.gaug.es/track.js';
+       var s = document.getElementsByTagName('script')[0];
+       s.parentNode.insertBefore(t, s);
+    })();
+
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-67221-8']);
     _gaq.push(['_trackPageview']);
