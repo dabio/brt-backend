@@ -24,7 +24,7 @@ module Brt
     end
 
     def l(string, options)
-      R18n::l(string, options)
+      ::R18n::l(string, options)
     end
 
     def markdown(text)

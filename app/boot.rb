@@ -15,8 +15,6 @@ Bundler.require(:default, RACK_ENV)
 DataMapper::Logger.new($stdout, :debug) if RACK_ENV == 'development'
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://dan@localhost/brt')
 
-R18n.set('de')
-
 # Library
 require_relative '../lib/dm_bcrypt'
 require_relative '../lib/dm_uri'
@@ -51,6 +49,7 @@ module Brt
 
   class App < Main
     register Sinatra::Flash
+    register Sinatra::R18n
     register Mustache::Sinatra
     helpers Brt::Helpers
 
