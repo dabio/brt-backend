@@ -6,7 +6,7 @@ module Brt
     include DataMapper::Resource
 
     property :id,     Serial
-    property :title,  String
+    property :title,  String, required: true
     timestamps :at
 
     belongs_to :person
@@ -15,12 +15,9 @@ module Brt
     validates_presence_of :title
 
     def editlink
-      "#{permalink}/edit"
+      "/admin/debates/#{id}"
     end
 
-    def permalink
-      "/diskussionen/#{id}"
-    end
   end
 
 end

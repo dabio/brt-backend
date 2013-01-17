@@ -5,7 +5,7 @@ module Brt
     class Index < AdminLayout
 
       def title
-        'Dashboard'
+        'Überblick'
       end
 
       def events

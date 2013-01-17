@@ -20,7 +20,15 @@
             <section>
               <label class="bold" for="image_url">Bild Url <span class="req">*</span></label>
             </section>
-            <input id="image_url" class="width-100" type="url" name="sponsor[image_url]" size="60" value="{{image_url}}" required>
+            <input id="image_url" class="width-100" type="url" name="sponsor[image_url]" size="60" value="{{image_url}}" placeholder="http://" required>
+          </fieldset>
+        </li>
+        <li>
+          <fieldset>
+            <section>
+              <label class="bold" for="image_url">Homepage</label>
+            </section>
+            <input id="url" class="width-100" type="url" name="sponsor[url]" size="60" value="{{url}}" placeholder="http://">
           </fieldset>
         </li>
         <li>

@@ -32,7 +32,7 @@ module Brt
 
   class Main < Sinatra::Base
     use Rack::ForceDomain, ENV['DOMAIN']
-    use Rack::Session::Cookie
+    use Rack::Session::Cookie, secret: 'blah'
     use Rack::Protection
 
     register Sinatra::Flash
