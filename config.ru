@@ -1,7 +1,4 @@
-# encoding: utf-8
-require File.expand_path(File.dirname(__FILE__) + '/app/boot')
+# This file is used by Rack-based servers to start the application.
 
-run Rack::URLMap.new({
-  '/'       => Brt::Frontend,
-  '/admin'  => Brt::Admin
-})
+require ::File.expand_path('../config/environment',  __FILE__)
+run Berlinracingteam::Application

@@ -1,47 +1,7 @@
-begin
-  desc 'Run all tests'
-  require 'rake/testtask'
-  Rake::TestTask.new do |t|
-    t.libs << 'test'
-    t.pattern = 'test/**/*_test.rb'
-    t.verbose = true
-  end
-rescue LoadError
-end
+#!/usr/bin/env rake
+# Add your own tasks in files placed in lib/tasks ending in .rake,
+# for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
-task :env do
-  require './app/boot'
-end
+require File.expand_path('../config/application', __FILE__)
 
-desc 'Open an irb session preloaded with this library'
-task :console do
-  `irb -rubygems -r ./app/boot`
-end
-
-desc 'Removes all installed gems'
-task :cleanup do
-  `rm -fr bin/ vendor/ .bundle/ Gemfile.lock`
-end
-
-task :load_migrations => :env do
-  require 'dm-migrations'
-  require 'dm-migrations/migration_runner'
-  FileList['db/migrate/*.rb'].each do |migration|
-    load migration
-  end
-end
-
-namespace 'db' do
-
-  task :migrate => :load_migrations do |t|
-    puts '=> Migrating up'
-    migrate_up!
-    puts "<= #{t.name} done"
-  end
-
-  task :migrations => :load_migrations do
-    puts migrations.sort.reverse.map {|m| "#{m.position}  #{m.name}  #{m.needs_up? ? '' : 'APPLIED'}"}
-  end
-
-end
-
+Berlinracingteam::Application.load_tasks

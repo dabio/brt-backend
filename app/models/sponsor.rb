@@ -1,23 +1,7 @@
-# encoding: utf-8
+class Sponsor < ActiveRecord::Base
+  attr_accessible :image_url, :text, :title, :url
 
-module Brt
-
-  class Sponsor
-    include DataMapper::Resource
-
-    property :id,         Serial
-    property :title,      String, length: 50
-    property :text,       Text
-    property :image_url,  URI
-    property :url,        URI
-    timestamps :at
-
-    default_scope(:default).update(order: [:title])
-
-    def editlink
-      "/admin/sponsors/#{id}"
-    end
-
-  end
-
+  validates :title, presence: true, length: { maximum: 2000 }
+  validates :image_url, presence: true, length: { maximum: 2000 }
+  validates :url, length: { maximum: 2000 }
 end
