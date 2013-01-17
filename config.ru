@@ -2,6 +2,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/app/boot')
 
 run Rack::URLMap.new({
-  '/'       => Brt::Frontend,
-  '/admin'  => Brt::Admin
+  '/' => Brt::Frontend,
+  '/admin' => Brt::Admin,
+  '/admin/sponsors' => Brt::AdminSponsors,
 })

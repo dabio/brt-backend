@@ -20,10 +20,12 @@ DataMapper.repository(:default).adapter.resource_naming_convention = DataMapper:
 Dir['./lib/*.rb'].each { |f| require f }
 
 # Helpers, Models, Views
-Dir['./app/helpers/*.rb'].each { |f| require f }
-Dir['./app/models/*.rb'].each { |f| require f }
-Dir['./app/views/**/layout.rb'].each { |f| require f }
-Dir['./app/views/**/*.rb'].each { |f| require f }
+Dir[
+  './app/helper.rb',
+  './app/models/*.rb',
+].each do |f|
+  require f
+end
 
 # Finalize Datamapper Models
 DataMapper.finalize
@@ -37,12 +39,12 @@ module Brt
 
     register Sinatra::Flash
     register Sinatra::R18n
-    register Mustache::Sinatra
 
     helpers Brt::Helpers
 
     configure do
       enable :method_override
+      enable :inline_templates
 
       set :root, ROOT_DIR
       set :public_folder, "#{ROOT_DIR}/../public"
@@ -64,12 +66,6 @@ module Brt
       disable :reload_templates
     end
 
-    # redirect all requests ending with a slash to their corresponding requests
-    # without the slash
-    get %r{(.+)/$} do |r|
-      redirect to(r)
-    end
-
     # store the flash-session into the global flash variable
     before do
       @flash = session.delete 'flash'
@@ -83,4 +79,4 @@ module Brt
 
 end
 
-Dir['./app/routes/*.rb'].each { |f| require f }
+Dir['./app/controllers/*.rb'].each { |f| require f }
