@@ -60,11 +60,6 @@ module Brt
       disable :reload_templates
     end
 
-    # store the flash-session into the global flash variable
-    before do
-      @flash = session.delete 'flash'
-    end
-
     error do
       'Error'
     end

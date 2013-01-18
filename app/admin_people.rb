@@ -54,6 +54,13 @@ module Brt
     put '/:id' do |id|
       item = Person.get(id)
 
+      if params[:person][:password].nil? or params[:person][:password].empty?
+        params[:person].delete 'password'
+        params[:person].delete 'password_confirmation'
+      end
+
+      params[:person][:is_admin] = !params[:person][:is_admin].nil?
+
       flash[:success] = 'Einstellungen gespeichert'
       item.update(params[:person])
 
@@ -115,28 +122,42 @@ section#sponsor
       ul
         li
           label.bold for="first_name" Vorname <span class="req">*</span>
-          input#first_name type="text" name="person[first_name]" value="#{item.first_name}" required="required"
+          input#first_name(type="text" name="person[first_name]" required="required"
+            value="#{item.first_name}")
         li
           label.bold for="last_name" Nachname <span class="req">*</span>
-          input#last_name type="text" name="person[last_name]" value="#{item.last_name}" required="required"
+          input#last_name(type="text" name="person[last_name]" required="required"
+            value="#{item.last_name}")
         li
           fieldset
             section
               label.bold for="email" E-Mail <span class="req">*</span>
-            input#email.width-50 type="email" name="person[email]" size="30" value="#{item.email}" required="required"
+            input#email.width-50(type="email" name="person[email]" size="30"
+              value="#{item.email}" required="required")
         - if has_admin?
           li
             fieldset
               section
                 label
                   - if item.is_admin
-                    input#is_admin type="checkbox" name="person[is_admin]" checked="checked" Administrator
+                    input#is_admin(type="checkbox" name="person[is_admin]"
+                      checked="checked") Administrator
                   - else 
                     input#is_admin type="checkbox" name="person[is_admin]" Administrator
+        li.form-section Kennwort
+        li.push
+          p.gray-light Kennwort ändern. Nur ausfüllen, wenn Kennwort geändert werden soll.
+        li
+          label.bold for="password" Kennwort
+          input#password type="password" name="person[password]"
+        li
+          label.bold for="password_confirmation" Wiederholung
+          input#password_confirmation type="password" name="person[password_confirmation]"
         li.form-section
         li.push
           - if item.new?
             input.btn type="submit" value="Anlegen"
           - else
             input.btn type="submit" value="Speichern"
-            a.red.delete href="#{item.deletelink}" title="Sponsor entfernen?" Sponsor entfernen
+            - if has_admin?
+              a.red.delete href="#{item.deletelink}" title="Fahrer entfernen?" Fahrer entfernen

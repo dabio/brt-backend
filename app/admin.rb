@@ -76,5 +76,17 @@ html
     header
     section.container.row
       nav.threequarter
+
+    == slim :_flash
+
     section.container == yield
+
+/ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+@@ _flash
+- if flash
+  section.container.flash
+    - flash.each do |type, message|
+      section class="#{type}" = message
+
+
 
