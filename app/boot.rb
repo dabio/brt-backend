@@ -16,12 +16,8 @@ DataMapper::Logger.new($stdout, :debug) if RACK_ENV == 'development'
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://dan@localhost/brt')
 DataMapper.repository(:default).adapter.resource_naming_convention = DataMapper::NamingConventions::Resource::UnderscoredAndPluralizedWithoutModule
 
-# Library
-Dir['./lib/*.rb'].each { |f| require f }
-
-# Helpers, Models, Views
 Dir[
-  './app/helper.rb',
+  './lib/*.rb',
   './app/models/*.rb',
 ].each do |f|
   require f
@@ -40,11 +36,9 @@ module Brt
     register Sinatra::Flash
     register Sinatra::R18n
 
-    helpers Brt::Helpers
-
     configure do
       enable :method_override
-      enable :inline_templates
+      # enable :inline_templates
 
       set :root, ROOT_DIR
       set :public_folder, "#{ROOT_DIR}/../public"
@@ -79,4 +73,9 @@ module Brt
 
 end
 
-Dir['./app/controllers/*.rb'].each { |f| require f }
+Dir[
+  './app/admin.rb',
+  './app/admin_*.rb'
+].each do |f|
+  require f
+end

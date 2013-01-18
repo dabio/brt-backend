@@ -18,6 +18,10 @@ module Brt
       "/admin/sponsors/#{id}"
     end
 
+    def deletelink
+      editlink
+    end
+
   end
 
 end
