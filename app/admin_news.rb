@@ -52,7 +52,7 @@ module Brt
     # GET /admin/news/:id
     #
     get '/:id' do |id|
-      slim :view, locals: { item: News.get(id) }
+      slim :view, locals: { item: News.get(id), events: Event.all_without_news }
     end
 
 
@@ -73,7 +73,7 @@ module Brt
         redirect to(item.editlink, true, false)
       end
 
-      slim :view, locals:  { item: item }
+      slim :view, locals:  { item: item, events: Event.all_without_news }
     end
 
 
@@ -124,35 +124,43 @@ section#news
 @@ view
 section#news
   form.forms.columnar action="#{item.editlink}" method="post"
-    fieldset
-      - unless item.new?
-        input type="hidden" name="_method" value="put"
-      ul
-        li
-          label.bold for="date" Datum <span class="req">*</span>
-          input#date(type="date" name="news[date]" value="#{item.date}"
-            placeholder="#{today}" required="required")
-        li
-          fieldset
-            section
-              label.bold for="title" Titel <span class="req">*</span>
-            input#title.width-100(type="text" name="news[title]" size="60"
-              value="#{item.title}" required="required")
-        li
-          fieldset
-            section
-              label.bold for="teaser" Teaser <span class="req">*</span>
-            textarea#teaser.width-100 name="news[teaser]" style="height: 54px" = item.teaser
-        li
-          fieldset
-            section
-              label.bold for="message" Text
-            textarea#message.width-100 name="news[message]" style="height: 387px" = item.message
-            span.descr Text wird mit <a class="gray" href="http://daringfireball.net/projects/markdown/dingus" title="Markdown Web Dingus">Markdown</a> formatiert.
-        li.form-section
-        li.push
-          - if item.new?
-            input.btn type="submit" value="Anlegen"
-          - else
-            input.btn type="submit" value="Speichern"
-            a.red.delete href="#{item.deletelink}" title="Nachricht oder Rennbericht löschen?" Eintrag löschen
+    - unless item.new?
+      input type="hidden" name="_method" value="put"
+    ul
+      li
+        label.bold for="date" Datum <span class="req">*</span>
+        input#date(type="date" name="news[date]" value="#{item.date}"
+          placeholder="#{today}" required="required")
+      li
+        fieldset
+          section
+            label.bold for="title" Titel <span class="req">*</span>
+          input#title.width-100(type="text" name="news[title]" size="60"
+            value="#{item.title}" required="required")
+      li
+        fieldset
+          section
+            label.bold for="teaser" Teaser <span class="req">*</span>
+          textarea#teaser.width-100 name="news[teaser]" style="height: 54px" = \
+            item.teaser
+      li
+        fieldset
+          section
+            label.bold for="message" Text
+          textarea#message.width-100 name="news[message]" style="height: 387px" = \
+            item.message
+          span.descr Text wird mit <a class="gray" href="http://daringfireball.net/projects/markdown/dingus" title="Markdown Web Dingus">Markdown</a> formatiert.
+      li
+        select#event_id name="news[event_id]" site="1" style="width:570px"
+          option value="" (leer)
+          - for event in events
+            option value="#{event.id}" #{event.date_formatted} - #{event.title}, #{event.distance} km
+        label.bold for="event_id" Rennen
+        span.descr Nur Für Rennberichte.
+      li.form-section
+      li.push
+        - if item.new?
+          input.btn type="submit" value="Anlegen"
+        - else
+          input.btn type="submit" value="Speichern"
+          a.red.delete href="#{item.deletelink}" title="Nachricht oder Rennbericht löschen?" Eintrag löschen
