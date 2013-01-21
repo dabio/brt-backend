@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+## cleanup
+
+set -e
+
+rm -fr bin/ vendor/ .bundle/ Gemfile.lock
+
+echo "Done!"

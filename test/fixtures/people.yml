@@ -1,19 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  first_name: MyString
-  last_name: MyString
-  slug: MyString
-  email: MyString
-  password: MyString
+ronald-mcdonald:
+  first_name: Ronald
+  last_name: McDonald
+  slug: ronald-mcdonald
+  email: ronald@mcdonald.com
+  password: test1234
   info: MyText
   is_admin: false
 
-two:
-  first_name: MyString
-  last_name: MyString
-  slug: MyString
-  email: MyString
-  password: MyString
+buerger-king:
+  first_name: Bürger
+  last_name: King
+  slug: buerger-king
+  email: buerger@king.com
+  password: test1234
   info: MyText
-  is_admin: false
+  is_admin: true
