@@ -14,15 +14,15 @@
 ActiveRecord::Schema.define(:version => 20130117144347) do
 
   create_table "people", :force => true do |t|
-    t.string   "first_name", :limit => 50,                     :null => false
-    t.string   "last_name",  :limit => 50,                     :null => false
-    t.string   "slug",       :limit => 101
+    t.string   "first_name",      :limit => 50,                     :null => false
+    t.string   "last_name",       :limit => 50,                     :null => false
+    t.string   "slug",            :limit => 101
     t.string   "email"
-    t.string   "password",   :limit => 60
+    t.string   "password_digest"
     t.text     "info"
-    t.boolean  "is_admin",                  :default => false
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
+    t.boolean  "is_admin",                       :default => false
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
   end
 
   create_table "sponsors", :force => true do |t|

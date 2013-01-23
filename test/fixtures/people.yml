@@ -5,7 +5,7 @@ ronald-mcdonald:
   last_name: McDonald
   slug: ronald-mcdonald
   email: ronald@mcdonald.com
-  password: test1234
+  password_digest: test1234
   info: MyText
   is_admin: false
 
@@ -14,6 +14,6 @@ buerger-king:
   last_name: King
   slug: buerger-king
   email: buerger@king.com
-  password: test1234
+  password_digest: test1234
   info: MyText
   is_admin: true
