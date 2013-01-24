@@ -1,4 +1,4 @@
-class PeopleController < ApplicationController
+class Admin::PeopleController < ApplicationController
   # GET /people
   # GET /people.json
   def index

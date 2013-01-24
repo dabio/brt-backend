@@ -1,6 +1,13 @@
 Berlinracingteam::Application.routes.draw do
-  resources :people
+  #resources :people
   resources :sponsors
+
+  namespace :admin do
+    # Directs /admin/people/* to Admin::PeopleController
+    # (app/controllers/admin/people_controller.rb)
+    resources :people
+  end
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
