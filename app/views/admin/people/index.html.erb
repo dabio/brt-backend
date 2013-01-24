@@ -1,35 +1,33 @@
-<h1>Listing people</h1>
+<section class="container" id="people">
 
-<table>
-  <tr>
-    <th>First name</th>
-    <th>Last name</th>
-    <th>Slug</th>
-    <th>Email</th>
-    <th>Password</th>
-    <th>Info</th>
-    <th>Is admin</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+  <h1>Fahrer</h1>
 
-<% @people.each do |person| %>
-  <tr>
-    <td><%= person.first_name %></td>
-    <td><%= person.last_name %></td>
-    <td><%= person.slug %></td>
-    <td><%= person.email %></td>
-    <td><%= person.password %></td>
-    <td><%= person.info %></td>
-    <td><%= person.is_admin %></td>
-    <td><%= link_to 'Show', [:admin, person] %></td>
-    <td><%= link_to 'Edit', edit_admin_person_path(person) %></td>
-    <td><%= link_to 'Destroy', [:admin, person], method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+  <table class="width-100 striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th colspan="2">E-Mail</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
 
-<br />
+    <tbody>
+    <% @people.each do |person| %>
+      <tr>
+        <td><%= person.name %></td>
+        <td><%= mail_to(person.email, nil, class: 'gray-dark') %></td>
+        <td><%= link_to 'Show', [:admin, person] %></td>
+        <td><%= link_to 'Edit', edit_admin_person_path(person) %></td>
+        <td><%= link_to 'Destroy', [:admin, person], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'New Person', new_admin_person_path %>
+  <br />
+
+  <%= link_to 'New Person', new_admin_person_path %>
+
+</section>

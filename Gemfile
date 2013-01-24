@@ -5,8 +5,9 @@ gem 'rails'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
-
+group :development do
+  gem 'sqlite3'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -20,11 +21,14 @@ group :assets do
   gem 'uglifier'
 end
 
-gem 'jquery-rails'
-gem 'stringex'
+#gem 'jquery-rails'
+#gem 'stringex'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby'
+
+# To create slugs
+gem 'stringex'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'

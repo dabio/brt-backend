@@ -1,5 +1,6 @@
 class Person < ActiveRecord::Base
   has_secure_password
+  acts_as_url :name, url_attribute: :slug, sync_url: true
 
   attr_accessible :email, :first_name, :info, :is_admin, :last_name,
     :password, :password_confirmation, :slug
