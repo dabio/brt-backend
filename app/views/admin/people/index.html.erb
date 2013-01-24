@@ -1,6 +1,11 @@
 <section class="container" id="people">
 
-  <h1>Fahrer</h1>
+  <header>
+    <h1 class="threequarter">Fahrer</h1>
+    <nav class="quarter second">
+      <%= link_to 'Neuer Fahrer', new_admin_person_path, class: 'btn btn-square icon-plus' %>
+    </nav>
+  </header>
 
   <table class="width-100 striped">
     <thead>
@@ -25,9 +30,5 @@
     <% end %>
     </tbody>
   </table>
-
-  <br />
-
-  <%= link_to 'New Person', new_admin_person_path %>
 
 </section>
