@@ -1,65 +1,57 @@
 # encoding: utf-8
 
-module Brt
+class Person < Base
+  include DataMapper::Resource
 
-  class Person
-    include DataMapper::Resource
+  property :id,         Serial
+  property :first_name, String, required: true
+  property :last_name,  String, required: true
+  property :email,      String, required: true, format: :email_address, unique: true
+  property :password,   SCryptHash, required: true
+  property :info,       Text, lazy: true
+  property :is_admin,   Boolean, default: false
+  timestamps :at
+  property :slug,       String, length: 2000, default: lambda { |r, p|
+    r.name.to_url
+  }
 
-    attr_accessor :index
+  has 1, :visit
+  has n, :news
+  has n, :reports
+  has n, :comments
+  has n, :participations
+  has n, :events, through: :participations
 
-    property :id,         Serial
-    property :first_name, String, required: true
-    property :last_name,  String, required: true
-    property :email,      String, required: true, format: :email_address, unique: true
-    property :password,   SCryptHash, required: true
-    property :info,       Text, lazy: true
-    property :is_admin,   Boolean, default: false
-    timestamps :at
-    property :slug,       String, length: 2000, default: lambda { |r, p|
-      r.name.to_url
-    }
+  attr_accessor :password_confirmation
 
-    has 1, :visit
-    has n, :news
-    has n, :reports
-    has n, :comments
-    has n, :participations
-    has n, :events, through: :participations
+  validates_confirmation_of :password, if: :password_required?
 
-    attr_accessor :password_confirmation
+  default_scope(:default).update(order: [:last_name, :first_name])
 
-    validates_confirmation_of :password, if: :password_required?
+  before :destroy do |person|
+    # participations
+    person.participations.each do |p|
+      p.destroy
+    end if person.participations
+  end
 
-    default_scope(:default).update(order: [:last_name, :first_name])
+  def name
+    "#{first_name} #{last_name}"
+  end
 
-    before :destroy do |person|
-      # participations
-      person.participations.each do |p|
-        p.destroy
-      end if person.participations
-    end
+  def self.link
+    '/people'
+  end
 
-    def name
-      "#{first_name} #{last_name}"
-    end
-
-    def editlink
-      "/admin/people/#{id}"
-    end
-
-    def deletelink
-      editlink
-    end
-
-    def self.authenticate(email, password)
-      return nil unless person = Person.first(email: email)
-      person.password == password ? person : nil
-    end
+  def self.authenticate(email, password)
+    return nil unless person = Person.first(email: email)
+    person.password == password ? person : nil
+  end
 
   private
+
     def password_required?
       !password.empty?
     end
-  end
-
 end
+

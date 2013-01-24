@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Brt
-  class AdminPeople < Admin
+  class People < App
 
     configure do
       enable :inline_templates
@@ -15,7 +15,7 @@ module Brt
     end
 
     #
-    # GET /admin/people
+    # GET /
     #
     get '/' do
       slim :index, locals: { items: Person.all }
@@ -23,7 +23,7 @@ module Brt
 
 
     #
-    # POST /admin/people
+    # POST /
     #
     post '/' do
       item = Person.new(params[:person])
@@ -41,7 +41,7 @@ module Brt
 
 
     #
-    # GET /admin/people/:id
+    # GET /:id
     #
     get '/:id' do |id|
       slim :view, locals: { item: Person.get(id) }
@@ -49,7 +49,7 @@ module Brt
 
 
     #
-    # PUT /admin/people/:id
+    # PUT /:id
     #
     put '/:id' do |id|
       item = Person.get(id)
@@ -69,7 +69,7 @@ module Brt
 
 
     #
-    # DELETE /admin/people/:id
+    # DELETE /:id
     #
     delete '/:id' do |id|
       not_found unless item = Person.get(id)
@@ -94,7 +94,7 @@ section#people
   header.row
     h2.threequarter Fahrer
     nav.quarter.second
-      form action="/admin/people" method="post"
+      form action="#{Person.createlink}" method="post"
         button.btn.btn-square.icon-plus Neuer Fahrer
 
   table.width-100.striped
@@ -141,7 +141,7 @@ section#sponsor
                 - if item.is_admin
                   input#is_admin(type="checkbox" name="person[is_admin]"
                     checked="checked") Administrator
-                - else 
+                - else
                   input#is_admin type="checkbox" name="person[is_admin]" Administrator
       li.form-section Kennwort
       li.push

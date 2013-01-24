@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Brt
-  class AdminSponsors < Admin
+  class Sponsors < App
 
     configure do
       enable :inline_templates
@@ -15,7 +15,7 @@ module Brt
     end
 
     #
-    # GET /admin/sponsors
+    # GET /
     #
     get '/' do
       slim :index, locals: { items: Sponsor.all }
@@ -23,7 +23,7 @@ module Brt
 
 
     #
-    # POST /admin/sponsors
+    # POST /
     #
     post '/' do
       item = Sponsor.new(params[:sponsor])
@@ -41,7 +41,7 @@ module Brt
 
 
     #
-    # GET /admin/sponsors/:id
+    # GET /:id
     #
     get '/:id' do |id|
       slim :view, locals: { item: Sponsor.get(id) }
@@ -49,7 +49,7 @@ module Brt
 
 
     #
-    # PUT /admin/sponsors/:id
+    # PUT /:id
     #
     put '/:id' do |id|
       item = Sponsor.get(id)
@@ -62,7 +62,7 @@ module Brt
 
 
     #
-    # DELETE /admin/sponsors/:id
+    # DELETE /:id
     #
     delete '/:id' do |id|
       not_found unless item = Sponsor.get(id)
@@ -87,7 +87,7 @@ section#sponsors
   header.row
     h2.threequarter Sponsoren
     nav.quarter.second
-      form action="/admin/sponsors" method="post"
+      form action="#{Sponsor.createlink}" method="post"
         button.btn.btn-square.icon-plus Neuer Sponsor
 
   table.width-100.striped

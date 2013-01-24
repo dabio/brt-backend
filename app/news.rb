@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Brt
-  class AdminNews < Admin
+  class NewsApp < App
 
     configure do
       enable :inline_templates
@@ -15,7 +15,7 @@ module Brt
     end
 
     #
-    # GET /admin/news
+    # GET /
     #
     get '/' do
       slim :index, locals: { items: News.all }
@@ -23,7 +23,7 @@ module Brt
 
 
     #
-    # POST /admin/news
+    # POST /
     #
     post '/' do
       item = News.new(params[:news])
@@ -49,7 +49,7 @@ module Brt
 
 
     #
-    # GET /admin/news/:id
+    # GET /:id
     #
     get '/:id' do |id|
       slim :view, locals: { item: News.get(id), events: Event.all_without_news }
@@ -57,7 +57,7 @@ module Brt
 
 
     #
-    # PUT /admin/news/:id
+    # PUT /:id
     #
     put '/:id' do |id|
       item = News.get(id)
@@ -78,7 +78,7 @@ module Brt
 
 
     #
-    # DELETE /admin/news/:id
+    # DELETE /:id
     #
     delete '/:id' do |id|
       not_found unless item = News.get(id)
@@ -103,7 +103,7 @@ section#news
   header.row
     h2.threequarter News & Rennberichte
     nav.quarter.second
-      form action="/admin/news" method="post"
+      form action="#{News.createlink}" method="post"
         button.btn.btn-square.icon-plus Anlegen
 
   table.width-100.striped

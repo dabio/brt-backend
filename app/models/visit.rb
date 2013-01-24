@@ -1,14 +1,10 @@
 # encoding: utf-8
 
-module Brt
+class Visit
+  include DataMapper::Resource
 
-  class Visit
-    include DataMapper::Resource
+  property :person_id, Integer, key: true
+  timestamps :at
 
-    property :person_id, Integer, key: true
-    timestamps :at
-
-    belongs_to :person, key: true
-  end
-
+  belongs_to :person, key: true
 end
