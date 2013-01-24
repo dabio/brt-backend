@@ -12,9 +12,6 @@
       <tr>
         <th>Name</th>
         <th colspan="2">E-Mail</th>
-        <th></th>
-        <th></th>
-        <th></th>
       </tr>
     </thead>
 
@@ -23,9 +20,8 @@
       <tr>
         <td><%= person.name %></td>
         <td><%= mail_to(person.email, nil, class: 'gray-dark') %></td>
-        <td><%= link_to 'Show', [:admin, person] %></td>
-        <td><%= link_to 'Edit', edit_admin_person_path(person) %></td>
-        <td><%= link_to 'Destroy', [:admin, person], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Bearbeiten', edit_admin_person_path(person) %></td>
+        <!--<td><%= link_to 'Destroy', [:admin, person], method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
       </tr>
     <% end %>
     </tbody>
