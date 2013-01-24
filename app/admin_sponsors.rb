@@ -104,34 +104,33 @@ section#sponsors
 @@ view
 section#sponsor
   form.forms.columnar action="#{item.editlink}" method="post"
-    fieldset
-      - unless item.new?
-        input type="hidden" name="_method" value="put"
-      ul
-        li
-          fieldset
-            section
-              label.bold for="title" Titel <span class="req">*</span>
-            input#title.width-100 type="text" name="sponsor[title]" size="60" value="#{item.title}" required="required"
-        li
-          fieldset
-            section
-              label.bold for="image_url" Bild Url <span class="req">*</span>
-            input#image_url.width-100 type="url" name="sponsor[image_url]" size="60" value="#{item.image_url}" placeholder="http://" required="required"
-        li
-          fieldset
-            section
-              label.bold for="url" Homepage
-            input#url.width-100 type="url" name="sponsor[url]" size="60" value="#{item.url}" placeholder="http://"
-        li
-          fieldset
-            section
-              label.bold for="text" Beschreibung
-            textarea#text.width-100 name="sponsor[text]" style="height: 387px" = item.text
-        li.form-section
-        li.push
-          - if item.new?
-            input.btn type="submit" value="Anlegen"
-          - else
-            input.btn type="submit" value="Speichern"
-            a.red.delete href="#{item.deletelink}" title="Sponsor entfernen?" Sponsor entfernen
+    - unless item.new?
+      input type="hidden" name="_method" value="put"
+    ul
+      li
+        fieldset
+          section
+            label.bold for="title" Titel <span class="req">*</span>
+          input#title.width-100 type="text" name="sponsor[title]" size="60" value="#{item.title}" required="required"
+      li
+        fieldset
+          section
+            label.bold for="image_url" Bild Url <span class="req">*</span>
+          input#image_url.width-100 type="url" name="sponsor[image_url]" size="60" value="#{item.image_url}" placeholder="http://" required="required"
+      li
+        fieldset
+          section
+            label.bold for="url" Homepage
+          input#url.width-100 type="url" name="sponsor[url]" size="60" value="#{item.url}" placeholder="http://"
+      li
+        fieldset
+          section
+            label.bold for="text" Beschreibung
+          textarea#text.width-100 name="sponsor[text]" style="height: 387px" = item.text
+      li.form-section
+      li.push
+        - if item.new?
+          input.btn type="submit" value="Anlegen"
+        - else
+          input.btn type="submit" value="Speichern"
+          a.red.delete href="#{item.deletelink}" title="Sponsor entfernen?" Sponsor entfernen
