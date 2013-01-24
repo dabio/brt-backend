@@ -1,9 +1,7 @@
 # encoding: utf-8
 
-class Event
+class Event < Base
   include DataMapper::Resource
-
-  attr_accessor :selected
 
   property :id,         Serial
   property :date,       Date,   required: true
@@ -18,25 +16,18 @@ class Event
   belongs_to :person
   has 1, :news
   has n, :reports
-  #has n, :comments
+  has n, :comments
   has n, :participations
   has n, :people, :through => :participations
 
-  #validates_presence_of :date, :title, :distance#, :type
-
   default_scope(:default).update(order: [:date, :updated_at.desc])
-
-#  after :save do |event|
-#    # save link in mixing table
-#    Mixing.first_or_create(:event => event).update(:date => event.date)
-#  end
 
   # Remove all associations of the current event.
   before :destroy do |event|
     # comments
-    #event.comments.each do |c|
-    #  c.destroy
-    #end
+    event.comments.each do |c|
+      c.destroy
+    end
 
     # participations
     event.participations.each do |p|
@@ -50,18 +41,6 @@ class Event
     date.strftime '%-d. %b. %y'
   end
 
-  def deletelink
-    editlink
-  end
-
-  def editlink
-    "/admin/events/#{id}"
-  end
-
-  def participation_createlink
-    Participation.createlink
-  end
-
   def for_person(person)
     participations.first(event: self, person: person)
   end
@@ -72,6 +51,10 @@ class Event
       order: [:date.desc, :updated_at.desc],
       limit: 10
      )
+  end
+
+  def self.link
+    '/events'
   end
 
 end

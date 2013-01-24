@@ -1,9 +1,9 @@
 # encoding: utf-8
 
-class Report
+class Report < Base
   include DataMapper::Resource
 
-  property :id,     Serial
+  property :id,         Serial
   property :date,   Date
   property :text,   Text
   timestamps :at

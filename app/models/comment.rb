@@ -1,9 +1,9 @@
 # encoding: utf-8
 
-class Comment
+class Comment < Base
   include DataMapper::Resource
 
-  property :id,     Serial
+  property :id,         Serial
   property :text,   Text
   timestamps :at
 

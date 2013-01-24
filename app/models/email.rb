@@ -1,8 +1,7 @@
 # encoding: utf-8
 
-class Email
+class Email < Base
   include DataMapper::Resource
-  #include Brt::Helpers
 
   property :id,         Serial
   property :name,       String, required: true,

@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class Participation
+class Participation < Base
   include DataMapper::Resource
 
   property :id,         Serial

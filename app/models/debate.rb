@@ -1,9 +1,9 @@
 # encoding: utf-8
 
-class Debate
+class Debate < Base
   include DataMapper::Resource
 
-  property :id,     Serial
+  property :id,         Serial
   property :title,  String, required: true
   timestamps :at
 
