@@ -15,7 +15,8 @@ gem 'redcarpet'
 gem 'scrypt'
 gem 'sinatra', require: 'sinatra/base'
 gem 'sinatra-r18n', require: 'sinatra/r18n'
-gem 'sinatra-flash-nicer', require: 'sinatra/flash'
+gem 'sinatra-flash', require: 'sinatra/flash'
+gem 'sinatra-redirect-with-flash', require: 'sinatra/redirect_with_flash'
 gem 'stringex'
 gem 'thin', require: false
 

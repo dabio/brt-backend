@@ -44,7 +44,7 @@ module Brt
         end
       end
 
-      slim :view, locals: { item: item }
+      slim :view, locals: { item: item, events: Event.all_without_news }
     end
 
 
@@ -52,7 +52,11 @@ module Brt
     # GET /:id
     #
     get '/:id' do |id|
-      slim :view, locals: { item: News.get(id), events: Event.all_without_news }
+      news = News.get(id)
+      events = Event.all_without_news
+      events.insert(0, news.event) unless news.event.nil?
+
+      slim :view, locals: { item: news, events: events }
     end
 
 
@@ -60,20 +64,14 @@ module Brt
     # PUT /:id
     #
     put '/:id' do |id|
-      item = News.get(id)
-      params[:news][:event_id] = nil unless params[:news][:event_id].length > 0
+      news = News.get(id)
 
-      if item.update(params[:news])
-        if params[:news][:event_id]
-          flash[:success] = 'Rennbericht erfolgreich gespeichert'
-        else
-          flash[:success] = 'News erfolgreich gespeichert'
-        end
-
-        redirect to(item.editlink, true, false)
+      if news.update(params[:news])
+        redirect to(news.editlink, true, false), success: 'Erfolgreich gespeichert'
+      else
+        slim :view, locals:  { item: news, events: Event.all_without_news }
       end
 
-      slim :view, locals:  { item: item, events: Event.all_without_news }
     end
 
 
@@ -151,10 +149,13 @@ section#news
             item.message
           span.descr Text wird mit <a class="gray" href="http://daringfireball.net/projects/markdown/dingus" title="Markdown Web Dingus">Markdown</a> formatiert.
       li
-        select#event_id name="news[event_id]" site="1" style="width:570px"
+        select#event_id name="news[event_id]" size="1" style="width:570px"
           option value="" (leer)
           - for event in events
-            option value="#{event.id}" #{event.date_formatted} - #{event.title}, #{event.distance} km
+            - if item.event == event
+              option value="#{event.id}" selected="selected" #{event.date_formatted} - #{event.title}, #{event.distance} km
+            - else
+              option value="#{event.id}" #{event.date_formatted} - #{event.title}, #{event.distance} km
         label.bold for="event_id" Rennen
         span.descr Nur Für Rennberichte.
       li.form-section

@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Brt
-  class App < Boot
+  class App
 
     configure do
       enable :inline_templates
