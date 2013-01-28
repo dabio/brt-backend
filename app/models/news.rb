@@ -10,7 +10,7 @@ class News < Base
   property :message,    Text
   timestamps :at
   property :slug,       String, length: 2000, default: lambda { |r, p|
-    r.title.to_url
+    r.title.to_url unless r.title.nil?
   }
 
   belongs_to :person
@@ -34,8 +34,8 @@ class News < Base
   end
 
   def date_formatted
-    date.strftime '%-d. %b. %y'
-    #R18n::l(date)
+    #date.strftime '%-d. %b. %y'
+    R18n::l(date, '%-d. %b %y')
   end
 
   def self.link

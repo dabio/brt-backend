@@ -3,7 +3,11 @@
 class Base
 
   def editlink
-    "#{self.class.link}/#{id}"
+    if new?
+      self.class.link
+    else
+      "#{self.class.link}/#{id}"
+    end
   end
 
   def deletelink

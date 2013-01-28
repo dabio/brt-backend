@@ -18,7 +18,7 @@ module Brt
     # GET /
     #
     get '/' do
-      slim :index, locals: { items: News.all }
+      slim :index, locals: { news: News.all }
     end
 
 
@@ -26,25 +26,14 @@ module Brt
     # POST /
     #
     post '/' do
-      item = News.new(params[:news])
-
-      if params[:news]
-        params[:news][:event_id] = nil unless params[:news][:event_id].length > 0
-        params[:news][:person] = current_person
-        item = News.create(params[:news])
-
-        if item.saved?
-          if params[:news][:event_id]
-            flash[:success] = 'Rennbericht erfolgreich angelegt'
-          else
-            flash[:success] = 'News erfolgreich angelegt'
-          end
-
-          redirect(to('/'))
-        end
+      params[:news][:person] = current_person if params[:news]
+      news = News.new(params[:news])
+      puts news.errors
+      if news.save
+        redirect to('/'), success: 'Erfolgreich gespeichert'
+      else
+        slim :view, locals:  { item: news, events: Event.all_without_news }
       end
-
-      slim :view, locals: { item: item, events: Event.all_without_news }
     end
 
 
@@ -110,7 +99,7 @@ section#news
         th.date Datum
         th colspan="2" Titel
     tbody
-      - for item in items
+      - for item in news
           tr
             td.date = item.date_formatted
             td = item.title
@@ -139,7 +128,7 @@ section#news
         fieldset
           section
             label.bold for="teaser" Teaser <span class="req">*</span>
-          textarea#teaser.width-100 name="news[teaser]" style="height: 54px" = \
+          textarea#teaser.width-100(name="news[teaser]" style="height: 54px" required) = \
             item.teaser
       li
         fieldset

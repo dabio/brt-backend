@@ -14,7 +14,6 @@ Bundler.require(:default, RACK_ENV)
 # PostgreSQL
 DataMapper::Logger.new($stdout, :debug) if RACK_ENV == 'development'
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://dan@localhost/brt')
-#DataMapper.repository(:default).adapter.resource_naming_convention = DataMapper::NamingConventions::Resource::UnderscoredAndPluralizedWithoutModule
 
 Dir[
   './lib/*.rb',
@@ -45,6 +44,7 @@ module Brt
     end
 
     configure :development do
+      set :session_secret, "My Session Secret"
       enable :logging
       enable :show_exceptions
     end
@@ -59,10 +59,6 @@ module Brt
     use Rack::Protection
     register Sinatra::Flash
     register Sinatra::R18n
-
-    before do
-      puts session[:flash]
-    end
 
   end
 
