@@ -28,7 +28,7 @@ module Brt
     post '/' do
       params[:news][:person] = current_person if params[:news]
       news = News.new(params[:news])
-      puts news.errors
+
       if news.save
         redirect to('/'), success: 'Erfolgreich gespeichert'
       else
@@ -110,25 +110,33 @@ section#news
 / -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 @@ view
 section#news
+
+  - if item.errors
+    section.errors
+      - for error in item.errors.full_messages
+        p = error
+
   form.forms.columnar action="#{item.editlink}" method="post"
     - unless item.new?
       input type="hidden" name="_method" value="put"
     ul
       li
         label.bold for="date" Datum <span class="req">*</span>
+        - if item.errors.on(:title).first
+          span.error = item.errors.on(:title).first
         input#date(type="date" name="news[date]" value="#{item.date}"
-          placeholder="#{today}" required="required")
+          placeholder="#{today}")
       li
         fieldset
           section
             label.bold for="title" Titel <span class="req">*</span>
           input#title.width-100(type="text" name="news[title]" size="60"
-            value="#{item.title}" required="required")
+            value="#{item.title}")
       li
         fieldset
           section
             label.bold for="teaser" Teaser <span class="req">*</span>
-          textarea#teaser.width-100(name="news[teaser]" style="height: 54px" required) = \
+          textarea#teaser.width-100(name="news[teaser]" style="height: 54px") = \
             item.teaser
       li
         fieldset

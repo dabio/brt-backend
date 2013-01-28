@@ -34,7 +34,6 @@ class News < Base
   end
 
   def date_formatted
-    #date.strftime '%-d. %b. %y'
     R18n::l(date, '%-d. %b %y')
   end
 
