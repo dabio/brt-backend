@@ -26,8 +26,8 @@ module Brt
     # POST /
     #
     post '/' do
-      params[:news][:person] = current_person if params[:news]
       news = News.new(params[:news])
+      news.person = current_person
 
       if news.save
         redirect to('/'), success: 'Erfolgreich gespeichert'
@@ -122,7 +122,7 @@ section#news
     ul
       li
         label.bold for="date" Datum <span class="req">*</span>
-        - if item.errors.on(:title).first
+        - if item.errors.on(:title)
           span.error = item.errors.on(:title).first
         input#date(type="date" name="news[date]" value="#{item.date}"
           placeholder="#{today}")

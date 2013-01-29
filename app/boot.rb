@@ -16,7 +16,7 @@ DataMapper::Logger.new($stdout, :debug) if RACK_ENV == 'development'
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://dan@localhost/brt')
 
 Dir[
-  './lib/*.rb',
+  './lib/**/*.rb',
   './app/models/base.rb',
   './app/models/*.rb',
 ].each do |f|
