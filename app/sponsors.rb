@@ -21,7 +21,6 @@ module Brt
       slim :index, locals: { sponsors: Sponsor.all }
     end
 
-
     #
     # POST /
     #
@@ -35,14 +34,12 @@ module Brt
       end
     end
 
-
     #
     # GET /:id
     #
     get '/:id' do |id|
       slim :view, locals: { item: Sponsor.get(id) }
     end
-
 
     #
     # PUT /:id
@@ -56,7 +53,6 @@ module Brt
         slim :view, locals: { item: sponsor }
       end
     end
-
 
     #
     # DELETE /:id
@@ -116,7 +112,8 @@ section#sponsor
         fieldset
           section
             label.bold for="url" Homepage
-          input#url.width-100 type="url" name="sponsor[url]" size="60" value="#{item.url}" placeholder="http://"
+          input#url.width-100(type="url" name="sponsor[url]" size="60"
+            value="#{item.url}" placeholder="http://")
       li
         fieldset
           section
