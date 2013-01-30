@@ -68,7 +68,7 @@ module Brt
     #
     delete '/:id' do |id|
       News.get(id).destroy
-      redirect to(News.link)
+      to(News.link, true, false)
     end
 
   end
