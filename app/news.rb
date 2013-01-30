@@ -148,4 +148,5 @@ section#news
           input.btn type="submit" value="Anlegen"
         - else
           input.btn type="submit" value="Speichern"
-          a.red.delete href="#{item.deletelink}" title="Nachricht oder Rennbericht löschen?" Eintrag löschen
+          a.red.delete(href="#{item.deletelink}" data-method="delete"
+            data-confirm="Nachricht oder Rennbericht löschen?" rel="nofollow") Eintrag löschen
