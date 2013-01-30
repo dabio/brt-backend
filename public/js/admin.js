@@ -3,24 +3,45 @@
       $ = root.Zepto || root.jQuery;
 
   // Allow the deletion of the current object.
-  $('form .delete').on('click', function (e) {
-    if (confirm('Wirklich löschen?')) {
-      $.ajax({
-        type: 'DELETE',
-        url: e.target.href,
-        timeout: 3000,
-        success: function(data) {
-          window.location = data;
-        },
-        error: function(xhr, type) {
-          alert('Konnte nicht gelöscht werden, bitte erneut versuchen.');
-        }
-      });
-    }
+  $('a[data-method]').on('click', function (e) {
+    el = $(this);
 
-    // prevents to call the url.
+    if (el.data('confirm') && !confirm(el.data('confirm')))
+      return false;
+
+    $.ajax({
+      type: el.data('method'),
+      url: e.target.href,
+      timeout: 3000,
+      success: function(data) {
+        window.location = data;
+      },
+      error: function (xhr, type) {
+        alert('Aktion konnte nicht ausgeführt werden, bitte erneut versuchen.')
+      }
+    })
+
     return false;
   });
+
+//  $('form .delete').on('click', function (e) {
+//    if (confirm('Wirklich löschen?')) {
+//      $.ajax({
+//        type: 'DELETE',
+//        url: e.target.href,
+//        timeout: 3000,
+//        success: function(data) {
+//          window.location = data;
+//        },
+//        error: function(xhr, type) {
+//          alert('Konnte nicht gelöscht werden, bitte erneut versuchen.');
+//        }
+//      });
+//    }
+//
+//    // prevents to call the url.
+//    return false;
+//  });
 
 
   var addParticipation = function (el) {

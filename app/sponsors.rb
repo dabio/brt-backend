@@ -18,7 +18,7 @@ module Brt
     # GET /
     #
     get '/' do
-      slim :index, locals: { items: Sponsor.all }
+      slim :index, locals: { sponsors: Sponsor.all }
     end
 
 
@@ -26,17 +26,13 @@ module Brt
     # POST /
     #
     post '/' do
-      item = Sponsor.new(params[:sponsor])
+      sponsor = Sponsor.new(params[:sponsor])
 
-      if params[:sponsor]
-        item = Sponsor.create(params[:sponsor])
-        if item.saved?
-          flash[:success] = 'Neuen Sponsor erfolgreich angelegt'
-          redirect(to('/'))
-        end
+      if sponsor.save
+        redirect to ('/'), success: 'Erfolgreich gespeichert'
+      else
+        slim :view, locals: { item: sponsor }
       end
-
-      slim :view, locals: { item: item }
     end
 
 
@@ -52,12 +48,13 @@ module Brt
     # PUT /:id
     #
     put '/:id' do |id|
-      item = Sponsor.get(id)
+      sponsor = Sponsor.get(id)
 
-      flash[:success] = 'Sponsor gespeichert'
-      item.update(params[:sponsor])
-
-      redirect to(item.editlink, true, false)
+      if sponsor.update(params[:sponsor])
+        redirect to(sponsor.editlink, true, false), success: 'Erfolgreich gespeichert'
+      else
+        slim :view, locals: { item: sponsor }
+      end
     end
 
 
@@ -65,13 +62,8 @@ module Brt
     # DELETE /:id
     #
     delete '/:id' do |id|
-      not_found unless item = Sponsor.get(id)
-      if item.destroy
-        flash[:success] = 'Sponsor erfolgreich gelöscht'
-        to('/')
-      else
-        to(item.editlink)
-      end
+      Sponsor.get(id).destroy
+      to(Sponsor.link, true, false)
     end
 
   end
@@ -92,7 +84,7 @@ section#sponsors
 
   table.width-100.striped
     tbody
-      - for item in items
+      - for item in sponsors
           tr
             td
               img src="#{item.image_url}" alt="#{item.title}"
@@ -103,6 +95,7 @@ section#sponsors
 / -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 @@ view
 section#sponsor
+
   form.forms.columnar action="#{item.editlink}" method="post"
     - unless item.new?
       input type="hidden" name="_method" value="put"
@@ -111,12 +104,14 @@ section#sponsor
         fieldset
           section
             label.bold for="title" Titel <span class="req">*</span>
-          input#title.width-100 type="text" name="sponsor[title]" size="60" value="#{item.title}" required="required"
+          input#title.width-100(type="text" name="sponsor[title]" size="60"
+            value="#{item.title}" required)
       li
         fieldset
           section
             label.bold for="image_url" Bild Url <span class="req">*</span>
-          input#image_url.width-100 type="url" name="sponsor[image_url]" size="60" value="#{item.image_url}" placeholder="http://" required="required"
+          input#image_url.width-100(type="url" name="sponsor[image_url]"
+            size="60" value="#{item.image_url}" placeholder="http://" required)
       li
         fieldset
           section
@@ -133,4 +128,5 @@ section#sponsor
           input.btn type="submit" value="Anlegen"
         - else
           input.btn type="submit" value="Speichern"
-          a.red.delete href="#{item.deletelink}" title="Sponsor entfernen?" Sponsor entfernen
+          a.red.delete(href="#{item.deletelink}" data-method="delete"
+            data-confirm="Sponsor entfernen?" rel="nofollow") Sponsor entfernen

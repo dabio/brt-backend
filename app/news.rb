@@ -60,7 +60,6 @@ module Brt
       else
         slim :view, locals:  { item: news, events: Event.all_without_news }
       end
-
     end
 
 
@@ -68,13 +67,8 @@ module Brt
     # DELETE /:id
     #
     delete '/:id' do |id|
-      not_found unless item = News.get(id)
-      if item.destroy
-        flash[:success] = 'Erfolgreich gelöscht'
-        to('/')
-      else
-        to(item.editlink)
-      end
+      News.get(id).destroy
+      redirect to(News.link)
     end
 
   end
@@ -111,33 +105,26 @@ section#news
 @@ view
 section#news
 
-  - if item.errors
-    section.errors
-      - for error in item.errors.full_messages
-        p = error
-
   form.forms.columnar action="#{item.editlink}" method="post"
     - unless item.new?
       input type="hidden" name="_method" value="put"
     ul
       li
         label.bold for="date" Datum <span class="req">*</span>
-        - if item.errors.on(:title)
-          span.error = item.errors.on(:title).first
         input#date(type="date" name="news[date]" value="#{item.date}"
-          placeholder="#{today}")
+          placeholder="#{today}" required)
       li
         fieldset
           section
             label.bold for="title" Titel <span class="req">*</span>
           input#title.width-100(type="text" name="news[title]" size="60"
-            value="#{item.title}")
+            value="#{item.title}" required)
       li
         fieldset
           section
             label.bold for="teaser" Teaser <span class="req">*</span>
-          textarea#teaser.width-100(name="news[teaser]" style="height: 54px") = \
-            item.teaser
+          textarea#teaser.width-100(name="news[teaser]" style="height: 54px"
+            required) = item.teaser
       li
         fieldset
           section

@@ -40,8 +40,10 @@ html
         a href="#{Person.link}" title="Fahrer" Fahrer
 
     == slim :_flash
-
     section.container == yield
+
+    script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.0rc1/zepto.min.js"
+    script src="/js/admin.js"
 
 / -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 @@ _flash
