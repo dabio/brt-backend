@@ -59,6 +59,7 @@ module Brt
     #
     delete '/:id' do |id|
       Sponsor.get(id).destroy
+      flash[:success] = 'Erfolgreich gelöscht'
       to(Sponsor.link, true, false)
     end
 

@@ -21,7 +21,6 @@ module Brt
       slim :index, locals: { news: News.all }
     end
 
-
     #
     # POST /
     #
@@ -36,7 +35,6 @@ module Brt
       end
     end
 
-
     #
     # GET /:id
     #
@@ -47,7 +45,6 @@ module Brt
 
       slim :view, locals: { item: news, events: events }
     end
-
 
     #
     # PUT /:id
@@ -62,12 +59,12 @@ module Brt
       end
     end
 
-
     #
     # DELETE /:id
     #
     delete '/:id' do |id|
       News.get(id).destroy
+      flash[:success] = 'Erfolgreich gelöscht'
       to(News.link, true, false)
     end
 

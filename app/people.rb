@@ -21,24 +21,18 @@ module Brt
       slim :index, locals: { items: Person.all }
     end
 
-
     #
     # POST /
     #
     post '/' do
-      item = Person.new(params[:person])
+      person = Person.new(params[:person])
 
-      if params[:person]
-        item = Person.create(params[:person])
-        if item.saved?
-          flash[:success] = 'Neuen Fahrer erfolgreich angelegt'
-          redirect(to('/'))
-        end
+      if person.save
+        redirect to('/'), success: 'Erfolgreich gespeichert'
+      else
+        slim :view, locals: { item: person }
       end
-
-      slim :view, locals: { item: item }
     end
-
 
     #
     # GET /:id
@@ -52,19 +46,18 @@ module Brt
     # PUT /:id
     #
     put '/:id' do |id|
-      item = Person.get(id)
+      person = Person.get(id)
 
       if params[:person][:password].nil? or params[:person][:password].empty?
         params[:person].delete 'password'
         params[:person].delete 'password_confirmation'
       end
 
-      params[:person][:is_admin] = !params[:person][:is_admin].nil?
-
-      flash[:success] = 'Einstellungen gespeichert'
-      item.update(params[:person])
-
-      redirect to(item.editlink, true, false)
+      if person.update(params[:person])
+        redirect to(person.editlink, true, false), success: 'Erfolgreich gespeichert'
+      else
+        slim :view, locals: { item: person }
+      end
     end
 
 
@@ -72,13 +65,9 @@ module Brt
     # DELETE /:id
     #
     delete '/:id' do |id|
-      not_found unless item = Person.get(id)
-      if item.destroy
-        flash[:success] = 'Person erfolgreich gelöscht'
-        to('/')
-      else
-        to(item.editlink)
-      end
+      Person.get(id).destroy
+      flash[:success] = 'Erfolgreich gelöscht'
+      to(Person.link, true, false)
     end
 
   end
@@ -133,16 +122,16 @@ section#sponsor
             label.bold for="email" E-Mail <span class="req">*</span>
           input#email.width-50(type="email" name="person[email]" size="30"
             value="#{item.email}" required="required")
-      - if has_admin?
-        li
-          fieldset
-            section
-              label
-                - if item.is_admin
-                  input#is_admin(type="checkbox" name="person[is_admin]"
-                    checked="checked") Administrator
-                - else
-                  input#is_admin type="checkbox" name="person[is_admin]" Administrator
+      /- if has_admin?
+      li
+        fieldset
+          label
+            input type="hidden" name="person[is_admin]" value="0"
+            - if item.is_admin
+              input#is_admin(type="checkbox" name="person[is_admin]"
+                checked="checked")  Administrator
+            - else
+              input#is_admin type="checkbox" name="person[is_admin]"  Administrator
       li.form-section Kennwort
       li.push
         p.gray-light Kennwort ändern. Nur ausfüllen, wenn Kennwort geändert werden soll.
@@ -158,5 +147,5 @@ section#sponsor
           input.btn type="submit" value="Anlegen"
         - else
           input.btn type="submit" value="Speichern"
-          - if has_admin?
-            a.red.delete href="#{item.deletelink}" title="Fahrer entfernen?" Fahrer entfernen
+          a.red.delete(href="#{item.deletelink}" data-method="delete"
+            data-confirm="Fahrer entfernen?" rel="nofollow") Fahrer entfernen
