@@ -24,25 +24,6 @@
     return false;
   });
 
-//  $('form .delete').on('click', function (e) {
-//    if (confirm('Wirklich löschen?')) {
-//      $.ajax({
-//        type: 'DELETE',
-//        url: e.target.href,
-//        timeout: 3000,
-//        success: function(data) {
-//          window.location = data;
-//        },
-//        error: function(xhr, type) {
-//          alert('Konnte nicht gelöscht werden, bitte erneut versuchen.');
-//        }
-//      });
-//    }
-//
-//    // prevents to call the url.
-//    return false;
-//  });
-
 
   var addParticipation = function (el) {
 

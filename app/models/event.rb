@@ -11,7 +11,7 @@ class Event < Base
   property :type,       Integer, default: 1 #Enum[:race, :training], default: :race
   timestamps :at
   property :slug,       String, length: 2000, default: lambda { |r, p|
-    r.title.to_url
+    r.title.to_url unless r.title.nil?
   }
   belongs_to :person
   has 1, :news
@@ -20,7 +20,7 @@ class Event < Base
   has n, :participations
   has n, :people, :through => :participations
 
-  default_scope(:default).update(order: [:date, :updated_at.desc])
+  default_scope(:default).update(order: [:date.desc, :updated_at.desc])
 
   # Remove all associations of the current event.
   before :destroy do |event|
@@ -38,7 +38,7 @@ class Event < Base
   end
 
   def date_formatted
-    date.strftime '%-d. %b. %y'
+    R18n::l(date, '%-d. %b %y')
   end
 
   def for_person(person)

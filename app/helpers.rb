@@ -4,6 +4,8 @@ module Brt
 
   class App
 
+    helpers Sinatra::RedirectWithFlash
+
     helpers do
       # Returns text transformed into HTML using simple formatting rules. Two or
       # more consecutive newlines(\n\n) are considered as a paragraph and wrapped

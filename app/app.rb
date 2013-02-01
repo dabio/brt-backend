@@ -35,9 +35,10 @@ html
     section.container.row
       nav.threequarter
         a href="/" title="Dashboard" Dashboard
-        a href="#{News.link}" title="News & Rennberichte" News & Rennberichte
-        a href="#{Sponsor.link}" title="Sponsoren" Sponsoren
-        a href="#{Person.link}" title="Fahrer" Fahrer
+        a href="#{News.link}" News & Rennberichte
+        a href="#{Event.link}" Rennen
+        a href="#{Sponsor.link}" Sponsoren
+        a href="#{Person.link}" Fahrer
 
     == slim :_flash
     section.container == yield

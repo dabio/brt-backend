@@ -142,8 +142,8 @@ section#news
       li.form-section
       li.push
         - if item.new?
-          input.btn type="submit" value="Anlegen"
+          input.btn.icon-floppy type="submit" value="Anlegen"
         - else
-          input.btn type="submit" value="Speichern"
+          input.btn.icon-floppy type="submit" value="Speichern"
           a.red.delete(href="#{item.deletelink}" data-method="delete"
             data-confirm="Nachricht oder Rennbericht löschen?" rel="nofollow") Eintrag löschen
