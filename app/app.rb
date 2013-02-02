@@ -33,7 +33,7 @@ html
   body
     header
     section.container.row
-      nav.threequarter
+      nav.primary.threequarter
         a href="/" title="Dashboard" Dashboard
         a href="#{News.link}" News & Rennberichte
         a href="#{Event.link}" Rennen

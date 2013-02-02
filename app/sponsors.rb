@@ -80,11 +80,16 @@ section#sponsors
         button.btn.btn-square.icon-plus Neuer Sponsor
 
   table.width-100.striped
+    thead
+      tr
+        th Name
+        th colspan="2" Homepage
     tbody
       - for item in sponsors
           tr
+            td = item.title
             td
-              img src="#{item.image_url}" alt="#{item.title}"
+              a href="#{item.url}" = item.url
             td
               a.icons href="#{item.editlink}" title="Bearbeiten" &#x21;
 

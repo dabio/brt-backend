@@ -49,7 +49,15 @@ module Brt
     put '/:id' do |id|
       event = Event.get(id)
 
-      if event.update(params[:person])
+      if event.update(params[:event])
+        # Destroy all previous participations.
+        Participation.all(event: event).destroy
+        params[:p].each_value do |p|
+          next unless p.include?('person_id')
+          p = p.reject { |key, value| value.empty? }.merge({ event_id: id })
+          Participation.create(p)
+        end
+
         redirect to(event.editlink, true, false), success: 'Erfolgreich gespeichert'
       else
         slim :view, locals: { item: event }
@@ -85,12 +93,12 @@ section#event
   table.width-100.striped
     thead
       tr
-        th Datum
+        th.date Datum
         th colspan="2" Bezeichnung
     tbody
       - for item in items
           tr
-            td = item.date_formatted
+            td.date = item.date_formatted
             td = item.title
             td
               a.icons href="#{item.editlink}" title="Bearbeiten" &#x21;
@@ -132,19 +140,29 @@ section#event
                 th AK
               tbody
                 - for p in item.participations
-                  td
-                    input(type="checkbox" name="p[#{p.person.id}}][person_id]"
-                      value="#{person.id}}" id="person_{p.person.id}" checked)
-                  td
-                    label for="person_#{p.person.id}" = p.person.name
-                  td
-                    input(type="text" name="p[#{p.person.id}][position_overall]"
-                      value="#{p.position_overall}" size="4")
-                  td
-                    input(type="text" name="p[#{p.person.id}][position_age_class]"
-                      value="#{p.position_age_class}" size="4")
-
-
+                  tr
+                    td
+                      input(type="checkbox" name="p[#{p.person.id}][person_id]"
+                        value="#{p.person.id}" id="person_#{p.person.id}" checked)
+                    td
+                      label for="person_#{p.person.id}" = p.person.name
+                    td
+                      input(type="text" name="p[#{p.person.id}][position_overall]"
+                        value="#{p.position_overall}" size="4")
+                    td
+                      input(type="text" name="p[#{p.person.id}][position_age_class]"
+                        value="#{p.position_age_class}" size="4")
+                - for p in item.non_participations
+                  tr
+                    td
+                      input(type="checkbox" name="p[#{p.id}][person_id]"
+                        id="person_#{p.id}" value="#{p.id}")
+                    td
+                      label for="person_#{p.id}" = p.name
+                    td
+                      input type="text" name="p[#{p.id}][position_overall]" size="4"
+                    td
+                      input type="text" name="p[#{p.id}][position_age_class]" size="4"
       li.form-section
       li.push
         - if item.new?

@@ -57,9 +57,9 @@
 
 
 body {
-	
+
 }
-	
+
 /* =Links
 -----------------------------------------------------------------------------*/
 
@@ -91,7 +91,9 @@ header a { text-decoration: none }
 -----------------------------------------------------------------------------*/
 
 nav.primary a {
-  display: inline;
+  display: inline-block;
+  margin-right: 15px;
+  text-decoration: none;
 }
 
 nav.second { text-align: right }

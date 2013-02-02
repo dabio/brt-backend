@@ -41,6 +41,10 @@ class Event < Base
     R18n::l(date, '%-d. %b %y')
   end
 
+  def non_participations
+    Person.all - participations.person
+  end
+
   def for_person(person)
     participations.first(event: self, person: person)
   end
