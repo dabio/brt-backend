@@ -17,7 +17,8 @@ module Brt
             ical_timestamp: e.created_at.strftime('%Y%m%dT%H%M%SZ'),
             ical_date_start: e.date.strftime('%Y%m%d'),
             ical_date_end: e.date.+(1).strftime('%Y%m%d'),
-            title: e.title
+            title: "#{e.title}, #{e.distance}km".gsub(/,/, '\,'),
+            url: e.url.to_s.length > 0 ? e.url : nil
           }
         end
       end
