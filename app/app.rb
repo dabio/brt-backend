@@ -54,5 +54,13 @@ html
       section class="#{type}" = message
 
 / -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+@@ _errors
+- if item.errors.count > 0
+  ul.errors
+    - item.errors.full_messages.each do |e|
+      li = e
+
+
+/ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 @@ index
 h2 Dashboard

@@ -51,7 +51,7 @@ class Person < Base
   private
 
     def password_required?
-      !password.empty?
+      password && !password.empty?
     end
 end
 

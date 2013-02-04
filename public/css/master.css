@@ -120,14 +120,27 @@ td.date {
   text-align: right;
 }
 
-.flash .success {
-  background-color: #dff0d8;
-  border: 1px solid #d6e9c6;
-  color: #468847;
+.success, .errors {
   margin-left: 0;
   padding: 8px 14px;
   text-shadow: 0 1px 0 #fff;
 }
+
+.success {
+  background-color: #dff0d8;
+  border: 1px solid #d6e9c6;
+  color: #468847;
+}
+
+.errors {
+  background-color: #f2dede;
+  border: 1px solid #eed3d7;
+  color: #b94a48;
+}
+.errors li {
+  list-style: none;
+}
+
 
 button:before { margin-right: 7px }
 

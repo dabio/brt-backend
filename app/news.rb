@@ -31,6 +31,7 @@ module Brt
       if news.save
         redirect to('/'), success: 'Erfolgreich gespeichert'
       else
+        news.errors.clear! unless params[:news]
         slim :view, locals:  { item: news, events: Event.all_without_news }
       end
     end
@@ -101,6 +102,8 @@ section#news
 / -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 @@ view
 section#news
+
+  == slim :_errors, locals: { item: item }
 
   form.forms.columnar action="#{item.editlink}" method="post"
     - unless item.new?

@@ -30,6 +30,7 @@ module Brt
       if sponsor.save
         redirect to ('/'), success: 'Erfolgreich gespeichert'
       else
+        sponsor.errors.clear! unless params[:sponsor]
         slim :view, locals: { item: sponsor }
       end
     end
@@ -97,6 +98,8 @@ section#sponsors
 / -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 @@ view
 section#sponsor
+
+  == slim :_errors, locals: { item: item }
 
   form.forms.columnar action="#{item.editlink}" method="post"
     - unless item.new?
