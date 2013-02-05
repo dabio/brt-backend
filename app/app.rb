@@ -11,6 +11,14 @@ module Brt
       slim :index
     end
 
+    get '/login' do
+      'login'
+    end
+
+    get '/logout' do
+      'logout'
+    end
+
     error do
       'Error'
     end
@@ -39,6 +47,7 @@ html
         a href="#{Event.link}" Rennen
         a href="#{Sponsor.link}" Sponsoren
         a href="#{Person.link}" Fahrer
+        a href="#{Email.link}" E-Mails
 
     == slim :_flash
     section.container == yield

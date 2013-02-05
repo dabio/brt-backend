@@ -33,8 +33,8 @@ class News < Base
     super
   end
 
-  def date_formatted
-    R18n::l(date, '%-d. %b %y')
+  def date_formatted(format='%-d. %b %y')
+    R18n::l(date, format)
   end
 
   def self.link

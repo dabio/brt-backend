@@ -26,21 +26,17 @@ class Email < Base
     e.send_email
   end
 
-
-  def date_formatted
-    send_at.strftime '%-d. %b. %y'
+  def date_formatted(format='%-d. %b %y')
+    R18n::l(send_at, format)
   end
-
 
   def message_formatted
     simple_format(message)
   end
 
-
-  def editlink
-    "/admin/emails/#{id}"
+  def self.link
+    '/emails'
   end
-
 
   def send_email(opts={})
     require 'net/smtp'

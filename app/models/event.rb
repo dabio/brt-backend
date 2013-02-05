@@ -37,8 +37,8 @@ class Event < Base
     event.news.update(event=nil) if event.news
   end
 
-  def date_formatted
-    R18n::l(date, '%-d. %b %y')
+  def date_formatted(format='%-d. %b %y')
+    R18n::l(date, format)
   end
 
   def non_participations
