@@ -102,18 +102,18 @@ nav.second { text-align: right }
 -----------------------------------------------------------------------------*/
 
 #email .date { text-align: right }
-#pagination .pages {
+.pages {
   display: block;
   float: left;
   padding-right: 23px
 }
-#pagination .page-items span,
-#pagination .page-items a {
+.page-items span,
+.page-items a {
   display: block;
   float: left;
   margin-right: 6px;
 }
-#pagination .pages-navigation { font-size: 120% }
+.pages-navigation { font-size: 120% }
 
 th.date,
 td.date {

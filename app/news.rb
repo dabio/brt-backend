@@ -18,7 +18,8 @@ module Brt
     # GET /
     #
     get '/' do
-      slim :index, locals: { news: News.all }
+      count, news = News.paginated(page: current_page, per_page: 20)
+      slim :index, locals: { items: news, page: current_page, page_count: count }
     end
 
     #
@@ -90,8 +91,11 @@ section#news
       tr
         th.date Datum
         th colspan="2" Titel
+    tfoot
+      tr
+        td colspan="3" == slim :_pagination, locals: { page_count: page_count, url: News.link, page: page }
     tbody
-      - for item in news
+      - for item in items
           tr
             td.date = item.date_formatted
             td = item.title

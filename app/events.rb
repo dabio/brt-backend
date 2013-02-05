@@ -18,7 +18,8 @@ module Brt
     # GET /
     #
     get '/' do
-      slim :index, locals: { items: Event.all }
+      count, events = Event.paginated(page: current_page, per_page: 20)
+      slim :index, locals: { items: events, page: current_page, page_count: count }
     end
 
     #
@@ -96,6 +97,9 @@ section#event
       tr
         th.date Datum
         th colspan="2" Bezeichnung
+    tfoot
+      tr
+        td colspan="3" == slim :_pagination, locals: { page_count: page_count, url: Event.link, page: page }
     tbody
       - for item in items
           tr

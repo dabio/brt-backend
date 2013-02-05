@@ -46,6 +46,7 @@ html
     script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.0rc1/zepto.min.js"
     script src="/js/admin.js"
 
+
 / -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 @@ _flash
 - if flash
@@ -53,12 +54,24 @@ html
     - flash.each do |type, message|
       section class="#{type}" = message
 
+
 / -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 @@ _errors
 - if item.errors.count > 0
   ul.errors
     - item.errors.full_messages.each do |e|
       li = e
+
+
+/ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+@@ _pagination
+span.pages Seite #{page} von #{page_count}
+span.page-items
+  - for p in pagination(page, page_count, url)
+    - if p[:href]
+      a href="#{p[:href]}" = p[:title]
+    - else
+      span = p[:title]
 
 
 / -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
