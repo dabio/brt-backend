@@ -11,7 +11,7 @@ module Brt
     # Disallow the admin area for non authorized users.
     #
     before do
-      #not_found unless has_admin?
+      redirect to('/login', true, false) unless has_auth?
     end
 
     #

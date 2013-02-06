@@ -11,13 +11,14 @@ module Brt
     # Disallow the admin area for non authorized users.
     #
     before do
-      #not_found unless has_admin?
+      redirect to('/login', true, false) unless has_auth?
     end
 
     #
     # GET /
     #
     get '/' do
+      not_found unless has_admin?
       slim :index, locals: { items: Person.all }
     end
 
@@ -25,6 +26,7 @@ module Brt
     # POST /
     #
     post '/' do
+      not_found unless has_admin?
       person = Person.new(params[:person])
 
       if person.save
@@ -39,6 +41,7 @@ module Brt
     # GET /:id
     #
     get '/:id' do |id|
+      not_found unless has_admin? || current_person.id == id.to_i
       slim :view, locals: { item: Person.get(id) }
     end
 
@@ -47,6 +50,7 @@ module Brt
     # PUT /:id
     #
     put '/:id' do |id|
+      not_found unless has_admin? || current_person.id == id.to_i
       person = Person.get(id)
 
       if params[:person][:password].nil? or params[:person][:password].empty?
@@ -66,6 +70,8 @@ module Brt
     # DELETE /:id
     #
     delete '/:id' do |id|
+      not_found unless has_admin?
+
       Person.get(id).destroy
       flash[:success] = 'Erfolgreich gelöscht'
       to(Person.link, true, false)
@@ -126,16 +132,16 @@ section#sponsor
             label.bold for="email" E-Mail <span class="req">*</span>
           input#email.width-50(type="email" name="person[email]" size="30"
             value="#{item.email}" required="required")
-      /- if has_admin?
-      li
-        fieldset
-          label
-            input type="hidden" name="person[is_admin]" value="0"
-            - if item.is_admin
-              input#is_admin(type="checkbox" name="person[is_admin]"
-                checked="checked")  Administrator
-            - else
-              input#is_admin type="checkbox" name="person[is_admin]"  Administrator
+      - if has_admin?
+        li
+          fieldset
+            label
+              input type="hidden" name="person[is_admin]" value="0"
+              - if item.is_admin
+                input#is_admin(type="checkbox" name="person[is_admin]"
+                  checked="checked" value="1")  Administrator
+              - else
+                input#is_admin type="checkbox" name="person[is_admin]"  Administrator
       li.form-section Kennwort
       li.push
         p.gray-light Kennwort ändern. Nur ausfüllen, wenn Kennwort geändert werden soll.
