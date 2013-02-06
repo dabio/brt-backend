@@ -22,7 +22,7 @@ module Brt
     end
 
     post '/login' do
-      halt slim :login unless params[:email] and params[:password]
+      halt redirect to('/') unless params[:email] and params[:password]
 
       email = params[:email].clone
       email << '@berlinracingteam.de' unless email['@']
