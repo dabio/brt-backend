@@ -2,6 +2,10 @@ require File.expand_path('../../helper', __FILE__)
 
 context 'App' do
 
+  def app
+    Brt::App
+  end
+
   setup do; end
 
   test '/' do
@@ -19,13 +23,13 @@ context 'App' do
   test '/login' do
     post '/login'
     assert last_response.headers['Location'].include?('/login')
-    assert last_response.status == 302
+    assert_equal last_response.status, 302
   end
 
   test '/logout' do
     get '/logout'
     assert last_response.headers['Location'].include?('/login')
-    assert last_response.status == 302
+    assert_equal last_response.status, 302
   end
 
   test 'wrong credentials' do

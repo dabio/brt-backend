@@ -7,7 +7,6 @@ SimpleCov.start do
   add_filter 'vendor/gems'
 
   add_group 'Models', 'app/models'
-  add_group 'Views', 'app/views'
 end
 
 # Use test database
@@ -20,7 +19,3 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'app'))
 
 require 'boot'
 include Rack::Test::Methods
-
-def app
-  Brt::App
-end

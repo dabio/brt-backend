@@ -9,7 +9,6 @@ module Brt
 
     get '/' do
       redirect to('/login') unless has_auth?
-
       slim :index
     end
 
