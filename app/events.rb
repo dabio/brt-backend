@@ -44,7 +44,6 @@ module Brt
       slim :view, locals: { item: Event.get(id) }
     end
 
-
     #
     # PUT /:id
     #
@@ -66,7 +65,6 @@ module Brt
       end
     end
 
-
     #
     # DELETE /:id
     #
@@ -74,6 +72,26 @@ module Brt
       Event.get(id).destroy
       flash[:success] = 'Erfolgreich gelöscht'
       to(Event.link, true, false)
+    end
+
+    #
+    # POST /:id/participation
+    #
+    post '/:id/participations', :provides => :json do |id|
+      Participation.first_or_create({
+        event: Event.get(id),
+        person: current_person
+      }).to_json({
+        only: [:id],
+        relationships: { person: { methods: [:name], only: [:id] } }
+      })
+    end
+
+    #
+    # DELETE /:id/participation
+    #
+    delete '/:id/participations' do |id|
+      Participation.all(event: Event.get(id), person: current_person).destroy
     end
 
   end

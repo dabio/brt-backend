@@ -49,6 +49,10 @@ class Event < Base
     participations.first(event: self, person: person)
   end
 
+  def participationlink
+    "#{self.class.link}/#{id}/participations"
+  end
+
   def self.all_without_news
     all(:date.lte => Date.today,
       :news.not => News.all(:event.not => nil),

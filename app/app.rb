@@ -7,19 +7,32 @@ module Brt
       enable :inline_templates
     end
 
+    #
+    # GET /
+    #
     get '/' do
       redirect to('/login') unless has_auth?
-      slim :index
+
+      slim :index, locals: {
+        items: Event.all(:date.gte => today, order: [:date.asc])
+      }
     end
+
 
     before '/login' do
       redirect to('/') if has_auth?
     end
 
+    #
+    # GET /login
+    #
     get '/login' do
       slim :login, locals: { email: '' }
     end
 
+    #
+    # POST /login
+    #
     post '/login' do
       redirect to('/login') unless params[:email] and params[:password]
 
@@ -35,6 +48,9 @@ module Brt
       end
     end
 
+    #
+    # GET /logout
+    #
     get '/logout' do
       redirect to('/login') unless has_auth?
 
@@ -113,7 +129,30 @@ span.page-items
 
 / -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 @@ index
-h2 Dashboard
+section#dashboard
+  header.row
+    h2 Überblick
+
+  table.width-100.striped
+    thead
+      tr
+        th.date Datum
+        th colspan="2" Rennen
+    tbody
+      - for item in items
+        tr
+          td.date = item.date_formatted
+          td
+            section = item.title
+            section.gray.small.participations
+              - for p in item.participations
+                span data-id="#{p.id}" = p.person.name
+          td
+            - unless item.participations.select { |p| p.person == current_person }.empty?
+              input(type="checkbox" data-url="#{item.participationlink}"
+                checked)
+            - else
+              input type="checkbox" data-url="#{item.participationlink}"
 
 
 / -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
