@@ -32,8 +32,7 @@ module Brt
         session[:person_id] = person.id
         redirect to('/')
       else
-        flash[:error] = 'Unbekannte E-Mail oder falsches Password eingegeben.'
-        slim :login, locals: { email: params[:email], flash: flash }
+        slim :login, locals: { email: params[:email] }
       end
     end
 
@@ -121,10 +120,13 @@ h2 Dashboard
 / -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 @@ login
 section#login.row
-  h2.third.centered Anmelden
+  - unless email.empty?
+    ul.errors
+      li Unbekannte E-Mail oder falsches Password
+
   form.forms.columnar.third.centered action="/login" method="post"
     ul
-      -if !email.empty?
+      - unless email.empty?
         li
           input(type="text" name="email" value="#{email}" required
             placeholder="Benutzername/E-Mail")
