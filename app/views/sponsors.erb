@@ -1,0 +1,47 @@
+<section id="sponsors">
+
+  <header class="row">
+    <h2 class="threequarter">Sponsoren</h2>
+    <nav class="quarter second">
+      <form action="<%= Sponsor.createlink %>" method="post">
+        <button class="btn btn-square icon-plus">Neuer Sponsor</button>
+      </form>
+    </nav>
+  </header>
+
+  <table class="width-100 striped">
+
+    <thead>
+      <tr>
+        <th>Name</ht>
+        <th colspan="2">Homepage</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <% if sponsors.each do |sponsor| %>
+
+        <tr>
+          <td><%= sponsor.title %></td>
+          <td>
+            <a href="<%= sponsor.url %>"><%= sponsor.url %></a>
+          </td>
+          <td>
+            <a class="icons" href="<%= sponsor.editlink %>" title="Bearbeiten">&#x21;</a>
+          </td>
+        </tr>
+
+      <% end.empty? %>
+
+        <tr>
+          <td colspan="3">Keine Sponsoren vorhanden</td>
+        </tr>
+
+      <% end %>
+
+    </tbody>
+
+  </table>
+
+</section>

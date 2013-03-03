@@ -1,0 +1,49 @@
+<section id="emails">
+
+  <header class="row">
+    <h2>E-Mails</h2>
+  </header>
+
+  <table class="width-100 striped">
+
+    <thead>
+      <tr>
+        <th class="date">Datum</ht>
+        <th colspan="2">Kontakt</th>
+      </tr>
+    </thead>
+
+    <tfoot>
+      <tr>
+        <td colspan="3"><%= erb :_pagination, locals: { page_count: page_count, url: Email.link, page: page } %></td>
+      </tr>
+    </tfoot>
+
+    <tbody>
+
+      <% if emails.each do |email| %>
+
+        <tr>
+          <td class="date"><%= email.date_formatted %></td>
+          <td>
+            <a class="gray-dark" href="mailto:<%= email.email %>"><%= email.name %> &lt;<%= email.email %>&gt;</a>
+          </td>
+          <td>
+            <a class="icons" href="<%= email.editlink %>" title="Ansehen">&#x22;</a>
+          </td>
+        </tr>
+
+      <% end.empty? %>
+
+        <tr>
+          <td colspan="3">Keine E-Mails vorhanden</td>
+        </tr>
+
+      <% end %>
+
+    </tbody>
+
+  </table>
+
+
+</section>

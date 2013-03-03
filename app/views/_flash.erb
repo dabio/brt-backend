@@ -1,0 +1,7 @@
+<% unless flash.empty? %>
+  <section class="container">
+    <% flash.each do |type, message| %>
+      <section class="<%= type %>"><%= message %></section>
+    <% end %>
+  </section>
+<% end %>

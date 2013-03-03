@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/css/kube.min.css">
+  <link rel="stylesheet" href="/css/master.css">
+</head>
+
+<body>
+
+  <%= erb :_nav %>
+  <%= erb :_flash %>
+
+  <section class="container"><%= yield %></section>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.0rc1/zepto.min.js"></script>
+  <script src="/js/admin.js"></script>
+
+</body>
+</html>

@@ -26,7 +26,7 @@ end
 task :load_migrations => :env do
   require 'dm-migrations'
   require 'dm-migrations/migration_runner'
-  FileList['db/migrate/*.rb'].each do |migration|
+  FileList['app/migrations/*.rb'].each do |migration|
     load migration
   end
 end

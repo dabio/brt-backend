@@ -1,0 +1,100 @@
+<section id="event">
+
+  <%= erb :_errors, locals: { item: event } %>
+
+  <form class="forms columnar" action="<%= event.new? ? Event.createlink : event.savelink %>" method="post">
+
+    <% unless event.new? %>
+      <input type="hidden" name="_method" value="put"/>
+    <% end %>
+
+    <ul>
+
+      <li>
+        <label class="bold" for="date">Datum <span class="req">*</span></label>
+        <input id="date" type="date" name="event[date]" value="<%= event.date %>" placeholder="<%= today %>" required/>
+      </li>
+
+      <li>
+        <label class="bold" for="title">Bezeichnung <span class="req">*</span></label>
+        <input id="title" type="text" name="event[title]" size="60" value="<%= event.title %>" required/>
+      </li>
+
+      <li>
+        <label class="bold" for="distance">Distanz <span class="req">*</span></label>
+        <input id="distance" type="text" name="event[distance]" size="3" value="<%= event.distance %>" placeholder="80" required/>
+        <span class="descr">km</span>
+      </li>
+
+      <li>
+        <label class="bold" for="url">URL</label>
+        <input id="url" type="url" name="event[url]" size="60" value="<%= event.url %>" placeholder="http://"/>
+      </li>
+
+      <% unless event.new? %>
+        <li class="form-section">Teilnehmer</li>
+        <li>
+          <fieldset>
+            <table class="width-100 simple stroked">
+              <thead>
+                <th colspan="2"></th>
+                <th>Gesamt</th>
+                <th>AK</th>
+              </thead>
+              <tbody>
+
+                <% event.participations.each do |p| %>
+                  <tr>
+                    <td>
+                      <input type="checkbox" name="p[<%= p.person.id %>][person_id]" value="<%= p.person.id %>" id="person_<%= p.person.id %>" checked/>
+                    </td>
+                    <td>
+                      <label for="person_<%= p.person.id %>"><%= p.person.name %></label>
+                    </td>
+                    <td>
+                      <input type="text" name="p[<%= p.person.id %>][position_overall]" value="<%= p.position_overall %>" size="4"/>
+                    </td>
+                    <td>
+                      <input type="text" name="p[<%= p.person.id %>][position_age_class]" value="<%= p.position_age_class %>" size="4"/>
+                    </td>
+                  </tr>
+                <% end %>
+
+                <% event.non_participations.each do |p| %>
+                  <tr>
+                    <td>
+                      <input type="checkbox" name="p[<%= p.id %>][person_id]" id="person_<%= p.id %>" value="<%= p.id %>"/>
+                    </td>
+                    <td>
+                      <label for="person_<%= p.id %>"><%= p.name %></label>
+                    </td>
+                    <td>
+                      <input type="text" name="p[<%= p.id %>][position_overall]" size="4"/>
+                    </td>
+                    <td>
+                      <input type="text" name="p[<%= p.id %>][position_age_class]" size="4"/>
+                    </td>
+                  </tr>
+                <% end %>
+
+              </tbody>
+            </table>
+          </fieldset>
+        </li>
+      <% end %>
+
+      <li class="form-section"></li>
+
+      <li class="push">
+        <input class="btn icon-floppy" type="submit" value="<%= event.new? ? 'Anlegen' : 'Speichern' %>"/>
+        <% unless event.new? %>
+          <a class="red delete" href="<%= event.deletelink %>" data-method="delete"
+          data-confirm="Rennen entfernen?" rel="nofollow">Rennen entfernen</a>
+        <% end %>
+      </li>
+
+    </ul>
+
+  </form>
+
+</section>

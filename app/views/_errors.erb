@@ -1,0 +1,7 @@
+<% if item.errors.count > 0 %>
+  <ul class="errors">
+    <% item.errors.full_messages.each do |error| %>
+      <li><%= error %></li>
+    <% end %>
+  </ul>
+<% end %>

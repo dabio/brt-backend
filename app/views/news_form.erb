@@ -1,0 +1,71 @@
+<section id="news">
+
+  <%= erb :_errors, locals: { item: news } %>
+
+  <form class="forms columnar" action="<%= news.new? ? News.createlink : news.savelink %>" method="post">
+
+    <% unless news.new? %>
+      <input type="hidden" name="_method" value="put"/>
+    <% end %>
+
+    <ul>
+
+      <li>
+        <label class="bold" for="date">Datum <span class="req">*</span></label>
+        <input id="date" type="date" name="news[date]" value="<%= news.date %>" placeholder="<%= today %>" required/>
+      </li>
+
+      <li>
+        <fieldset>
+          <section>
+            <label class="bold" for="title">Titel <span class="req">*</span></label>
+          </section>
+          <input class="width-100" id="title" type="text" name="news[title]" size="60" required value="<%= news.title %>"/>
+        </fieldset>
+      </li>
+
+      <li>
+        <fieldset>
+          <section>
+            <label class="bold" for="teaser">Teaser <span class="req">*</span></label>
+          </section>
+          <textarea id="teaser" class="width-100" name="news[teaser]" style="height: 54px" required><%= news.teaser %></textarea>
+        </fieldset>
+      </li>
+
+      <li>
+        <fieldset>
+          <section>
+            <label class="bold" for="message">Text</label>
+          </section>
+          <textarea id="message" class="width-100" name="news[message]" style="height: 387px"><%= news.message %></textarea>
+          <span class="descr">Text wird mit <a class="gray" href="http://daringfireball.net/projects/markdown/dingus" title="Markdown Web Dingus">Markdown</a> formatiert.</span>
+        </fieldset>
+      </li>
+
+      <li>
+        <select id="event_id" name="news[event_id]" size="1" style="width: 566px">
+          <option value="">(leer)</option>
+          <% events.each do |event| %>
+            <option value="<%= event.id %>"<% if news.event == event %> selected="selected"<% end %>><%= event.date_formatted %> - <%= event.title %>, <%= event.distance %> km</option>
+          <% end %>
+        </select>
+        <label class="bold" for="event_id">Rennen</label>
+        <span class="descr">Nur für Rennberichte</span>
+      </li>
+
+      <li class="form-section"></li>
+
+      <li class="push">
+        <input class="btn icon-floppy" type="submit" value="<%= news.new? ? 'Anlegen' : 'Speichern' %>"/>
+        <% unless news.new? %>
+          <a class="red delete" href="<%= news.deletelink %>" data-method="delete"
+          data-confirm="Nachricht oder Rennbericht löschen?" rel="nofollow">Eintrag entfernen</a>
+        <% end %>
+      </li>
+
+    </ul>
+
+  </form>
+
+</section>

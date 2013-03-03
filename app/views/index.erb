@@ -1,0 +1,47 @@
+<section id="dashboard">
+
+  <header class="row">
+    <h2>Überblick</h2>
+  </header>
+
+  <table class="width-100 striped">
+
+    <thead>
+      <tr>
+        <th class="date">Datum</th>
+        <th colspan="2">Rennen</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <% if items.each do |item| %>
+
+        <tr>
+          <td class="date"><%= item.date_formatted %></td>
+          <td>
+            <section><%= item.title %></section>
+            <section class="gray small participations">
+              <% item.participations.each do |p| %>
+                <span data-id="<%= p.id %>"><%= p.person.name %></span>
+              <% end %>
+            </section>
+          </td>
+          <td>
+              <input type="checkbox" data-url="<%= item.participationlink %>"<% unless item.participations.select { |p| p.person == current_person }.empty? %> checked<% end %>/>
+          </td>
+        </tr>
+
+      <% end.empty? %>
+
+        <tr>
+          <td colspan="3">Keine Rennen vorhanden</td>
+        </tr>
+
+      <% end %>
+
+    </tbody>
+
+  </table>
+
+</section>

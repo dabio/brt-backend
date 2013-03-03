@@ -56,7 +56,6 @@ module Brt
     end
 
     use Rack::ForceDomain, ENV['DOMAIN']
-    use Rack::Protection
     register Sinatra::Flash
     register Sinatra::R18n
 

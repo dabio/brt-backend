@@ -1,4 +1,4 @@
-source :rubygems
+source "https://rubygems.org/"
 
 gem 'dm-core'
 gem 'dm-aggregates'
@@ -8,7 +8,6 @@ gem 'dm-timestamps'
 gem 'dm-serializer', require: 'dm-serializer/to_json'
 gem 'dm-validations'
 gem 'json'
-gem 'slim'
 gem 'rack-force_domain'
 gem 'rack-timeout', require: 'rack/timeout'
 gem 'redcarpet'
@@ -18,7 +17,7 @@ gem 'sinatra-r18n', require: 'sinatra/r18n'
 gem 'sinatra-flash-nicer', require: 'sinatra/flash'
 gem 'sinatra-redirect-with-flash', require: 'sinatra/redirect_with_flash'
 gem 'stringex'
-gem 'thin', require: false
+gem 'puma', require: false
 
 group :development do
   gem 'shotgun', require: false

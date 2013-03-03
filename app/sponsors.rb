@@ -3,10 +3,6 @@
 module Brt
   class Sponsors < App
 
-    configure do
-      enable :inline_templates
-    end
-
     #
     # Disallow the admin area for non authorized users.
     #
@@ -18,7 +14,7 @@ module Brt
     # GET /
     #
     get '/' do
-      slim :index, locals: { sponsors: Sponsor.all }
+      erb :sponsors, locals: { sponsors: Sponsor.all }
     end
 
     #
@@ -31,7 +27,7 @@ module Brt
         redirect to ('/'), success: 'Erfolgreich gespeichert'
       else
         sponsor.errors.clear! unless params[:sponsor]
-        slim :view, locals: { item: sponsor }
+        erb :sponsor_form, locals: { sponsor: sponsor }
       end
     end
 
@@ -39,7 +35,7 @@ module Brt
     # GET /:id
     #
     get '/:id' do |id|
-      slim :view, locals: { item: Sponsor.get(id) }
+      erb :sponsor_form, locals: { sponsor: Sponsor.get(id) }
     end
 
     #
@@ -51,7 +47,7 @@ module Brt
       if sponsor.update(params[:sponsor])
         redirect to(sponsor.editlink, true, false), success: 'Erfolgreich gespeichert'
       else
-        slim :view, locals: { item: sponsor }
+        erb :sponsor_form, locals: { sponsor: sponsor }
       end
     end
 
@@ -66,73 +62,3 @@ module Brt
 
   end
 end
-
-
-__END__
-
-
-/ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-@@ index
-section#sponsors
-  header.row
-    h2.threequarter Sponsoren
-    nav.quarter.second
-      form action="#{Sponsor.createlink}" method="post"
-        button.btn.btn-square.icon-plus Neuer Sponsor
-
-  table.width-100.striped
-    thead
-      tr
-        th Name
-        th colspan="2" Homepage
-    tbody
-      - for item in sponsors
-          tr
-            td = item.title
-            td
-              a href="#{item.url}" = item.url
-            td
-              a.icons href="#{item.editlink}" title="Bearbeiten" &#x21;
-
-
-/ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-@@ view
-section#sponsor
-
-  == slim :_errors, locals: { item: item }
-
-  form.forms.columnar action="#{item.editlink}" method="post"
-    - unless item.new?
-      input type="hidden" name="_method" value="put"
-    ul
-      li
-        fieldset
-          section
-            label.bold for="title" Titel <span class="req">*</span>
-          input#title.width-100(type="text" name="sponsor[title]" size="60"
-            value="#{item.title}" required)
-      li
-        fieldset
-          section
-            label.bold for="image_url" Bild Url <span class="req">*</span>
-          input#image_url.width-100(type="url" name="sponsor[image_url]"
-            size="60" value="#{item.image_url}" placeholder="http://" required)
-      li
-        fieldset
-          section
-            label.bold for="url" Homepage
-          input#url.width-100(type="url" name="sponsor[url]" size="60"
-            value="#{item.url}" placeholder="http://")
-      li
-        fieldset
-          section
-            label.bold for="text" Beschreibung
-          textarea#text.width-100 name="sponsor[text]" style="height: 387px" = item.text
-      li.form-section
-      li.push
-        - if item.new?
-          input.btn.icon-floppy type="submit" value="Anlegen"
-        - else
-          input.btn.icon-floppy.icon-floppy type="submit" value="Speichern"
-          a.red.delete(href="#{item.deletelink}" data-method="delete"
-            data-confirm="Sponsor entfernen?" rel="nofollow") Sponsor entfernen

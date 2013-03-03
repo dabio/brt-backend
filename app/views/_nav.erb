@@ -1,0 +1,21 @@
+<% if has_auth? %>
+  <section class="row container">
+
+    <nav class="primary threequarter">
+      <a href="/">Überblick</a>
+      <a href="<%= News.link %>">News &amp; Rennberichte</a>
+      <a href="<%= Event.link %>">Rennen</a>
+      <% if has_admin? %>
+        <a href="<%= Sponsor.link %>">Sponsoren</a>
+        <a href="<%= Person.link %>">Fahrer</a>
+        <a href="<%= Email.link %>">E-Mails</a>
+      <% end %>
+    </nav>
+
+    <nav class="primary quarter" style="text-align: right">
+      <a href="<%= current_person.editlink %>">Einstellungen</a>
+      <a href="/logout">Abmelden</a>
+    </nav>
+
+  </section>
+<% end %>
