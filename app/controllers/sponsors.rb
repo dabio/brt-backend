@@ -7,7 +7,7 @@ module Brt
     # Disallow the admin area for non authorized users.
     #
     before do
-      not_found unless has_admin?
+      authorize!
     end
 
     #

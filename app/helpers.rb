@@ -64,6 +64,13 @@ module Brt
       def today
         Date.today
       end
+
+      # checks for authorized user and redirects to the login page if user
+      # is not authorized.
+      def authorize!
+        redirect to("/login?to=#{request.path}", true, false) unless has_auth?
+      end
+
     end
 
   end

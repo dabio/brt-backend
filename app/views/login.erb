@@ -7,6 +7,7 @@
   <% end %>
 
   <form class="forms columnar third centered" action="/login" method="post">
+    <input type="hidden" name="to" value="<%= to %>"/>
     <ul>
       <li>
         <input type="text" name="email" value="<%= email %>" required placeholder="Benutzername/E-Mail"<% if email.empty? %> autofocus="autofocus"<% end %>/>

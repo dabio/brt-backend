@@ -17,13 +17,14 @@ module Brt
 
     before '/login' do
       redirect to('/') if has_auth?
+      @to = params[:to] ? params[:to] : '/'
     end
 
     #
     # GET /login
     #
     get '/login' do
-      erb :login, locals: { email: '' }
+      erb :login, locals: { email: '', to: @to }
     end
 
     #
@@ -38,9 +39,9 @@ module Brt
 
       if person
         session[:person_id] = person.id
-        redirect to('/')
+        redirect to(params[:to], true, false)
       else
-        erb :login, locals: { email: params[:email] }
+        erb :login, locals: { email: params[:email], to: @to }
       end
     end
 
