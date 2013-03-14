@@ -45,24 +45,24 @@ class Event < Base
     Person.all - participations.person
   end
 
-  def for_person(person)
-    participations.first(event: self, person: person)
-  end
-
   def participationlink
     "#{self.class.link}/#{id}/participations"
   end
 
-  def self.all_without_news
-    all(:date.lte => Date.today,
-      :news.not => News.all(:event.not => nil),
-      order: [:date.desc, :updated_at.desc],
-      limit: 10
-     )
-  end
+  class << self
 
-  def self.link
-    '/events'
+    def all_without_news
+      all(:date.lte => Date.today,
+        :news.not => News.all(:event.not => nil),
+        order: [:date.desc, :updated_at.desc],
+        limit: 10
+       )
+    end
+
+    def link
+      '/events'
+    end
+
   end
 
 end

@@ -4,7 +4,7 @@
 
   // Allow the deletion of the current object.
   $('a[data-method]').on('click', function (e) {
-    el = $(this);
+    var el = $(this);
 
     if (el.data('confirm') && !confirm(el.data('confirm')))
       return false;
@@ -19,9 +19,35 @@
       error: function (xhr, type) {
         alert('Aktion konnte nicht ausgeführt werden, bitte erneut versuchen.')
       }
-    })
+    });
 
     return false;
+  });
+
+  // For participating an event
+  $('input[data-method]').on('click', function (e) {
+    var el = $(this)
+      , method = el.data('method');
+
+    $.ajax({
+      type: method,
+      url: el.data('url'),
+      timeout: 3000,
+      dataType: 'json',
+      success: function(data) {
+        if (method == 'delete') {
+          $('#'+el.data('event')+' .current').remove();
+          el.data('method', 'post');
+        } else {
+          $('#'+el.data('event')+' .participations')
+            .append('<span class="current">'+data.person.name+'</span>');
+          el.data('method', 'delete');
+        }
+      },
+      error: function (xhr, type) {
+        alert('Aktion konnte nicht ausgeführt werden, bitte erneut versuchen.')
+      }
+    });
   });
 
 
@@ -71,9 +97,9 @@
 
 
   // Dashboard, remove person from participationlist
-  $('#dashboard input[type=checkbox]').on('click', function (e) {
-    var el = $(e.target);
-    el.attr('checked') ? addParticipation(el) : removeParticipation(el);
-  });
+  // $('#dashboard input[type=checkbox]').on('click', function (e) {
+  //   var el = $(e.target);
+  //   el.attr('checked') ? addParticipation(el) : removeParticipation(el);
+  // });
 
 }).call(this);

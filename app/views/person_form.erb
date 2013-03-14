@@ -46,7 +46,7 @@
       <li class="form-section"></li>
       <li class="push">
         <input class="btn icon-floppy" type="submit" value="<%= person.new? ? 'Anlegen' : 'Speichern' %>"/>
-        <% unless person.new? %>
+        <% if has_admin? and !person.new? %>
           <a class="red delete" href="<%= person.deletelink %>" data-method="delete"
           data-confirm="Fahrer entfernen?" rel="nofollow">Fahrer entfernen</a>
         <% end %>

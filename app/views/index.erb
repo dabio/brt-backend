@@ -15,20 +15,20 @@
 
     <tbody>
 
-      <% if items.each do |item| %>
+      <% if events.each do |event| %>
 
-        <tr>
-          <td class="date"><%= item.date_formatted %></td>
+        <tr id="event_<%= event.id %>">
+          <td class="date"><%= event.date_formatted %></td>
           <td>
-            <section><%= item.title %></section>
+            <section><%= event.title %></section>
             <section class="gray small participations">
-              <% item.participations.each do |p| %>
-                <span data-id="<%= p.id %>"><%= p.person.name %></span>
+              <% event.participations.each do |p| %>
+                <span<% if p.person == current_person %> class="current"<% end %>><%= p.person.name %></span>
               <% end %>
             </section>
           </td>
           <td>
-              <input type="checkbox" data-url="<%= item.participationlink %>"<% unless item.participations.select { |p| p.person == current_person }.empty? %> checked<% end %>/>
+            <input type="checkbox" data-url="<%= event.participationlink %>" data-event="event_<%= event.id %>"<% if event.participations.select { |p| p.person == current_person }.empty? %> data-method="post"<% else %> data-method="delete" checked<% end %>/>
           </td>
         </tr>
 

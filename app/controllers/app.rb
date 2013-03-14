@@ -10,7 +10,7 @@ module Brt
       redirect to('/login') unless has_auth?
 
       erb :index, locals: {
-        items: Event.all(:date.gte => today, order: [:date.asc])
+        events: Event.all(:date.gte => today, order: [:date.asc])
       }
     end
 
