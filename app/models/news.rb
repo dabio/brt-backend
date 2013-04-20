@@ -1,75 +1,44 @@
 # encoding: utf-8
-#
-#   this is berlinracingteam.de, a sinatra application
-#   it is copyright (c) 2009-2011 danilo braband (danilo @ berlinracingteam,
-#   then a dot and a 'de')
-#
 
-class News
+class News < Base
   include DataMapper::Resource
 
   property :id,         Serial
-  property :date,       Date
-  property :title,      String, length: 250
-  property :teaser,     Text
+  property :date,       Date, required: true, default: Date.today
+  property :title,      String, required: true, length: 250
+  property :teaser,     Text, required: true
   property :message,    Text
   timestamps :at
   property :slug,       String, length: 2000, default: lambda { |r, p|
-    r.title.to_url
+    r.title.to_url unless r.title.nil?
   }
-  #is :slug, :source => :title
 
   belongs_to :person
   belongs_to :event, required: false
 
   has n, :comments
 
-  validates_presence_of :title, :date, :teaser
-
   default_scope(:default).update(order: [:date.desc, :updated_at.desc])
 
-  #after :save do |news|
-  #  # save link in mixing table
-  #  Mixing.first_or_create(:news => news).update(:date => news.date)
-  #end
-
-  def permalink
-    "/news/#{date.strftime("%Y/%m/%d")}/#{slug}"
+  # Remove all associated data from this news.
+  before :destroy do |news|
+    news.comments.each do |comment|
+      comment.destroy
+    end if news.comments
   end
 
-  def editlink
-    "/admin#{permalink}"
+  # remove the event_id when no event is set
+  def event_id=(event_id)
+    event_id = nil unless event_id.length > 0
+    super
   end
 
-  def deletelink
-    editlink
+  def date_formatted(format='%-d. %b %y')
+    R18n::l(date, format)
   end
 
-  def createlink
-    '/admin/news'
+  def self.link
+    '/news'
   end
 
-  #def commentlink
-  #  "#{permalink}#comment"
-  #end
-
-  def self.paginated(options={})
-    page = options.delete(:page) || 1
-    per_page = options.delete(:per_page) || 5
-
-    options.reverse_merge!({
-      :order => [:id.desc]
-    })
-
-    page_count = (count(options.except(:order)).to_f / per_page).ceil
-
-    options.merge!({
-      :limit => per_page,
-      :offset => (page - 1) * per_page
-    })
-
-    [ page_count, all(options) ]
-  end
 end
-
-

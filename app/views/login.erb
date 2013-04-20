@@ -1,0 +1,24 @@
+<section id="login" class="row">
+
+  <% unless email.empty? %>
+    <ul class="errors">
+      <li>Unbekannte E-Mail oder falsches Password</li>
+    </ul>
+  <% end %>
+
+  <form class="forms columnar third centered" action="/login" method="post">
+    <input type="hidden" name="to" value="<%= to %>"/>
+    <ul>
+      <li>
+        <input type="text" name="email" value="<%= email %>" required placeholder="Benutzername/E-Mail"<% if email.empty? %> autofocus="autofocus"<% end %>/>
+      </li>
+      <li>
+        <input type="password" name="password" placeholder="Passwort" required<% unless email.empty? %> autofocus="autofocus"<% end %>/>
+      </li>
+      <li>
+        <input class="btn" type="submit" value="Anmelden"/>
+      </li>
+    </ul>
+  </form>
+
+</section>

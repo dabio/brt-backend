@@ -1,15 +1,11 @@
 # encoding: utf-8
-#
-#   this is berlinracingteam.de, a sinatra application
-#   it is copyright (c) 2009-2011 danilo braband (danilo @ berlinracingteam,
-#   then a dot and a 'de')
-#
 
-class Participation
+class Participation < Base
   include DataMapper::Resource
 
-  property :person_id,  Integer, :key => true
-  property :event_id,   Integer, :key => true
+  property :id,         Serial
+  property :person_id,  Integer
+  property :event_id,   Integer
   property :position_overall,   Integer
   property :position_age_class, Integer
   # this property is needed only for ordering the participation on the person
@@ -17,8 +13,8 @@ class Participation
   property :date,       Date
   timestamps :at
 
-  belongs_to :person,   :key => true
-  belongs_to :event,    :key => true
+  belongs_to :person
+  belongs_to :event
 
   before :save do |p|
     # this hook adds the event date to this participation. this is needed to
@@ -28,5 +24,16 @@ class Participation
 
   default_scope(:default).update(order: [:date.desc, :position_overall])
 
-end
+  def self.createlink
+    '/admin/participations'
+  end
 
+  def createlink
+    Participation.createlink
+  end
+
+  def deletelink
+    "#{createlink}/#{id}"
+  end
+
+end

@@ -1,0 +1,16 @@
+<section id="email">
+
+  <header class="row">
+    <section class="twothird">
+      <a class="gray-dark" href="mailto:<%= email.email %>"><%= email.name %> &lt;<%= email.email %>&gt;</a>
+    </section>
+    <section class="third date">
+      <%= email.date_formatted('%-d. %B %Y') %>
+    </section>
+  </header>
+
+  <article class="row">
+    <%= email.message_formatted %>
+  </article>
+
+</section>

@@ -1,6 +1,7 @@
-db/
 coverage/
-node_modules/
+
+# Vim
+*.swp
 
 # Bundler
 /.bundle

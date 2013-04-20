@@ -1,14 +1,9 @@
 # encoding: utf-8
-#
-#   this is berlinracingteam.de, a sinatra application
-#   it is copyright (c) 2009-2011 danilo braband (danilo @ berlinracingteam,
-#   then a dot and a 'de')
-#
 
-class Report
+class Report < Base
   include DataMapper::Resource
 
-  property :id,     Serial
+  property :id,         Serial
   property :date,   Date
   property :text,   Text
   timestamps :at
@@ -27,4 +22,3 @@ class Report
   end
 
 end
-

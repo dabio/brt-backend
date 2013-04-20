@@ -1,0 +1,10 @@
+<span class="pages">Seite <%= page %> von <%= page_count %></span>
+<span class="page-items">
+  <% for p in pagination(page, page_count, url)%>
+    <% if p[:href] %>
+      <a href="<%= p[:href] %>"><%= p[:title] %></a>
+    <% else %>
+      <span><%= p[:title] %></span>
+    <% end %>
+  <% end %>
+</span>

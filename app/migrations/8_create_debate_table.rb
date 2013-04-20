@@ -1,4 +1,4 @@
-migration 1, :create_debates_table do
+migration 8, :create_debates_table do
 
   up do
     create_table :debates do

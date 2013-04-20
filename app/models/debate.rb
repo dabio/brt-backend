@@ -1,15 +1,10 @@
 # encoding: utf-8
-#
-#   this is berlinracingteam.de, a sinatra application
-#   it is copyright (c) 2009-2011 danilo braband (danilo @ berlinracingteam,
-#   then a dot and a 'de')
-#
 
-class Debate
+class Debate < Base
   include DataMapper::Resource
 
-  property :id,     Serial
-  property :title,  String
+  property :id,         Serial
+  property :title,  String, required: true
   timestamps :at
 
   belongs_to :person
@@ -18,11 +13,7 @@ class Debate
   validates_presence_of :title
 
   def editlink
-    "#{permalink}/edit"
+    "/admin/debates/#{id}"
   end
 
-  def permalink
-    "/diskussionen/#{id}"
-  end
 end
-

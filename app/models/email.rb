@@ -1,11 +1,6 @@
 # encoding: utf-8
-#
-#   this is berlinracingteam.de, a sinatra application
-#   it is copyright (c) 2009-2011 danilo braband (danilo @ berlinracingteam,
-#   then a dot and a 'de')
-#
 
-class Email
+class Email < Base
   include DataMapper::Resource
 
   property :id,         Serial
@@ -25,9 +20,22 @@ class Email
   property :send_at,    DateTime
   timestamps :at
 
+
   before :save do |e|
     e.send_at = Time.now
     e.send_email
+  end
+
+  def date_formatted(format='%-d. %b %y')
+    R18n::l(send_at, format)
+  end
+
+  def message_formatted
+    simple_format(message)
+  end
+
+  def self.link
+    '/emails'
   end
 
   def send_email(opts={})
@@ -50,7 +58,6 @@ END_OF_MESSAGE
     Net::SMTP.start(opts[:server], opts[:port], opts[:from], opts[:user], opts[:password], :plain) do |smtp|
       smtp.send_message msg, opts[:from], opts[:to]
     end
-    
   end
-end
 
+end

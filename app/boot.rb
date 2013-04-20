@@ -5,67 +5,69 @@ if defined? Encoding
   Encoding.default_internal = Encoding::UTF_8
 end
 
-$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__))
-
 RACK_ENV = ENV['RACK_ENV'] ||= 'development' unless defined? RACK_ENV
+ROOT_DIR = File.dirname(File.expand_path(__FILE__))
 
 require 'bundler/setup'
 Bundler.require(:default, RACK_ENV)
 
+# PostgreSQL
 DataMapper::Logger.new($stdout, :debug) if RACK_ENV == 'development'
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://dan@localhost/brt')
 
-# Library
-require_relative '../lib/dm_bcrypt'
-require_relative '../lib/dm_uri'
-require_relative '../lib/hash'
+Dir[
+  './lib/**/*.rb',
+  './app/models/base.rb',
+  './app/models/*.rb',
+].each do |f|
+  require f
+end
 
-# Models
-require_relative 'models/comment'
-require_relative 'models/debate'
-require_relative 'models/email'
-require_relative 'models/event'
-require_relative 'models/news'
-require_relative 'models/participation'
-require_relative 'models/person'
-require_relative 'models/report'
-require_relative 'models/visit'
+# Finalize Datamapper Models
 DataMapper.finalize
-
-# Helper
-require_relative 'helpers'
-
-# Non-autoloaded views
-require_relative 'views/layout'
 
 module Brt
 
-  class Main < Sinatra::Base
-    disable :protection
+  class App < Sinatra::Base
+
+    configure do
+      enable :method_override
+      enable :sessions
+
+      set :root, ROOT_DIR
+      set :public_folder, "#{ROOT_DIR}/../public"
+      set :default_locale, 'de'
+    end
+
+    configure :production do
+      disable :logging
+    end
+
+    configure :development do
+      set :session_secret, "My Session Secret"
+      enable :logging
+      enable :show_exceptions
+    end
+
+    configure :test do
+      enable :raise_errors
+      disable :logging
+      disable :reload_templates
+    end
 
     use Rack::ForceDomain, ENV['DOMAIN']
-    use Rack::Session::Pool
-  end
-
-  class App < Main
     register Sinatra::Flash
     register Sinatra::R18n
-    register Mustache::Sinatra
-    helpers Brt::Helpers
 
-    dir = File.dirname(File.expand_path(__FILE__))
-
-    set :default_locale, 'de'
-    set :public_folder, "#{dir}/frontend/public"
-    set :method_override, true
-    set :mustache, {
-      namespace: Brt,
-      templates: "#{dir}/templates",
-      views: "#{dir}/views"
-    }
   end
 
 end
 
-# App
-require 'app'
+Dir[
+  './app/helpers.rb',
+  './app/controllers/app.rb',
+  './app/controllers/*.rb'
+].each do |f|
+  require f
+end
+

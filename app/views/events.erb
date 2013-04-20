@@ -1,0 +1,51 @@
+<section id="events">
+
+  <header class="row">
+    <h2 class="threequarter">Rennen</h2>
+    <nav class="quarter second">
+      <form action="<%= Event.createlink %>" method="post">
+        <button class="btn btn-square icon-plus">Neues Rennen</button>
+      </form>
+    </nav>
+  </header>
+
+  <table class="width-100 striped">
+
+    <thead>
+      <tr>
+        <th class="date">Datum</ht>
+        <th colspan="2">Bezeichnung</th>
+      </tr>
+    </thead>
+
+    <tfoot>
+      <tr>
+        <td colspan="3"><%= erb :_pagination, locals: { page_count: page_count, url: Event.link, page: page } %></td>
+      </tr>
+    </tfoot>
+
+    <tbody>
+
+      <% if events.each do |event| %>
+
+        <tr>
+          <td class="date"><%= event.date_formatted %></td>
+          <td><%= event.title %></td>
+          <td>
+            <a class="icons" href="<%= event.editlink %>" title="Bearbeiten">&#x21;</a>
+          </td>
+        </tr>
+
+      <% end.empty? %>
+
+        <tr>
+          <td colspan="3">Keine Rennen vorhanden</td>
+        </tr>
+
+      <% end %>
+
+    </tbody>
+
+  </table>
+
+</section>
