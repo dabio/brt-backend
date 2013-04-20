@@ -42,7 +42,7 @@ class Event < Base
   end
 
   def non_participations
-    Person.all - participations.person
+    Person.all(is_active: true) - participations.person
   end
 
   def participationlink

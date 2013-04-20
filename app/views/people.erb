@@ -23,7 +23,7 @@
       <% if people.each do |person| %>
 
         <tr>
-          <td><%= person.name %></td>
+          <td<% if !person.is_active %> class="gray-light"<% end %>><%= person.name %></td>
           <td>
             <a class="gray-dark" href="mailto:<%= person.email %>"><%= person.email %></a>
           </td>

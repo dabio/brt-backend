@@ -32,6 +32,14 @@
             </label>
           </fieldset>
         </li>
+        <li>
+          <fieldset>
+            <label>
+              <input type="hidden" name="person[is_active]" value="0"/>
+              <input type="checkbox" name="person[is_active]"<% if person.is_active %> value="1" checked<% end %>/> Aktiv
+            </label>
+          </fieldset>
+        </li>
       <% end %>
       <li class="form-section">Kennwort</li>
       <li class="push"><p class="gray-light">Kennwort ändern. Nur ausfüllen, wenn Kennwort geändert werden soll.</p></li>

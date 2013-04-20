@@ -10,6 +10,7 @@ class Person < Base
   property :password,   SCryptHash, required: true
   property :info,       Text, lazy: true
   property :is_admin,   Boolean, default: false
+  property :is_active,  Boolean, default: true
   timestamps :at
   property :slug,       String, length: 2000, default: lambda { |r, p|
     r.name.to_url

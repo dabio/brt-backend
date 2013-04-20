@@ -118,6 +118,7 @@ nav.second { text-align: right }
 th.date,
 td.date {
   text-align: right;
+  white-space: nowrap;
 }
 
 .success, .errors {

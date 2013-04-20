@@ -20,7 +20,7 @@
         <tr id="event_<%= event.id %>">
           <td class="date"><%= event.date_formatted %></td>
           <td>
-            <section><%= event.title %></section>
+            <section><%= event.title %>, <%= event.distance %> km</section>
             <section class="gray small participations">
               <% event.participations.each do |p| %>
                 <span<% if p.person == current_person %> class="current"<% end %>><%= p.person.name %></span>
