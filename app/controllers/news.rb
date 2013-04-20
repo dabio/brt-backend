@@ -18,7 +18,9 @@ module Brt
     # GET /
     #
     get '/' do
-      count, news = News.paginated(page: current_page, per_page: 20)
+      count, news = News.paginated(
+        order: [:date.desc, :updated_at.desc], page: current_page, per_page: 20
+      )
       erb :news, locals: { news: news, page: current_page, page_count: count }
     end
 

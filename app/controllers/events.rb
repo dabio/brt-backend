@@ -18,7 +18,9 @@ module Brt
     # GET /
     #
     get '/' do
-      count, events = Event.paginated(page: current_page, per_page: 20)
+      count, events = Event.paginated(
+        order: [:date.desc, :updated_at.desc], page: current_page, per_page: 20
+      )
       erb :events, locals: { events: events, page: current_page, page_count: count }
     end
 
