@@ -20,6 +20,13 @@
         <input id="title" type="text" name="event[title]" size="60" value="<%= event.title %>" required/>
       </li>
 
+      <% if has_admin? %>
+        <li>
+          <label class="bold" for="slug">Slug</label>
+          <input id="slug" type="text" name="event[slug]" size="60" value="<%= event.slug %>"/>
+        </li>
+      <% end %>
+
       <li>
         <label class="bold" for="distance">Distanz <span class="req">*</span></label>
         <input id="distance" type="text" name="event[distance]" size="3" value="<%= event.distance %>" placeholder="80" required/>
