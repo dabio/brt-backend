@@ -24,6 +24,13 @@
         </fieldset>
       </li>
 
+      <% if has_admin? %>
+        <li>
+          <label class="bold" for="slug">Slug</label>
+          <input id="slug" type="text" name="news[slug]" size="60" value="<%= news.slug %>"/>
+        </li>
+      <% end %>
+
       <li>
         <fieldset>
           <section>
