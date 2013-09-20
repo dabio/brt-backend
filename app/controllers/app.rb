@@ -10,7 +10,8 @@ module Brt
       redirect to('/login') unless has_auth?
 
       erb :index, locals: {
-        events: Event.all(:date.gte => today, order: [:date.asc])
+        events: Event.all(:date.gte => today, order: [:date.asc]),
+        title: 'Überblick'
       }
     end
 
@@ -24,7 +25,7 @@ module Brt
     # GET /login
     #
     get '/login' do
-      erb :login, locals: { email: '', to: @to }
+      erb :login, locals: { email: '', to: @to, title: 'Login' }
     end
 
     #
@@ -41,7 +42,7 @@ module Brt
         session[:person_id] = person.id
         redirect to(params[:to], true, false)
       else
-        erb :login, locals: { email: params[:email], to: @to }
+        erb :login, locals: { email: params[:email], to: @to, title: 'Login' }
       end
     end
 

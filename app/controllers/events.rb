@@ -21,7 +21,9 @@ module Brt
       count, events = Event.paginated(
         order: [:date.desc, :updated_at.desc], page: current_page, per_page: 20
       )
-      erb :events, locals: { events: events, page: current_page, page_count: count }
+      erb :events, locals: {
+        events: events, page: current_page, page_count: count, title: 'Rennen'
+      }
     end
 
     #
@@ -35,7 +37,7 @@ module Brt
         redirect to('/'), success: 'Erfolgreich gespeichert'
       else
         event.errors.clear! unless params[:event]
-        erb :event_form, locals: { event: event }
+        erb :event_form, locals: { event: event, title: 'Neues Rennen' }
       end
     end
 
@@ -43,7 +45,8 @@ module Brt
     # GET /:id
     #
     get '/:id' do |id|
-      erb :event_form, locals: { event: Event.get(id) }
+      event = Event.get(id)
+      erb :event_form, locals: { event: event, title: event.title }
     end
 
     #
@@ -63,7 +66,7 @@ module Brt
 
         redirect to(event.editlink, true, false), success: 'Erfolgreich gespeichert'
       else
-        erb :event_form, locals: { event: event }
+        erb :event_form, locals: { event: event, title: event.title }
       end
     end
 

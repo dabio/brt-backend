@@ -14,7 +14,7 @@ module Brt
     # GET /
     #
     get '/' do
-      erb :sponsors, locals: { sponsors: Sponsor.all }
+      erb :sponsors, locals: { sponsors: Sponsor.all, title: 'Sponsoren' }
     end
 
     #
@@ -27,7 +27,7 @@ module Brt
         redirect to ('/'), success: 'Erfolgreich gespeichert'
       else
         sponsor.errors.clear! unless params[:sponsor]
-        erb :sponsor_form, locals: { sponsor: sponsor }
+        erb :sponsor_form, locals: { sponsor: sponsor, title: 'Neuer Sponsor' }
       end
     end
 
@@ -35,7 +35,8 @@ module Brt
     # GET /:id
     #
     get '/:id' do |id|
-      erb :sponsor_form, locals: { sponsor: Sponsor.get(id) }
+      sponsor = Sponsor.get(id)
+      erb :sponsor_form, locals: { sponsor: sponsor, title: sponsor.title }
     end
 
     #
@@ -47,7 +48,7 @@ module Brt
       if sponsor.update(params[:sponsor])
         redirect to(sponsor.editlink, true, false), success: 'Erfolgreich gespeichert'
       else
-        erb :sponsor_form, locals: { sponsor: sponsor }
+        erb :sponsor_form, locals: { sponsor: sponsor, title: sponsor.title }
       end
     end
 

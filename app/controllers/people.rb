@@ -15,7 +15,7 @@ module Brt
     #
     get '/' do
       not_found unless has_admin?
-      erb :people, locals: { people: Person.all }
+      erb :people, locals: { people: Person.all, title: 'Fahrer' }
     end
 
     #
@@ -29,7 +29,7 @@ module Brt
         redirect to('/'), success: 'Erfolgreich gespeichert'
       else
         person.errors.clear! unless params[:person]
-        erb :person_form, locals: { person: person }
+        erb :person_form, locals: { person: person, title: 'Neuer Fahrer' }
       end
     end
 
@@ -38,7 +38,8 @@ module Brt
     #
     get '/:id' do |id|
       not_found unless has_admin? || current_person.id == id.to_i
-      erb :person_form, locals: { person: Person.get(id) }
+      person = Person.get(id)
+      erb :person_form, locals: { person: person, title: person.name }
     end
 
 
@@ -57,7 +58,7 @@ module Brt
       if person.update(params[:person])
         redirect to(person.editlink, true, false), success: 'Erfolgreich gespeichert'
       else
-        erb :person_form, locals: { person: person }
+        erb :person_form, locals: { person: person, title: person.name }
       end
     end
 

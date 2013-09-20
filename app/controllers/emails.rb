@@ -17,7 +17,7 @@ module Brt
     get '/' do
       count, emails = Email.paginated(page: current_page, per_page: 20)
       erb :emails, locals: {
-        emails: emails, page: current_page, page_count: count
+        emails: emails, page: current_page, page_count: count, title: 'E-Mails'
       }
     end
 
@@ -25,7 +25,8 @@ module Brt
     # GET /:id
     #
     get '/:id' do |id|
-      erb :email, locals: { email: Email.get(id) }
+      email = Email.get(id)
+      erb :email, locals: { email: email, title: "E-Mail von #{email.name}" }
     end
 
   end

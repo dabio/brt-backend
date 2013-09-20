@@ -21,7 +21,10 @@ module Brt
       count, news = News.paginated(
         order: [:date.desc, :updated_at.desc], page: current_page, per_page: 20
       )
-      erb :news, locals: { news: news, page: current_page, page_count: count }
+      erb :news, locals: {
+        news: news, page: current_page, page_count: count,
+        title: 'News & Rennberichte'
+      }
     end
 
     #
@@ -35,7 +38,9 @@ module Brt
         redirect to('/'), success: 'Erfolgreich gespeichert'
       else
         news.errors.clear! unless params[:news]
-        erb :news_form, locals:  { news: news, events: Event.all_without_news }
+        erb :news_form, locals:  {
+          news: news, events: Event.all_without_news, title: 'Anlegen'
+        }
       end
     end
 
@@ -47,7 +52,7 @@ module Brt
       events = Event.all_without_news
       events.insert(0, news.event) unless news.event.nil?
 
-      erb :news_form, locals: { news: news, events: events }
+      erb :news_form, locals: { news: news, events: events, title: news.title }
     end
 
     #
@@ -59,7 +64,9 @@ module Brt
       if news.update(params[:news])
         redirect to(news.editlink, true, false), success: 'Erfolgreich gespeichert'
       else
-        erb :news_form, locals:  { news: news, events: Event.all_without_news }
+        erb :news_form, locals:  {
+          news: news, events: Event.all_without_news, title: news.title
+        }
       end
     end
 
