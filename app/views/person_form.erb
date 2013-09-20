@@ -25,6 +25,10 @@
       </li>
       <% if has_admin? %>
         <li>
+          <label class="bold" for="slug">Slug</label>
+          <input id="slug" type="text" name="person[slug]" value="<%= person.slug %>" required />
+        </li>
+        <li>
           <fieldset>
             <label>
               <input type="hidden" name="person[is_admin]" value="0"/>
