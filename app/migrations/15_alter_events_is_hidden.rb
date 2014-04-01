@@ -1,4 +1,4 @@
-migration 14, :alter_events_is_hidden do
+migration 15, :alter_events_is_hidden do
 
   up do
     modify_table :events do
