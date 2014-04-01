@@ -24,7 +24,7 @@
         </fieldset>
       </li>
 
-      <% if has_admin? %>
+      <% if has_admin? and !news.new? %>
         <li>
           <label class="bold" for="slug">Slug</label>
           <input id="slug" type="text" name="news[slug]" size="60" value="<%= news.slug %>"/>
@@ -49,6 +49,16 @@
           <span class="descr">Text wird mit <a class="gray" href="http://daringfireball.net/projects/markdown/dingus" title="Markdown Web Dingus">Markdown</a> formatiert.</span>
         </fieldset>
       </li>
+
+      <li>
+        <select id="person_id" name="news[person_id]" size="1">
+          <% people.each do |person| %>
+            <option value="<%= person.id %>"<% if news.person == person %> selected="selected"<% end %>><%= person.name %></option>
+          <% end %>
+        </select>
+        <label class="bold" for="person_id">Author</label>
+      </li>
+
 
       <li>
         <select id="event_id" name="news[event_id]" size="1" style="width: 566px">

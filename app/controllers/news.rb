@@ -39,7 +39,8 @@ module Brt
       else
         news.errors.clear! unless params[:news]
         erb :news_form, locals:  {
-          news: news, events: Event.all_without_news, title: 'Anlegen'
+          news: news, events: Event.all_without_news, title: 'Anlegen',
+          people: Person.all
         }
       end
     end
@@ -52,7 +53,9 @@ module Brt
       events = Event.all_without_news
       events.insert(0, news.event) unless news.event.nil?
 
-      erb :news_form, locals: { news: news, events: events, title: news.title }
+      erb :news_form, locals: {
+        news: news, events: events, title: news.title, people: Person.all
+      }
     end
 
     #
@@ -65,7 +68,8 @@ module Brt
         redirect to(news.editlink, true, false), success: 'Erfolgreich gespeichert'
       else
         erb :news_form, locals:  {
-          news: news, events: Event.all_without_news, title: news.title
+          news: news, events: Event.all_without_news, title: news.title,
+          people: Person.all
         }
       end
     end
