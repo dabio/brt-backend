@@ -7,6 +7,9 @@ module Brt
     helpers Sinatra::RedirectWithFlash
 
     helpers do
+      include Rack::Utils
+      alias_method :h, :escape_html
+
       # Returns text transformed into HTML using simple formatting rules. Two or
       # more consecutive newlines(\n\n) are considered as a paragraph and wrapped
       # in <p> or your own tags. One newline (\n) is considered as a linebreak

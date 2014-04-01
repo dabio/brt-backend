@@ -56,9 +56,8 @@
             <option value="<%= person.id %>"<% if news.person == person %> selected="selected"<% end %>><%= person.name %></option>
           <% end %>
         </select>
-        <label class="bold" for="person_id">Author</label>
+        <label class="bold" for="person_id">Author <span class="req">*</span></label>
       </li>
-
 
       <li>
         <select id="event_id" name="news[event_id]" size="1" style="width: 566px">

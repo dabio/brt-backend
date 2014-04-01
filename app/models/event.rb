@@ -9,6 +9,7 @@ class Event < Base
   property :url,        URI
   property :distance,   Integer,required: true
   property :type,       Integer, default: 1 #Enum[:race, :training], default: :race
+  property :is_hidden,  Boolean, default: false
   timestamps :at
   property :slug,       String, length: 2000, default: lambda { |r, p|
     r.title.to_url unless r.title.nil?
