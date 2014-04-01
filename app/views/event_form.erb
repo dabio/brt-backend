@@ -17,10 +17,10 @@
 
       <li>
         <label class="bold" for="title">Bezeichnung <span class="req">*</span></label>
-        <input id="title" type="text" name="event[title]" size="60" value="<%= event.title %>" required/>
+        <input id="title" type="text" name="event[title]" size="60" value="<%= h event.title %>" required/>
       </li>
 
-      <% if has_admin? %>
+      <% if has_admin? and !event.new? %>
         <li>
           <label class="bold" for="slug">Slug</label>
           <input id="slug" type="text" name="event[slug]" size="60" value="<%= event.slug %>"/>
@@ -36,6 +36,16 @@
       <li>
         <label class="bold" for="url">URL</label>
         <input id="url" type="url" name="event[url]" size="60" value="<%= event.url %>" placeholder="http://"/>
+      </li>
+
+      <li>
+        <fieldset>
+          <label>
+            <input type="hidden" name="event[is_hidden]" value="0"/>
+            <input type="checkbox" name="event[is_hidden]" value="1"<% if event.is_hidden %> checked<% end %>/> Versteckt?
+            <span class="descr">Versteckte Rennen werden nicht auf der Webseite gelistet.</span>
+          </label>
+        </fieldset>
       </li>
 
       <% unless event.new? %>

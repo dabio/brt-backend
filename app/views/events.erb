@@ -30,7 +30,7 @@
 
         <tr>
           <td class="date"><%= event.date_formatted %></td>
-          <td><%= event.title %></td>
+          <td<% if event.is_hidden %> class="gray-light"<% end %>><%= event.title %></td>
           <td>
             <a class="icons" href="<%= event.editlink %>" title="Bearbeiten">&#x21;</a>
           </td>
