@@ -1,10 +1,10 @@
-<section id="people">
+<div id="people">
 
-  <header class="row">
-    <h2 class="threequarter"><%= title %></h2>
-    <nav class="quarter second">
+  <header class="units-row">
+    <h2 class="unit-66"><%= title %></h2>
+    <nav class="unit-33 secondary">
       <form action="<%= Person.createlink %>" method="post">
-        <button class="btn btn-square icon-plus">Neuer Fahrer</button>
+        <button class="btn btn-blue icon-plus">Neuer Fahrer</button>
       </form>
     </nav>
   </header>
@@ -23,9 +23,9 @@
       <% if people.each do |person| %>
 
         <tr>
-          <td<% if !person.is_active %> class="gray-light"<% end %>><%= person.name %></td>
+          <td<% if !person.is_active %> class="color-gray-light"<% end %>><%= person.name %></td>
           <td>
-            <a class="gray-dark" href="mailto:<%= person.email %>"><%= person.email %></a>
+            <a<% if !person.is_active %> class="inactive"<% end %> href="mailto:<%= person.email %>"><%= person.email %></a>
           </td>
           <td>
             <a class="icons" href="<%= person.editlink %>" title="Bearbeiten">&#x21;</a>
@@ -44,4 +44,4 @@
 
   </table>
 
-</section>
+</div>

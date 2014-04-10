@@ -2,53 +2,37 @@
 
   <%= erb :_errors, locals: { item: sponsor } %>
 
-  <form class="forms columnar" action="<%= sponsor.editlink %>" method="post">
+  <form class="forms" action="<%= sponsor.new? ? Sponsor.createlink : sponsor.savelink %>" method="post">
     <% unless sponsor.new? %>
       <input type="hidden" name="_method" value="put"/>
     <% end %>
 
-    <ul>
-      <li>
-        <fieldset>
-          <section>
-            <label class="bold" for="title">Titel <span class="red">*</span></label>
-          </section>
-          <input id="title" class="width-100" type="text" name="sponsor[title]" size="60" value="<%= sponsor.title %>" required/>
-        </fieldset>
-      </li>
-      <li>
-        <fieldset>
-          <section>
-            <label class="bold" for="image_url">Bild Url <span class="req">*</span></label>
-          </section>
-          <input id="image_url" class="width-100" type="url" name="sponsor[image_url]" size="60" value="<%= sponsor.image_url %>" placeholder="http://" required/>
-        </fieldset>
-      </li>
-      <li>
-        <fieldset>
-          <section>
-            <label class="bold" for="url">Homepage</label>
-          </section>
-          <input id="url" class="width-100" type="url" name="sponsor[url]" size="60" value="<%= sponsor.url %>" placeholder="http://"/>
-        </fieldset>
-      </li>
-      <li>
-        <fieldset>
-          <section>
-            <label class="bold" for="text">Beschreibung</label>
-          </section>
-          <textarea id="text" class="width-100" name="sponsor[text]" style="height: 387px"><%= sponsor.text %></textarea>
-        </fieldset>
-      </li>
-      <li class="form-section"></li>
-      <li class="push">
-        <input class="btn icon-floppy" type="submit" value="<%= sponsor.new? ? 'Anlegen' : 'Speichern' %>"/>
-        <% unless sponsor.new? %>
-          <a class="red delete" href="<%= sponsor.deletelink %>" data-method="delete"
-          data-confirm="Sponsor entfernen?" rel="nofollow">Sponsor entfernen</a>
-        <% end %>
-      </li>
-    </ul>
+    <label>
+      Titel <span class="req">*</span>
+      <input type="text" name="sponsor[title]" size="60" value="<%= sponsor.title %>" required/>
+    </label>
+
+    <label>
+      Bild Url <span class="req">*</span>
+      <input type="url" name="sponsor[image_url]" size="60" value="<%= sponsor.image_url %>" placeholder="http://" required/>
+    </label>
+
+    <label>
+      Homepage
+      <input type="url" name="sponsor[url]" size="60" value="<%= sponsor.url %>" placeholder="http://"/>
+    </label>
+
+    <label>
+      Beschreibung
+      <textarea class="width-100" name="sponsor[text]" style="height: 387px"><%= sponsor.text %></textarea>
+    </label>
+
+    <p>
+      <button class="btn btn-green" type="submit"><%= sponsor.new? ? 'Anlegen' : 'Speichern' %></button>
+      <% unless sponsor.new? %>
+        <a class="color-red delete" href="<%= sponsor.deletelink %>" data-method="delete" data-confirm="Sponsor entfernen?" rel="nofollow">Sponsor entfernen</a>
+      <% end %>
+    </p>
 
   </form>
 

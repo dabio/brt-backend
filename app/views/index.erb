@@ -1,10 +1,8 @@
-<section id="dashboard">
+<div id="dashboard">
 
-  <header class="row">
-    <h2><%= title %></h2>
-  </header>
+  <h2><%= title %></h2>
 
-  <table class="width-100 striped">
+  <table class="width-100">
 
     <thead>
       <tr>
@@ -21,7 +19,7 @@
           <td class="date"><%= event.date_formatted %></td>
           <td>
             <section><%= event.title %>, <%= event.distance %> km</section>
-            <section class="gray small participations">
+            <section class="color-gray-light small participations">
               <% event.participations.each do |p| %>
                 <span<% if p.person == current_person %> class="current"<% end %>><%= p.person.name %></span>
               <% end %>
@@ -44,4 +42,4 @@
 
   </table>
 
-</section>
+</div>

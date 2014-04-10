@@ -1,7 +1,8 @@
 <% if has_auth? %>
-  <section class="row container">
 
-    <nav class="primary threequarter">
+  <div class="units-row container">
+
+    <nav class="primary unit-66">
       <a href="/">Überblick</a>
       <a href="<%= News.link %>">News &amp; Rennberichte</a>
       <a href="<%= Event.link %>">Rennen</a>
@@ -12,10 +13,11 @@
       <% end %>
     </nav>
 
-    <nav class="primary quarter" style="text-align: right">
+    <nav class="secondary unit-33" style="text-align: right">
       <a href="<%= current_person.editlink %>">Einstellungen</a>
       <a href="/logout">Abmelden</a>
     </nav>
 
-  </section>
+  </div>
+
 <% end %>

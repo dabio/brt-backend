@@ -57,13 +57,14 @@
 
 
 body {
-
+  font-family: 'Source Sans Pro', 'PT Sans', Arial, "Helvetica Neue", Helvetica, Tahoma, sans-serif;
 }
 
 /* =Links
 -----------------------------------------------------------------------------*/
 
 table a { text-decoration: none }
+
 
 /* =Layout
 -----------------------------------------------------------------------------*/
@@ -90,13 +91,19 @@ header a { text-decoration: none }
 /* =Nav
 -----------------------------------------------------------------------------*/
 
-nav.primary a {
+nav.primary a,
+nav.secondary a {
   display: inline-block;
   margin-right: 7px;
   text-decoration: none;
 }
-
-nav.second { text-align: right }
+nav.secondary {
+  text-align: right;
+}
+nav.secondary a {
+  margin-left: 7px;
+  margin-right: 0;
+}
 
 /* =Misc
 -----------------------------------------------------------------------------*/
@@ -124,7 +131,6 @@ td.date {
 .success, .errors {
   margin-left: 0;
   padding: 8px 14px;
-  text-shadow: 0 1px 0 #fff;
 }
 
 .success {

@@ -1,87 +1,68 @@
-<section id="news">
+<div id="news">
 
   <%= erb :_errors, locals: { item: news } %>
 
-  <form class="forms columnar" action="<%= news.new? ? News.createlink : news.savelink %>" method="post">
+  <form class="forms" action="<%= news.new? ? News.createlink : news.savelink %>" method="post">
 
     <% unless news.new? %>
       <input type="hidden" name="_method" value="put"/>
     <% end %>
 
-    <ul>
+    <label>
+      Datum <span class="req">*</span>
+      <input type="date" name="news[date]" value="<%= news.date %>" placeholder="<%= today %>" required/>
+    </label>
 
-      <li>
-        <label class="bold" for="date">Datum <span class="req">*</span></label>
-        <input id="date" type="date" name="news[date]" value="<%= news.date %>" placeholder="<%= today %>" required/>
-      </li>
+    <label>
+      Titel <span class="req">*</span>
+      <input class="width-100" type="text" name="news[title]" size="60" required value="<%= news.title %>"/>
+    </label>
 
-      <li>
-        <fieldset>
-          <section>
-            <label class="bold" for="title">Titel <span class="req">*</span></label>
-          </section>
-          <input class="width-100" id="title" type="text" name="news[title]" size="60" required value="<%= news.title %>"/>
-        </fieldset>
-      </li>
+    <% if has_admin? and !news.new? %>
+    <label>
+      Slug
+      <input type="text" name="news[slug]" size="60" value="<%= news.slug %>"/>
+    </label>
+    <% end %>
 
-      <% if has_admin? and !news.new? %>
-        <li>
-          <label class="bold" for="slug">Slug</label>
-          <input id="slug" type="text" name="news[slug]" size="60" value="<%= news.slug %>"/>
-        </li>
-      <% end %>
+    <label>
+      Teaser <span class="req">*</span>
+      <textarea class="width-100" name="news[teaser]" style="height: 54px" required><%= news.teaser %></textarea>
+    </label>
 
-      <li>
-        <fieldset>
-          <section>
-            <label class="bold" for="teaser">Teaser <span class="req">*</span></label>
-          </section>
-          <textarea id="teaser" class="width-100" name="news[teaser]" style="height: 54px" required><%= news.teaser %></textarea>
-        </fieldset>
-      </li>
+    <label>
+      Text
+      <textarea class="width-100" name="news[message]" style="height: 387px"><%= news.message %></textarea>
+      <div class="forms-desc">Text wird mit <a class="gray" href="http://daringfireball.net/projects/markdown/dingus" title="Markdown Web Dingus">Markdown</a> formatiert.</div>
+    </label>
 
-      <li>
-        <fieldset>
-          <section>
-            <label class="bold" for="message">Text</label>
-          </section>
-          <textarea id="message" class="width-100" name="news[message]" style="height: 387px"><%= news.message %></textarea>
-          <span class="descr">Text wird mit <a class="gray" href="http://daringfireball.net/projects/markdown/dingus" title="Markdown Web Dingus">Markdown</a> formatiert.</span>
-        </fieldset>
-      </li>
-
-      <li>
-        <select id="person_id" name="news[person_id]" size="1">
-          <% people.each do |person| %>
-            <option value="<%= person.id %>"<% if news.person == person %> selected="selected"<% end %>><%= person.name %></option>
-          <% end %>
-        </select>
-        <label class="bold" for="person_id">Author <span class="req">*</span></label>
-      </li>
-
-      <li>
-        <select id="event_id" name="news[event_id]" size="1" style="width: 566px">
-          <option value="">(leer)</option>
-          <% events.each do |event| %>
-            <option value="<%= event.id %>"<% if news.event == event %> selected="selected"<% end %>><%= event.date_formatted %> - <%= event.title %>, <%= event.distance %> km</option>
-          <% end %>
-        </select>
-        <label class="bold" for="event_id">Rennen</label>
-        <span class="descr">Nur für Rennberichte</span>
-      </li>
-
-      <li class="form-section"></li>
-
-      <li class="push">
-        <input class="btn icon-floppy" type="submit" value="<%= news.new? ? 'Anlegen' : 'Speichern' %>"/>
-        <% unless news.new? %>
-          <a class="red delete" href="<%= news.deletelink %>" data-method="delete"
-          data-confirm="Nachricht oder Rennbericht löschen?" rel="nofollow">Eintrag entfernen</a>
+    <label>
+      Author <span class="req">*</span>
+      <select name="news[person_id]" size="1">
+        <% people.each do |person| %>
+          <option value="<%= person.id %>"<% if news.person == person %> selected="selected"<% end %>><%= person.name %></option>
         <% end %>
-      </li>
+      </select>
+    </label>
 
-    </ul>
+    <label>
+      Rennen
+      <select name="news[event_id]" size="1" class="width-60">
+        <option value="">(leer)</option>
+        <% events.each do |event| %>
+          <option value="<%= event.id %>"<% if news.event == event %> selected="selected"<% end %>><%= event.date_formatted %> - <%= event.title %>, <%= event.distance %> km</option>
+        <% end %>
+      </select>
+      <div class="forms-desc">Nur für Rennberichte</div>
+    </label>
+
+    <p>
+      <button class="btn btn-green" type="submit"><%= news.new? ? 'Anlegen' : 'Speichern' %></button>
+      <% unless news.new? %>
+        <a class="color-red delete" href="<%= news.deletelink %>" data-method="delete" data-confirm="Nachricht oder Rennbericht löschen?" rel="nofollow">Eintrag entfernen</a>
+      <% end %>
+    </p>
 
   </form>
 
-</section>
+</div>

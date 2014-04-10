@@ -1,69 +1,65 @@
-<section id="person">
+<div id="person">
 
   <%= erb :_errors, locals: { item: person } %>
 
-  <form class="forms columnar" action="<%= person.new? ? Person.createlink : person.savelink %>" method="post">
+  <form class="forms" action="<%= person.new? ? Person.createlink : person.savelink %>" method="post">
     <% unless person.new? %>
       <input type="hidden" name="_method" value="put"/>
     <% end %>
-    <ul>
-      <li>
-        <label class="bold" for="first_name">Vorname <span class="req">*</span></label>
-        <input id="first_name" type="text" name="person[first_name]" required value="<%= person.first_name %>"/>
-      </li>
-      <li>
-        <label class="bold" for="last_name">Nachname <span class="req">*</span></label>
-        <input id="last_name" type="text" name="person[last_name]" required value="<%= person.last_name %>"/>
-      </li>
-      <li>
-        <fieldset>
-          <section>
-            <label class="bold" for="email">E-Mail <span class="req">*</span></label>
-          </section>
-          <input class="width-50" id="email" type="email" name="person[email]" size="30" required value="<%= person.email %>"/>
-        </fieldset>
-      </li>
-      <% if has_admin? %>
-        <li>
-          <label class="bold" for="slug">Slug</label>
-          <input id="slug" type="text" name="person[slug]" value="<%= person.slug %>" required />
-        </li>
-        <li>
-          <fieldset>
-            <label>
-              <input type="hidden" name="person[is_admin]" value="0"/>
-              <input type="checkbox" name="person[is_admin]" value="1"<% if person.is_admin %> checked<% end %>/> Administrator
-            </label>
-          </fieldset>
-        </li>
-        <li>
-          <fieldset>
-            <label>
-              <input type="hidden" name="person[is_active]" value="0"/>
-              <input type="checkbox" name="person[is_active]" value="1"<% if person.is_active %> checked<% end %>/> Aktiv
-            </label>
-          </fieldset>
-        </li>
+
+    <label>
+      Vorname <span class="req">*</span>
+      <input type="text" name="person[first_name]" required value="<%= person.first_name %>"/>
+    </label>
+
+    <label>Nachname <span class="req">*</span>
+      <input type="text" name="person[last_name]" required value="<%= person.last_name %>"/>
+    </label>
+
+    <label>
+      E-Mail <span class="req">*</span>
+      <input type="email" name="person[email]" size="40" required value="<%= person.email %>"/>
+    </label>
+
+    <% if has_admin? %>
+    <label>
+      Slug
+      <input type="text" name="person[slug]" value="<%= person.slug %>" required />
+    </label>
+
+    <label>
+      <input type="hidden" name="person[is_admin]" value="0"/>
+      <input type="checkbox" name="person[is_admin]" value="1"<% if person.is_admin %> checked<% end %>/> Administrator
+    </label>
+
+    <label>
+      <input type="hidden" name="person[is_active]" value="0"/>
+      <input type="checkbox" name="person[is_active]" value="1"<% if person.is_active %> checked<% end %>/> Aktiv
+    </label>
+    <% end %>
+
+    <hgroup>
+      <h4>Kennwort ändern</h4>
+      <h4 class="subheading">Nur ausfüllen, wenn Kennwort geändert werden soll.</h4>
+    </hgroup>
+
+    <label>
+      Kennwort
+      <input type="password" name="person[password]"/>
+    </label>
+
+    <label>
+      Wiederholung
+      <input type="password" name="person[password_confirmation]"/>
+    </label>
+
+    <p>
+      <button class="btn btn-green" type="submit"><%= person.new? ? 'Anlegen' : 'Speichern' %></button>
+      <% unless person.new? %>
+        <a class="color-red delete" href="<%= person.deletelink %>" data-method="delete" data-confirm="Fahrer entfernen?" rel="nofollow">Fahrer entfernen</a>
       <% end %>
-      <li class="form-section">Kennwort</li>
-      <li class="push"><p class="gray-light">Kennwort ändern. Nur ausfüllen, wenn Kennwort geändert werden soll.</p></li>
-      <li>
-        <label class="bold" for="password">Kennwort</label>
-        <input id="password" type="password" name="person[password]"/>
-      </li>
-      <li>
-        <label class="bold" for="password_confirmation">Wiederholung</label>
-        <input id="password_confirmation" type="password" name="person[password_confirmation]"/>
-      </li>
-      <li class="form-section"></li>
-      <li class="push">
-        <input class="btn icon-floppy" type="submit" value="<%= person.new? ? 'Anlegen' : 'Speichern' %>"/>
-        <% if has_admin? and !person.new? %>
-          <a class="red delete" href="<%= person.deletelink %>" data-method="delete"
-          data-confirm="Fahrer entfernen?" rel="nofollow">Fahrer entfernen</a>
-        <% end %>
-      </li>
-    </ul>
+    </p>
+
   </form>
 
-</section>
+</div>

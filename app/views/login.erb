@@ -1,4 +1,4 @@
-<section id="login" class="row">
+<div class="unit-centered unit-40">
 
   <% unless email.empty? %>
     <ul class="errors">
@@ -6,19 +6,19 @@
     </ul>
   <% end %>
 
-  <form class="forms columnar third centered" action="/login" method="post">
+  <form class="forms" action="/login" method="post">
     <input type="hidden" name="to" value="<%= to %>"/>
-    <ul>
-      <li>
-        <input type="text" name="email" value="<%= email %>" required placeholder="Benutzername/E-Mail"<% if email.empty? %> autofocus="autofocus"<% end %>/>
-      </li>
-      <li>
-        <input type="password" name="password" placeholder="Passwort" required<% unless email.empty? %> autofocus="autofocus"<% end %>/>
-      </li>
-      <li>
-        <input class="btn" type="submit" value="Anmelden"/>
-      </li>
-    </ul>
+    <label>
+      Benutzername/E-Mail
+      <input type="text" name="email" value="<%= email %>" required <% if email.empty? %> autofocus="autofocus"<% end %>>
+    </label>
+    <label>
+      Passwort
+      <input type="password" name="password" required<% unless email.empty? %> autofocus="autofocus"<% end %>/>
+    </label>
+    <p>
+      <button type="submit" class="btn">Anmelden</button>
+    </p>
   </form>
 
-</section>
+</div>
