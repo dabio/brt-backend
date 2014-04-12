@@ -1,16 +1,16 @@
-<section id="email">
+<div id="email">
 
-  <header class="row">
-    <section class="twothird">
-      <a class="gray-dark" href="mailto:<%= email.email %>"><%= email.name %> &lt;<%= email.email %>&gt;</a>
-    </section>
-    <section class="third date">
+  <header class="units-row">
+    <div class="unit-66">
+      <a href="mailto:<%= email.email %>"><%= email.name %> &lt;<%= email.email %>&gt;</a>
+    </div>
+    <div class="unit-33 date">
       <%= email.date_formatted('%-d. %B %Y') %>
-    </section>
+    </div>
   </header>
 
   <article class="row">
     <%= email.message_formatted %>
   </article>
 
-</section>
+</div>
