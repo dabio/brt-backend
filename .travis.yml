@@ -2,4 +2,4 @@ language: ruby
 rvm:
   - ruby-head
 
-install: bundle install --test
+install: bundle install --binstubs vendor/bundle/bin --path vendor/bundle -j4 --without production
