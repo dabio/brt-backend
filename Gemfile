@@ -26,6 +26,7 @@ end
 
 group :test do
   gem 'rack-test', require: 'rack/test'
+  gem 'rake', require: false
   gem 'simplecov'
 end
 
