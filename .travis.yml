@@ -1,5 +1,5 @@
 language: ruby
 rvm:
-  - ruby-head
+  - 2.1.1
 
 install: bundle install --binstubs vendor/bundle/bin --path vendor/bundle -j4 --without production
