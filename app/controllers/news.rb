@@ -32,7 +32,7 @@ module Brt
     #
     post '/' do
       news = News.new(params[:news])
-      news.person = current_person
+      news.person = current_person unless news.person
 
       if news.save
         redirect to('/'), success: 'Erfolgreich gespeichert'
