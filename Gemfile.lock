@@ -43,7 +43,7 @@ GEM
     rack-test (0.6.3)
       rack (>= 1.0)
     rack-timeout (0.2.1)
-    rake (10.4.2)
+    rake (12.3.3)
     redcarpet (3.2.2)
     scrypt (1.1.0)
     shotgun (0.9.1)
