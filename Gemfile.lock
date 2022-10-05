@@ -1,7 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.3.7)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
     data_objects (0.10.15)
       addressable (~> 2.1)
     dm-aggregates (1.2.0)
@@ -34,6 +35,7 @@ GEM
     json_pure (1.8.2)
     multi_json (1.11.0)
     newrelic_rpm (3.11.0.283)
+    public_suffix (3.1.1)
     puma (3.12.6)
     r18n-core (2.0.3)
     rack (1.6.13)
